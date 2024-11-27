@@ -1,0 +1,2 @@
+# SkripsiPolos
+ Tugas Skripsiku
