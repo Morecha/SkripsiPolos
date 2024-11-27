@@ -45,7 +45,7 @@ class PeminjamanController extends Controller
         $peminjaman = $request->all();
         unset($peminjaman['id_buku']);
 
-        dd($peminjaman);
+        dd($jumlah_buku,$request,$peminjaman);
     }
 
     /**

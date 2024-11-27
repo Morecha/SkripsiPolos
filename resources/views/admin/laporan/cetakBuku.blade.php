@@ -65,7 +65,7 @@
             @php
                 $i = 0;
             @endphp
-            @foreach ($data as $data)
+            @foreach ($data as $item)
                 @php
                     $i++;
                 @endphp
@@ -78,10 +78,10 @@
                         <div class="school-name">SDN Bandungrejosari 4 Malang</div>
                         <div>Dinas Pendidikan Kota Malang</div>
                         <div class="divider"></div>
-                        <div class="book-code">{{ $data['kodeddc'] }}</div>
-                        <div class="pengarang">{{ $data['pengarang'] }}</div>
-                        <div class="judul">{{ $data['judul'] }}</div>
-                        <div class="copy">Copy {{ $data['copy'] }}</div>
+                        <div class="book-code">{{ $item['kodeddc'] }}</div>
+                        <div class="pengarang">{{ $item['pengarang'] }}</div>
+                        <div class="judul">{{ $item['judul'] }}</div>
+                        <div class="copy">Copy {{ $item['copy'] }}</div>
                     </div>
                 </td>
                 @if ($i % 2 == 0)
@@ -100,6 +100,33 @@
                     <div class="copy">Copy 1</div>
                 </div>
             </td> --}}
+    </table>
+    <div class="divider"></div>
+    <table>
+        @php
+            $j = 0;
+        @endphp
+        @foreach ($kode as $key => $barcode)
+            @php
+                $j++;
+            @endphp
+            @if ($j % 2 == 1)
+                <tr>
+            @endif
+            <td>
+                <div class="label">
+                    {{-- <div class="school-name">Perpustakaan</div>
+                    <div class="school-name">SDN Bandungrejosari 4 Malang</div>
+                    <div>Dinas Pendidikan Kota Malang</div> --}}
+                    <div class="book-code">{{ $barcode }}</div>
+                    <div class="divider"></div>
+                    <div class="book-code">{!!  DNS1D::getBarcodeHTML($barcode, 'C128',1.7,60) !!}</div>
+                </div>
+            </td>
+            @if ($i % 2 == 0)
+                </tr>
+            @endif
+        @endforeach
     </table>
 </body>
 </html>

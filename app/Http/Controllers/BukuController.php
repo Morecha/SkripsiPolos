@@ -100,6 +100,8 @@ class BukuController extends Controller
     {
         $inventaris = inventaris::find($id);
         // dd($request,$inventaris);
+        $kode = $request->all();
+        unset($kode['_token']);
         $data = [];
         foreach($request->all() as $key => $value){
             if(strpos($key, 'print')===0){
@@ -112,8 +114,8 @@ class BukuController extends Controller
                 ];
             }
         }
-        // dd($data);
-        $pdf = Pdf::loadView('admin.laporan.cetakBuku', compact('data'));
+        // dd($data, $kode);
+        $pdf = Pdf::loadView('admin.laporan.cetakBuku', compact('data','kode'));
         return $pdf->stream($inventaris['judul'].'.pdf');
         // return view('admin.laporan.cetakBuku', compact('anggota'));
     }
