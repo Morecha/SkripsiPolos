@@ -43,8 +43,19 @@ class InventarisController extends Controller
             'status' => 'required',
             'deskripsi' => 'nullable',
             'eksemplar' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
         $input = $request->all();
+
+        if($request->file('image')){
+            $destinationPath = 'gambar/inventaris';
+            $profileImage = date('YmdHis') . "." . $request->image->getClientOriginalExtension();
+            $image = $request->file('image')->storeAs($destinationPath, $profileImage, 'public');
+            $input['image'] = "$profileImage";
+        }
+
+        // dd($input);
         inventaris::create($input);
         return redirect()->route('inventaris.list')->with('success', 'Data inventaris berhasil ditambahkan');
     }
@@ -66,6 +77,7 @@ class InventarisController extends Controller
             'status' => 'required',
             'deskripsi' => 'nullable',
             'eksemplar' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $update = inventaris::find($id);
@@ -76,6 +88,22 @@ class InventarisController extends Controller
             $pengadaan['diterima'] = $input['eksemplar'];
             $pengadaan->update();
         }
+
+        if($request->file('image')){
+            $destinationPath = 'gambar/inventaris';
+            $profileImage = date('YmdHis') . "." . $request->image->getClientOriginalExtension();
+            if($update->image != null){
+                $oldImage = $update->image;
+                if(file_exists(public_path('storage/gambar/inventaris/'.$oldImage))){
+                    unlink(public_path('storage/gambar/inventaris/'.$oldImage));
+                }
+            }
+            $image = $request->file('image')->storeAs($destinationPath, $profileImage, 'public');
+            $input['image'] = "$profileImage";
+        }else{
+            unset($input['image']);
+        }
+
         $update->update($input);
         return redirect()->route('inventaris.list')->with('success', 'Data inventaris berhasil diupdate');
     }
@@ -91,6 +119,12 @@ class InventarisController extends Controller
         if($pengadaan != null){
             $pengadaan['diterima'] = $pengadaan['diterima'] - $data->eksemplar;
             $pengadaan->update();
+        }
+
+        if($data->image != null){
+            if(file_exists(public_path('storage/gambar/inventaris/'.$data->image))){
+                unlink(public_path('storage/gambar/inventaris/'.$data->image));
+            }
         }
         $data->delete();
         return redirect()->route('inventaris.list')->with('success', 'Data inventaris berhasil dihapus');

@@ -115,7 +115,7 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="judul">status</label>
+                                                    <label class="form-label" for="judul">status Inventaris</label>
                                                     <input type="text" id="judul" class="form-control" autocomplete="false" placeholder="judul" value="{{$inventaris->status}}" disabled/>
                                                 </div>
                                             </div>
@@ -178,14 +178,18 @@
                                         </div>
 
                                         {{-- image --}}
-                                        {{-- <div class="row">
+                                        <div class="row">
                                             <div class="col-12 mb-2">
                                                 <div class="border rounded p-2">
-                                                    <h4 class="mb-1">ProfileImage</h4>
+                                                    <h4 class="mb-1">Buku Image</h4>
                                                     <div class="d-flex flex-column flex-md-row">
-                                                        <img src="{{asset('app-assets/images/portrait/small/avatar-s-11.jpg')}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
+                                                        @if ($data->image == null)
+                                                            <img src="{{asset('storage/gambar/inventaris/'.$inventaris->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
+                                                        @else
+                                                            <img src="{{asset('storage/gambar/buku/'.$data->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
+                                                        @endif
                                                         <div class="featured-info">
-                                                            <small class="text-muted">Required image resolution 400x400, image size 2mb.</small>
+                                                            <small class="text-muted">image max size 2mb.</small>
                                                             <p class="my-50">
                                                                 <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a>
                                                             </p>
@@ -196,7 +200,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         {{-- button --}}
                                         <div class="row">
                                             <div class="col-12 mt-50">

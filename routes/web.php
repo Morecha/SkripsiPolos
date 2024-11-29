@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     //peminjaman
     Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.list');
     Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
+    Route::get('/peminjaman/{id}/detail', [PeminjamanController::class, 'detail'])->name('peminjaman.detail');
 
     //presensi_kelompok
     Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.list');

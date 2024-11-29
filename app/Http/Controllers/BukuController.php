@@ -28,6 +28,8 @@ class BukuController extends Controller
                     'id_inven' => $id,
                     'kode_buku' => $kode_ddc."-".$tajuk_buku."-".$judul."-".$i,
                     'posisi' => 'ada',
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ];
             }
         //klo buku ada di inven
@@ -35,34 +37,42 @@ class BukuController extends Controller
             $string = $buku->last()->kode_buku;
             $pisah = explode('-', $string);
             $akhir = intval($pisah[3])+1;
+            // dd($kode_ddc!=$pisah[0], $tajuk_buku!=$pisah[1], $judul!=$pisah[2]);
 
-            if($kode_ddc==$pisah[0] && $tajuk_buku==$pisah[1] && $judul==$pisah[2])
+            if($kode_ddc!=$pisah[0] || $tajuk_buku!=$pisah[1] || $judul!=$pisah[2])
             {
-                // $banyak = $inventaris['eksemplar'] - $buku->count();
-                // $last = end($pisah);
-                // dd('benar masuk sini');
-                // dd($buku,$inventaris,$string,$pisah[3],$akhir);
-                for($i=$akhir; $i<=$inventaris['eksemplar']; $i++){
-                    $input[] = [
-                        'id_inven' => $id,
-                        'kode_buku' => $kode_ddc."-".$tajuk_buku."-".$judul."-".$i,
-                        'posisi' => 'ada',
-                    ];
+                //kondisi klo disana regenerate tetapi kode invennya beda
+                //harus cek posisi buku (agar tidak crash dengan buku yang dipinjam)
+                $diluar = $buku->filter(function ($item) {
+                    return $item->posisi != 'ada';
+                })->count();
+
+                // 1. rubah dulu data yang ada.
+                if($diluar == 0){
+                    foreach ($buku as $item){
+                        $explode = explode('-', $item->kode_buku);
+                        $kode_buku_baru = $kode_ddc."-".$tajuk_buku."-".$judul."-".$explode[3];
+                        $update = buku::find($item->id);
+                        $update->update([
+                            'kode_buku' => $kode_buku_baru
+                        ]);
+                    }
+                }
+                else{
+                    return back()->with('error', 'Terdapat buku yang dipinjam');
                 }
             }
-            else
-            {
-                foreach ($buku as $item){
-                    $item->delete();
-                }
-                $banyak = $inventaris['eksemplar'];
-                for($i=1; $i<=$banyak; $i++){
-                    $input[] = [
-                        'id_inven' => $id,
-                        'kode_buku' => $kode_ddc."-".$tajuk_buku."-".$judul."-".$i,
-                        'posisi' => 'ada',
-                    ];
-                }
+
+            //Tambahkan buku baru
+            $banyak = $inventaris['eksemplar'] - $buku->count();
+            for($i=$akhir; $i<=$inventaris['eksemplar']+$banyak; $i++){
+                $input[] = [
+                    'id_inven' => $id,
+                    'kode_buku' => $kode_ddc."-".$tajuk_buku."-".$judul."-".$i,
+                    'posisi' => 'ada',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
             }
         }
         buku::insert($input);
@@ -154,10 +164,28 @@ class BukuController extends Controller
     {
         $request->validate([
             'posisi' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $inventaris = inventaris::find($id);
         $buku = buku::find($id_buku);
         $input = $request->all();
+
+        // dd($input->image);
+        if($request->file('image')){
+            $destinationPath = 'gambar/buku';
+            $profileImage = date('YmdHis') . "." . $request->image->getClientOriginalExtension();
+            if($buku->image != null){
+                $oldImage = $buku->image;
+                if(file_exists(public_path('storage/gambar/buku/'.$oldImage))){
+                    unlink(public_path('storage/gambar/buku/'.$oldImage));
+                }
+            }
+            $image = $request->file('image')->storeAs($destinationPath, $profileImage, 'public');
+            $input['image'] = "$profileImage";
+        }else{
+            unset($input['image']);
+        }
+
         $buku->update($input);
         return redirect()->route('buku.list', $inventaris->id)->with('success', 'Data inventaris berhasil diupdate');
     }
@@ -168,6 +196,13 @@ class BukuController extends Controller
     public function destroy(string $id, string $id_buku)
     {
         $buku = buku::find($id_buku);
+
+        if($buku->image != null){
+            if(file_exists(public_path('storage/gambar/buku/'.$buku->image))){
+                unlink(public_path('storage/gambar/buku/'.$buku->image));
+            }
+        }
+
         $buku->delete();
         return redirect()->route('buku.list', $id)->with('success', 'Data inventaris berhasil dihapus');
     }

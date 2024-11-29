@@ -22,4 +22,9 @@ class pengadaan extends Model
         'eksemplar',
         'diterima',
     ];
+
+    public function inventaris()
+    {
+        return $this->belongsTo(inventaris::class, 'id_inventaris');
+    }
 }

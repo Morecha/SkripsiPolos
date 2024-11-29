@@ -18,4 +18,14 @@ class presensi extends Model
         'jumlah',
         'keterangan',
     ];
+
+    public function anggota()
+    {
+        return $this->belongsTo(anggota::class, 'id_anggota');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }

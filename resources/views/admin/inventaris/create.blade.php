@@ -168,14 +168,14 @@
                                         </div>
 
                                         {{-- image --}}
-                                        {{-- <div class="row">
+                                        <div class="row">
                                             <div class="col-12 mb-2">
                                                 <div class="border rounded p-2">
-                                                    <h4 class="mb-1">ProfileImage</h4>
+                                                    <h4 class="mb-1">Inventaris Image</h4>
                                                     <div class="d-flex flex-column flex-md-row">
-                                                        <img src="{{asset('app-assets/images/portrait/small/avatar-s-11.jpg')}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
+                                                        <img src="{{asset('app-assets/images/book/template/3fe9c8a1dbfb5b3910e306183ec5d669.jpg')}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
                                                         <div class="featured-info">
-                                                            <small class="text-muted">Required image resolution 400x400, image size 2mb.</small>
+                                                            <small class="text-muted">image max size 2mb.</small>
                                                             <p class="my-50">
                                                                 <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a>
                                                             </p>
@@ -186,7 +186,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         {{-- button --}}
                                         <div class="row">
                                             <div class="col-12 mt-50">

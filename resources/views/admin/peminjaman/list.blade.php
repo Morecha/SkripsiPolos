@@ -71,29 +71,34 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Nama</th>
-                                                <th>Jenis User</th>
+                                                <th>Jenis Peminjaman</th>
+                                                <th>Nama Peminjam</th>
                                                 <th>jumlah buku</th>
-                                                <th>status</th>
-                                                <th>Detail</th>
+                                                <th>Lama Peminjaman</th>
+                                                <th>Mulai Peminjaman</th>
                                                 <th>options</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @php
+                                            @php
                                                 $i = 1;
                                             @endphp
-                                            @foreach ($data as $data)
+                                            @foreach ($peminjaman as $data)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td>{{ $data->judul }}</td>
-                                                    <td>{{ $data->kode_ddc }}</td>
-                                                    <td>{{ $data->eksemplar }}</td>
-                                                    <td>{{ $data->buku_count }}</td>
-                                                    <td>
+                                                    <td>{{ $data->jenis_peminjaman }}</td>
+                                                    @if ($data->jenis_peminjaman == 'kelompok')
+                                                        <td>{{ $data->id_user }}</td>
+                                                    @else
+                                                        <td>{{ $data->id_anggota }}</td>
+                                                    @endif
+                                                    <td>{{ $data->pivot_count }}</td>
+                                                    <td>{{ $data->lama_peminjaman }}</td>
+                                                    <td>{{ $data->created_at }}</td>
+                                                    {{-- <td>
                                                         <span class="badge badge-light-warning">{{ $data->status }}</span>
-                                                    </td>
-                                                    <td>
+                                                    </td> --}}
+                                                    {{-- <td>
                                                         <div class="scrolling-inside-modal">
                                                             <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-sm btn-flat-info waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable{{ $data->id }}">
@@ -125,7 +130,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button"
@@ -135,24 +140,9 @@
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('buku.list',$data->id) }}">
+                                                                    href="{{ route('peminjaman.detail', $data->id) }}">
                                                                     <i data-feather="eye" class="me-50"></i>
-                                                                    <span>List Buku</span>
-                                                                </a>
-                                                                <a class="dropdown-item"
-                                                                href="{{route('inventaris.generate', $data->id)}}"
-                                                                onclick="event.preventDefault();
-                                                                    document.getElementById('generate-form-{{ $data->id }}').submit();">
-                                                                    <i data-feather="refresh-cw" class="me-50"></i>
-                                                                    <form id="generate-form-{{ $data->id }}" method="POST" action="{{route('inventaris.generate', $data->id)}}" style="display: none;">
-                                                                        @csrf
-                                                                    </form>
-                                                                    <span>Generate Buku</span>
-                                                                </a>
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('buku.list_cetak',$data->id) }}">
-                                                                    <i data-feather="printer" class="me-50"></i>
-                                                                    <span>Cetak Nomor Buku</span>
+                                                                    <span>Detail Peminjaman</span>
                                                                 </a>
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('inventaris.edit',$data->id) }}">
@@ -173,7 +163,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            @endforeach --}}
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

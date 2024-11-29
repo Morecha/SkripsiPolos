@@ -18,4 +18,24 @@ class peminjaman extends Model
         'detail',
         'lama_peminjaman',
     ];
+
+    public function anggota()
+    {
+        return $this->belongsTo(anggota::class, 'id_anggota');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function pivot()
+    {
+        return $this->hasMany(pivot::class, 'id_peminjaman');
+    }
+
+    public function buku()
+    {
+        return $this->belongsToMany(Buku::class, 'pivot', 'id_peminjaman', 'id_buku');
+    }
 }

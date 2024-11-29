@@ -21,4 +21,15 @@ class inventaris extends Model
         'eksemplar',
         'image',
     ];
+
+    public function buku()
+    {
+        return $this->hasMany(buku::class, 'id_inven');
+    }
+
+
+    public function pengadaan()
+    {
+        return $this->hasMany(pengadaan::class, 'id_inventaris');
+    }
 }

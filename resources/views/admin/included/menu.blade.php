@@ -54,13 +54,15 @@
                 </li>
                 {{-- Pengembalian --}}
                 <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="file-minus"></i><span class="menu-title text-truncate" data-i18n="Product">Pengembalian Buku</span></a>
+                </li>
+                {{-- <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="file-minus"></i><span class="menu-title text-truncate" data-i18n="Product">Pengembalian Buku</span></a>
                     <ul class="menu-content">
                         <li><a class="d-flex align-items-center" href=""><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Pengembalian</span></a>
                         </li>
                         <li><a class="d-flex align-items-center" href=""><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Tambah  Pengembalian</span></a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 {{-- pembatas --}}
                 <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Presensi</span><i data-feather="more-horizontal"></i>
                 </li>

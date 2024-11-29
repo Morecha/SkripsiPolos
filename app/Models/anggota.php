@@ -19,4 +19,15 @@ class anggota extends Model
         'tanggal_lahir',
         'status',
     ];
+
+    public function peminjaman()
+    {
+        return $this->hasMany(peminjaman::class, 'id_anggota');
+    }
+
+
+    public function presensiIndividu()
+    {
+        return $this->hasMany(presensi::class, 'id_anggota');
+    }
 }

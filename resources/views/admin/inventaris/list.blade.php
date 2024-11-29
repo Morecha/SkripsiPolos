@@ -53,6 +53,11 @@
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
                             <h2 class="content-header-title float-start mb-0">Inventaris</h2>
+                            @if (session('error') or $errors->any())
+                            <h1>error masuk</h1>
+                                <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -121,6 +126,11 @@
                                                                                 <li><span class="label">eksemplar</span> = {{$data->eksemplar}}</li>
                                                                                 <li><span class="label">tangga masuk</span> = {{$data->created_at}}</li>
                                                                                 <li><span class="label">Deskripsi</span> = {!!$data->deskripsi!!}</li>
+                                                                                @if ($data->image != null)
+                                                                                    <li><span class="label">Image</span> =
+                                                                                        <img src="{{asset('storage/gambar/inventaris/'.$data->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" style="margin: 10px;"/>
+                                                                                    </li>
+                                                                                @endif
                                                                             </ul>
                                                                             <br>
                                                                         </div>
@@ -201,10 +211,30 @@
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.checkboxes.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/polyfill.min.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
     {{-- <script src="{{asset('app-assets/js/scripts/pages/app-invoice-list.js')}}"></script> --}}
     <script src="{{ asset('app-assets/js/scripts/pages/datatables-demo.js') }}"></script>
+    <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
     <!-- END: Page JS-->
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-gagal');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Gagal !',
+                    text: '{{ session('error') }}',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                });
+            }
+        });
+    </script>
 @endsection

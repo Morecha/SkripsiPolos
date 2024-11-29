@@ -24,4 +24,14 @@ class buku extends Model
     {
         return $this->belongsTo(inventaris::class, 'id_inven', 'id');
     }
+
+    public function pivot()
+    {
+        return $this->hasMany(Pivot::class, 'id_buku');
+    }
+
+    public function peminjaman()
+    {
+        return $this->belongsToMany(Peminjaman::class, 'pivot', 'id_buku', 'id_peminjaman');
+    }
 }

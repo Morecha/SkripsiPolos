@@ -114,24 +114,27 @@ class PengadaanController extends Controller
     public function inventaris(string $id){
         $data = pengadaan::find($id);
         if($data->eksemplar - $data->diterima > 0){
-            return view('admin.pengadaan.inventaris', compact('data'));
+            $inventaris = $data->inventaris;
+            // dd($inventaris);
+            return view('admin.pengadaan.inventaris', compact('data', 'inventaris'));
         }
         return redirect()->back();
     }
 
     public function inventaris_store(Request $request, string $id){
+
         $data = pengadaan::find($id);
         $request->validate([
             'jumlah' => 'required|integer|min:1|max:'.$data->eksemplar-$data->diterima,
             'deskripsi' => 'nullable',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $input = $data->toArray();
         $update = $data->toArray();
         // dd($request->jumlah);
-
         // mencari inventaris pengadaan
         $refrence = inventaris::find($data->id_inventaris);
-// dd($input, $update);
+        // dd($input, $update);
         if($refrence==null){
             $input['eksemplar'] = $request->jumlah;
             unset($input['id']);
@@ -139,6 +142,14 @@ class PengadaanController extends Controller
             unset($input['diterima']);
             // create input inventaris
             // dd($input['eksemplar']);
+
+            if($request->file('image')){
+                $destinationPath = 'gambar/inventaris';
+                $profileImage = date('YmdHis') . "." . $request->image->getClientOriginalExtension();
+                $image = $request->file('image')->storeAs($destinationPath, $profileImage, 'public');
+                $input['image'] = "$profileImage";
+            }
+
             $id_inven = inventaris::create($input);
 
             $update['id_inventaris'] = $id_inven->id;
@@ -151,6 +162,14 @@ class PengadaanController extends Controller
             $update['diterima'] = $refrence->eksemplar + $request->jumlah;
             // $inven = $refrence->update($input);//inventaris
             // $coba = $data->update($update);//pengadaan
+
+            if($refrence['image'] == null && $request->file('image') != null){
+                $destinationPath = 'gambar/inventaris';
+                $profileImage = date('YmdHis') . "." . $request->image->getClientOriginalExtension();
+                $image = $request->file('image')->storeAs($destinationPath, $profileImage, 'public');
+                $refrence->update(['image' => "$profileImage"]);
+            }
+
             $refrence->update(['eksemplar'=> $input['eksemplar']]);
             $data->update(['diterima'=> $update['diterima']],
                         ['deskripsi'=> $request->deskripsi]);

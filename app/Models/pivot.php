@@ -15,4 +15,14 @@ class pivot extends Model
         'id_peminjaman',
         'id_buku',
     ];
+
+    public function peminjaman()
+    {
+        return $this->belongsTo(peminjaman::class, 'id_peminjaman');
+    }
+
+    public function buku()
+    {
+        return $this->belongsTo(buku::class, 'id_buku');
+    }
 }
