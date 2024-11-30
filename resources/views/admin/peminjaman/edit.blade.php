@@ -51,22 +51,22 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Detail Peminjaman</h2>
-                            {{-- @if (session('error') or $errors->any())
+                            <h2 class="content-header-title float-start mb-0">User Create</h2>
+                            @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
-                            @endif --}}
+                            @endif
                         </div>
                     </div>
                 </div>
-                {{-- <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                     <div class="mb-1 breadcrumb-right">
                         <div class="dropdown">
                             <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
                             <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="app-todo.html"><i class="me-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="me-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="me-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="me-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
             <div class="content-body">
                 <!-- Blog Edit -->
@@ -76,35 +76,64 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-start">
-
+                                        <div class="avatar me-75">
+                                            @if (Auth::user()->image != null)
+                                                <img src="{{asset('storage/gambar/profil/'.Auth::user()->image)}}" width="38" height="38" alt="Avatar" />
+                                            @else
+                                                <img src="{{asset('app-assets/images/portrait/small/avatar-s-9.jpg')}}" width="38" height="38" alt="Avatar" />
+                                            @endif
+                                        </div>
+                                        <div class="author-info">
+                                            <h6 class="mb-25">{{Auth::user()->name}}</h6>
+                                            @php
+                                                use Carbon\Carbon;
+                                            @endphp
+                                            <p class="card-text">{{ Carbon::now()->format('F j, Y') }}</p>
+                                        </div>
                                     </div>
+                                    <!-- Form -->
+                                    @if ($errors->any())
+                                        <br>
+                                        <div class="alert alert-danger" role="alert">
+                                            <h4 class="alert-heading">Error</h4>
+                                            <div class="alert-body">
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <form action="{{route('peminjaman.update', $dipinjam->id)}}" method="POST" class="mt-2" enctype="multipart/form-data">
+                                        @csrf
                                         {{-- first line --}}
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="jenis_peminjaman">Jenis Peminjaman</label>
                                                     <select class="form-select" id="jenis_peminjaman" name="jenis_peminjaman" disabled>
-                                                    <option value="" selected>{{ $peminjaman->jenis_peminjaman }}</option>
+                                                            <option value="individu" {{ $dipinjam->jenis_peminjaman == 'individu' ? 'selected' : '' }}>Individu</option>
+                                                            <option value="kelompok" {{ $dipinjam->jenis_peminjaman == 'kelompok' ? 'selected' : '' }}>Kelompok</option>
                                                     </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-12">
-                                                <div class="mb-2">
-                                                    <label class="form-label" for="lama_peminjaman">Tamgga; Peminjaman</label>
-                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $peminjaman->created_at }}" disabled/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="id_anggota">Anggota</label>
+                                                    <label class="form-label" for="id_anggota">Peminjam</label>
                                                     {{-- <input type="text" id="id_anggota" class="form-control" name="id_anggota" autocomplete="off" placeholder="Anggota"/> --}}
-                                                    <select class="select2 form-select" name="id_anggota" id="select2" disabled>
-                                                        @if ($peminjaman->id_anggota != null)
-                                                        <option value="" selected disabled>{{$peminjaman->anggota->name}}</option>
+                                                    <select class="select2 form-select" name="id_anggota" id="select2" {{ $dipinjam->jenis_peminjaman == 'individu' ? '' : 'disabled' }}>
+                                                        @if ($dipinjam->jenis_peminjaman == 'kelompok')
+                                                            <option value="{{ $dipinjam->user->id }}" selected>{{ $dipinjam->user->name }}</option>
                                                         @else
-                                                        <option value="" selected disabled>{{$peminjaman->user->name}}</option>
+                                                            <!-- Default untuk individu -->
+                                                            <option value="{{$dipinjam->anggota->id}}">{{$dipinjam->anggota->name}}</option>
+                                                            @foreach ($list_anggota as $isi)
+                                                                <option value="{{$isi->id}}" @if ($isi->status != 'aktif') disabled @endif">
+                                                                    {{$isi->name}}
+                                                                </option>
+                                                            @endforeach
                                                         @endif
                                                     </select>
                                                     <input type="hidden" id="id_user" name="id_user" value="">
@@ -113,77 +142,64 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="lama_peminjaman">Lama Peminjaman (hari)</label>
-                                                    <input type="number" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $peminjaman->lama_peminjaman }}" disabled/>
+                                                    <input type="number" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $dipinjam->lama_peminjaman }}"/>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="divider divider-success">
-                                            <div class="divider-text">Deskripsi</div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-1">
+                                                <label class="form-label" for="select2-nested">Kode Buku</label>
+                                                <div id="kodeBukuContainer">
+                                                    <!-- Wrapper untuk duplikasi select -->
+                                                    @foreach ($dipinjam->pivot as $index => $item)
+                                                    <div class="kode-buku-group mb-2">
+                                                        <select class="select2 form-select" name="id_buku[]" id="select2-nested-{{$index}}">
+                                                            <option value="{{$item->buku->id}}" selected>{{$item->buku->kode_buku}}</option>
+                                                                @php
+                                                                    $judul = '';
+                                                                @endphp
+                                                                @foreach ($buku as $bukuItem)
+                                                                    @if ($judul != $bukuItem->inventaris->judul)
+                                                                        <optgroup label="{{$bukuItem->inventaris->judul}}">
+                                                                    @endif
+                                                                    <option value="{{$bukuItem->id}}" @if ($bukuItem->posisi != 'ada') disabled @endif>
+                                                                        {{$bukuItem->kode_buku}}
+                                                                    </option>
+                                                                    @if ($judul != $bukuItem->inventaris->judul)
+                                                                        </optgroup>
+                                                                        @php
+                                                                            $judul = $bukuItem->inventaris->judul;
+                                                                        @endphp
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                <!-- Button untuk menambah kolom baru -->
+                                                <button type="button" class="btn btn-secondary mt-2" id="addKodeBuku">Tambah Kode Buku</button>
+                                            </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label">Deskripsi</label><br>
-                                                    {!! $peminjaman->detail !!}
+                                                    <textarea name="detail" id="textarea" cols="30" rows="5">{!!$dipinjam->detail!!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="divider divider-success">
-                                            <div class="divider-text">Jenis Buku</div>
-                                        </div>
-                                        @foreach ($peminjaman->pivot as $pivot)
-                                        {{-- @dd($pivot->buku->kode_buku); --}}
-                                        <div class="border rounded p-2">
-                                            <div class="row">
-                                                <div class="row">
-                                                    <div class="col-md-8 col-12">
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-12">
-                                                                <div class="mb-2">
-                                                                    <label class="form-label" for="lama_peminjaman">Nama Buku</label>
-                                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pivot->buku->inventaris->judul }}" disabled/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-12">
-                                                                <div class="mb-2">
-                                                                    <label class="form-label" for="lama_peminjaman">Kode Buku</label>
-                                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pivot->buku->kode_buku }}" disabled/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-12">
-                                                                <div class="mb-2">
-                                                                    <label class="form-label" for="lama_peminjaman">Status</label>
-                                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pivot->buku->posisi }}" disabled/>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-12">
-                                                                <div class="mb-2">
-                                                                    <label class="form-label" for="lama_peminjaman">Pengarang</label>
-                                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pivot->buku->inventaris->pengarang }}" disabled/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4 col-12">
-                                                        {{-- gambar --}}
-                                                        <div class="mb-2">
-                                                            {{-- <label class="form-label" for="lama_peminjaman">Gambar</label> --}}
-                                                            @if ($pivot->buku->image != null)
-                                                                <img src="{{asset('storage/gambar/buku/'.$pivot->buku->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" style="margin: 10px;"/>
-                                                            @else
-                                                                <img src="{{asset('app-assets/images/book/template/3fe9c8a1dbfb5b3910e306183ec5d669.jpg')}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="130" alt="Blog Featured Image" style="margin: 10px;"/>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        {{-- button --}}
+                                        <div class="row">
+                                            <div class="col-12 mt-50">
+                                                <button type="submit" class="btn btn-primary me-1">Save Changes</button>
+                                                <a type="reset" class="btn btn-outline-secondary" href="{{url()->previous()}}">Cancel</a>
                                             </div>
                                         </div>
-                                        <br>
-                                        @endforeach
+                                    </form>
+
                                     <!--/ Form -->
                                 </div>
                             </div>
@@ -233,7 +249,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         // Inisialisasi counter untuk membuat id unik
         let counter = 1;
 
@@ -250,6 +266,60 @@
                 }
             });
         })
+        }
+
+        document.getElementById('addKodeBuku').addEventListener('click', function() {
+            // Dapatkan container untuk grup kode buku
+            var container = document.getElementById('kodeBukuContainer');
+
+            // Dapatkan grup kode buku pertama untuk diduplikasi
+            var kodeBukuGroup = container.querySelector('.kode-buku-group');
+
+            // Hapus Select2 sebelum menduplikasi elemen
+            $(kodeBukuGroup.querySelector('select')).select2('destroy');
+
+            // Buat duplikat grup kode buku
+            var newKodeBukuGroup = kodeBukuGroup.cloneNode(true);
+
+            // Buat ID unik untuk select yang baru menggunakan counter
+            var newId = 'select2-nested-' + counter;
+            counter++; // Tingkatkan counter setelah membuat id
+
+            // Atur id baru pada elemen select yang diduplikasi
+            newKodeBukuGroup.querySelector('select').id = newId;
+
+            // Hapus nilai yang dipilih sebelumnya di select baru
+            newKodeBukuGroup.querySelector('select').selectedIndex = -1;
+
+            // Tambahkan grup kode buku baru ke dalam container
+            container.appendChild(newKodeBukuGroup);
+
+            // Inisialisasi ulang Select2 untuk elemen yang baru ditambahkan
+            initializeSelect2();
+        });
+
+        // Inisialisasi Select2 pada elemen yang ada saat pertama kali halaman dimuat
+        initializeSelect2();
+    </script> --}}
+
+
+    <script>
+        // Inisialisasi counter untuk membuat id unik
+        let counter = {{$dipinjam->pivot->count()}}; // Mulai dari jumlah buku yang dipilih
+
+        // Fungsi untuk menginisialisasi Select2 pada elemen select tertentu
+        function initializeSelect2() {
+            $('.select2').select2(); // Menginisialisasi Select2 pada semua elemen select dengan kelas select2
+
+            document.querySelectorAll('.select2').forEach((dropdown, index, dropdowns) => {
+                dropdown.addEventListener('change', function () {
+                    // Fokus ke dropdown berikutnya jika ada
+                    const nextDropdown = dropdowns[index + 1];
+                    if (nextDropdown) {
+                        $(nextDropdown).select2('open'); // Buka dropdown berikutnya
+                    }
+                });
+            });
         }
 
         document.getElementById('addKodeBuku').addEventListener('click', function() {

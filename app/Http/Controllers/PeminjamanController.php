@@ -34,18 +34,35 @@ class PeminjamanController extends Controller
     }
 
     public function detail(string $id){
+        // dd($id, $jenis);
         $peminjaman = peminjaman::with(['pivot.buku.inventaris'])
                     ->withCount('pivot')
                     ->find($id);
 
+        // dd($peminjaman);
         if ($peminjaman->id_anggota == null){
             $peminjaman['jenis_peminjaman'] = 'kelompok';
         }elseif ($peminjaman->id_user == null){
             $peminjaman['jenis_peminjaman'] = 'individu';
         }
 
-        // dd($peminjaman);
         return view('admin.peminjaman.detail', compact('peminjaman'));
+    }
+
+    public function detail_pengembalian(string $id){
+        // dd($id, $jenis);
+        $peminjaman = peminjaman::with(['pivot.buku.inventaris'])
+                    ->withCount('pivot')
+                    ->find($id);
+
+        // dd($peminjaman);
+        if ($peminjaman->id_anggota == null){
+            $peminjaman['jenis_peminjaman'] = 'kelompok';
+        }elseif ($peminjaman->id_user == null){
+            $peminjaman['jenis_peminjaman'] = 'individu';
+        }
+
+        return view('admin.pengembalian.detail', compact('peminjaman'));
     }
 
     /**
@@ -133,7 +150,24 @@ class PeminjamanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $dipinjam = peminjaman::with(['pivot.buku.inventaris','anggota','user'])
+                    ->withCount('pivot')
+                    ->find($id);
+
+        $buku = buku::with('inventaris')
+                ->where('posisi', 'ada')
+                ->orderBy('id_inven', 'asc')->get();
+        // dd($buku->inventaris);
+        if($dipinjam->id_anggota == null){
+            $dipinjam['jenis_peminjaman'] = 'kelompok';
+            return view('admin.peminjaman.edit', compact('dipinjam','buku'));
+        }elseif ($dipinjam->id_user == null){
+            $dipinjam['jenis_peminjaman'] = 'individu';
+            $list_anggota = anggota::where('id','!=',$dipinjam->id_anggota)
+                        ->orderBy('id', 'asc')->get();
+            // dd($list_anggota);
+            return view('admin.peminjaman.edit', compact('dipinjam','buku','list_anggota'));
+        }
     }
 
     /**
@@ -141,7 +175,62 @@ class PeminjamanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'lama_peminjaman' => 'required',
+            'id_buku' => 'required',
+            'deskripsi' => 'nullable',
+        ]);
+        $input = $request->all();
+        $peminjaman = peminjaman::with('pivot')->find($id);
+        $buku = buku::find($request['id_buku']);
+
+        if($request['id_anggota'] == null){
+            unset($input['id_anggota']);
+        }elseif($request['id_user'] == null){
+            unset($input['id_user']);
+        }
+
+        // 1. bandingin yang lama sama yang baru
+        //    klo yang lama ga ada di yang baru di drop
+        // 2. bedakan jadi 3 buah
+        //    - klo ada di lama tapi ga ada di yang baru (hapus)
+        //    - klo ada di lama tapi ada jg di yang baru (update)
+        //    - klo ga ada di lama tapi ada di yang baru (tambah)
+
+        $id_buku_peminjaman = []; //array asosiatif
+        $id_buku_peminjaman_id_buku = []; //array biasa
+        $deleted = [];
+        foreach($peminjaman->pivot as $p){
+            $id_buku_peminjaman[] = [
+                'id' => $p->id,
+                'id_buku' => (string)$p->id_buku
+            ];
+            $id_buku_peminjaman_id_buku[] = (string)$p->id_buku;
+        }
+
+        // cek apa ada buku lama yang tidak ada di buku baru
+        // klo ga ada delete + perbarui posisi buku
+        foreach($id_buku_peminjaman as $q){
+            if(!in_array($q['id_buku'], $input['id_buku'])){
+                $for_delete = pivot::find($q['id']);
+                $update = buku::find($q['id_buku']);
+                $update->posisi = 'ada';
+                // $update->save();
+                // $for_delete->delete();
+            }
+        }
+
+        foreach($input['id_buku'] as $r){
+            $added = [];
+            if(!in_array($r, $id_buku_peminjaman_id_buku)){
+                pivot::create([
+                    'id_peminjaman' => $id,
+                    'id_buku' => $r
+                ]);
+            }
+        }
+        // dd('cek',$id_buku_peminjaman_id_buku,$deleted,$input['id_buku'],$added);
+        return redirect('/peminjaman')->with('success', 'Pembaruan Peminjaman Berhasil');
     }
 
     /**
@@ -149,6 +238,97 @@ class PeminjamanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $peminjaman = peminjaman::find($id);
+        $pivot = pivot::where('id_peminjaman', $id)->get();
+        //edit status buku
+        foreach($pivot as $p){
+            $buku = buku::find($p->id_buku);
+            if($buku){
+                $buku->posisi = 'ada';
+                $buku->save();
+            }
+            $p->delete();
+        }
+        $peminjaman->delete();
+        return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil dihapus');
+    }
+
+    public function pengembalian(){
+        $peminjaman = peminjaman::with(['pivot.buku.inventaris','anggota','user'])
+                    ->withCount('pivot')
+                    ->where('status', 'kembali')
+                    ->get();
+        foreach($peminjaman as $p){
+            if ($p->id_anggota == null){
+                $p['jenis_peminjaman'] = 'kelompok';
+                $p['id_user'] = User::find($p->id_user)->name;
+            }elseif ($p->id_user == null){
+                $p['jenis_peminjaman'] = 'individu';
+                $p['id_anggota'] = anggota::find($p->id_anggota)->name;
+            }
+        }
+        // dd($peminjaman);
+        return view('admin.pengembalian.list',compact('peminjaman'));
+    }
+
+    public function pengembalian_create(string $id){
+        $dipinjam = peminjaman::with(['pivot.buku.inventaris','anggota','user'])
+                    ->withCount('pivot')
+                    ->find($id);
+
+        $buku = buku::with('inventaris')
+                ->where('posisi', 'ada')
+                ->orderBy('id_inven', 'asc')->get();
+        // dd($buku->inventaris);
+        if($dipinjam->id_anggota == null){
+            $dipinjam['jenis_peminjaman'] = 'kelompok';
+            return view('admin.peminjaman.edit', compact('dipinjam','buku'));
+        }elseif ($dipinjam->id_user == null){
+            $dipinjam['jenis_peminjaman'] = 'individu';
+            $list_anggota = anggota::where('id','!=',$dipinjam->id_anggota)
+                        ->orderBy('id', 'asc')->get();
+            // dd($list_anggota);
+            return view('admin.pengembalian.create', compact('dipinjam','buku','list_anggota'));
+        }
+    }
+
+    public function pengembalian_store(Request $request, string $id){
+        // dd($request,$id);
+        $peminjaman = peminjaman::with(['pivot.buku.inventaris'])
+                    ->find($id);
+        $peminjaman->status = 'kembali';
+        $peminjaman->detail = $request->detail;
+        foreach($peminjaman->pivot as $p){
+            $buku = buku::find($p->id_buku);
+            $buku->posisi = 'ada';
+            $buku->save();
+        }
+        $peminjaman->save();
+        return redirect()->route('peminjaman.list')->with('success', 'Data peminjaman berhasil dikembalikan');
+    }
+
+    public function pengembalian_edit(string $id){
+        $pengembalian = peminjaman::with(['pivot.buku.inventaris'])
+                    ->withCount('pivot')
+                    ->find($id);
+        if ($pengembalian->id_anggota == null){
+            $pengembalian['jenis_peminjaman'] = 'kelompok';
+        }elseif ($pengembalian->id_user == null){
+            $pengembalian['jenis_peminjaman'] = 'individu';
+        }
+        return view('admin.pengembalian.edit',compact('pengembalian'));
+    }
+
+    public function pengembalian_update(Request $request, string $id){
+        $pengembalian = peminjaman::find($id);
+        $pengembalian->detail = $request->detail;
+        $pengembalian->save();
+        return redirect()->route('pengembalian.list')->with('success', 'Data pengembalian berhasil diubah');
+    }
+
+    public function pengembalian_destroy(string $id){
+        $pengembalian = peminjaman::find($id);
+        $pengembalian->delete();
+        return redirect()->route('pengembalian.list')->with('success', 'Data pengembalian berhasil dihapus');
     }
 }

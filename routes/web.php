@@ -46,10 +46,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/anggota/masal', [AnggotaController::class, 'create_masal'])->name('anggota.create_masal');
     Route::post('/anggota/masal/store', [AnggotaController::class, 'store_masal'])->name('anggota.store_masal');
 
-    //peminjaman
-    Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.list');
-    Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
-    Route::get('/peminjaman/{id}/detail', [PeminjamanController::class, 'detail'])->name('peminjaman.detail');
 
     //presensi_kelompok
     Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.list');
@@ -100,4 +96,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])->name('peminjaman.edit');
     Route::post('/peminjaman/{id}/update', [PeminjamanController::class, 'update'])->name('peminjaman.update');
     Route::post('/peminjaman/{id}/delete', [PeminjamanController::class, 'destroy'])->name('peminjaman.delete');
+
+    Route::get('/peminjaman/{id}/detail', [PeminjamanController::class, 'detail'])->name('peminjaman.detail');
+    Route::get('/pengembalian/{id}/detail', [PeminjamanController::class, 'detail_pengembalian'])->name('pengembalian.detail');
+
+    Route::get('/pengembalian', [PeminjamanController::class, 'pengembalian'])->name('pengembalian.list');
+    Route::get('/pengembalian/{id}', [PeminjamanController::class, 'pengembalian_create'])->name('pengembalian.create');
+    Route::post('/pengembalian/{id}/store', [PeminjamanController::class, 'pengembalian_store'])->name('pengembalian.store');
+    Route::get('/pengembalian/{id}/edit', [PeminjamanController::class, 'pengembalian_edit'])->name('pengembalian.edit');
+    Route::post('/pengembalian/{id}/update', [PeminjamanController::class, 'pengembalian_update'])->name('pengembalian.update');
+    Route::post('/pengembalian/{id}/delete', [PeminjamanController::class, 'pengembalian_destroy'])->name('pengembalian.delete');
 });

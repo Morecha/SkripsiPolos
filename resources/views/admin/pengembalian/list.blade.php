@@ -52,7 +52,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Peminjaman</h2>
+                            <h2 class="content-header-title float-start mb-0">Pengembalian</h2>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header border-bottom">
-                                    <h4 class="card-title">Peminjaman List</h4>
+                                    <h4 class="card-title">Pengembalian List</h4>
                                 </div>
                                 <div class="card-datatable">
                                     <table class="datatables-ajax table table-responsive table-hover">
@@ -93,44 +93,8 @@
                                                         <td>{{ $data->id_anggota }}</td>
                                                     @endif
                                                     <td>{{ $data->pivot_count }}</td>
-                                                    <td>{{ $data->lama_peminjaman }}</td>
-                                                    <td>{{ $data->created_at }}</td>
-                                                    {{-- <td>
-                                                        <span class="badge badge-light-warning">{{ $data->status }}</span>
-                                                    </td> --}}
-                                                    {{-- <td>
-                                                        <div class="scrolling-inside-modal">
-                                                            <!-- Button trigger modal -->
-                                                            <button type="button" class="btn btn-sm btn-flat-info waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable{{ $data->id }}">
-                                                                Detail
-                                                            </button>
-
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="exampleModalScrollable{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-scrollable">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <ul class="custom-list">
-                                                                                <li><span class="label">Judul Buku</span> = {{$data->judul}}</li>
-                                                                                <li><span class="label">pengarang</span> = {{$data->pengarang}}</li>
-                                                                                <li><span class="label">penerbit</span> = {{$data->penerbit}}</li>
-                                                                                <li><span class="label">kode buku</span> = {{$data->kode_ddc}}</li>
-                                                                                <li><span class="label">status</span> = {{$data->status}}</li>
-                                                                                <li><span class="label">eksemplar</span> = {{$data->eksemplar}}</li>
-                                                                                <li><span class="label">tangga masuk</span> = {{$data->created_at}}</li>
-                                                                                <li><span class="label">Deskripsi</span> = {!!$data->deskripsi!!}</li>
-                                                                            </ul>
-                                                                            <br>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td> --}}
+                                                    <td>{{ $data->lama_peminjaman }} hari</td>
+                                                    <td>{{ $data->updated_at }}</td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button"
@@ -140,26 +104,21 @@
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('peminjaman.detail', $data->id) }}">
+                                                                    href="{{ route('pengembalian.detail', $data->id) }}">
                                                                     <i data-feather="eye" class="me-50"></i>
                                                                     <span>Detail Peminjaman</span>
                                                                 </a>
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('peminjaman.edit',$data->id) }}">
+                                                                    href="{{ route('pengembalian.edit',$data->id) }}">
                                                                     <i data-feather="edit-2" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a>
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('pengembalian.create',$data->id) }}">
-                                                                    <i data-feather="bookmark" class="me-50"></i>
-                                                                    <span>Pengembalian</span>
-                                                                </a>
-                                                                <a class="dropdown-item"
-                                                                    href="{{route('peminjaman.delete', $data->id)}}"
+                                                                    href="{{route('pengembalian.delete', $data->id)}}"
                                                                     onclick="event.preventDefault();
                                                                     document.getElementById('delete-form-{{ $data->id }}').submit();">
                                                                     <i data-feather="trash" class="me-50"></i>
-                                                                    <form id="delete-form-{{ $data->id }}" method="POST" action="{{route('peminjaman.delete', $data->id)}}" style="display: none;">
+                                                                    <form id="delete-form-{{ $data->id }}" method="POST" action="{{route('pengembalian.delete', $data->id)}}" style="display: none;">
                                                                         @csrf
                                                                     </form>
                                                                     <span>Delete</span>

@@ -51,7 +51,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Detail Peminjaman</h2>
+                            <h2 class="content-header-title float-start mb-0">Detail Pengembalian</h2>
                             {{-- @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
@@ -90,8 +90,14 @@
                                             </div>
                                             <div class="col-md-3 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="lama_peminjaman">Tamgga; Peminjaman</label>
+                                                    <label class="form-label" for="lama_peminjaman">Tanggal Peminjaman</label>
                                                     <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $peminjaman->created_at }}" disabled/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-12">
+                                                <div class="mb-2">
+                                                    <label class="form-label" for="tanggal_pengembalian">Tanggal Pengembalian</label>
+                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" value="{{ $peminjaman->updated_at }}" disabled/>
                                                 </div>
                                             </div>
                                         </div>

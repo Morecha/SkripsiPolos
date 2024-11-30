@@ -53,7 +53,7 @@
                     </ul>
                 </li>
                 {{-- Pengembalian --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="file-minus"></i><span class="menu-title text-truncate" data-i18n="Product">Pengembalian Buku</span></a>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('pengembalian.list')}}"><i data-feather="file-minus"></i><span class="menu-title text-truncate" data-i18n="Product">Pengembalian Buku</span></a>
                 </li>
                 {{-- <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="file-minus"></i><span class="menu-title text-truncate" data-i18n="Product">Pengembalian Buku</span></a>
                     <ul class="menu-content">

@@ -51,7 +51,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Detail Peminjaman</h2>
+                            <h2 class="content-header-title float-start mb-0">Edit Pengembalian</h2>
                             {{-- @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
@@ -84,14 +84,20 @@
                                                 <div class="mb-2">
                                                     <label class="form-label" for="jenis_peminjaman">Jenis Peminjaman</label>
                                                     <select class="form-select" id="jenis_peminjaman" name="jenis_peminjaman" disabled>
-                                                    <option value="" selected>{{ $peminjaman->jenis_peminjaman }}</option>
+                                                    <option value="" selected>{{ $pengembalian->jenis_peminjaman }}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="lama_peminjaman">Tamgga; Peminjaman</label>
-                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $peminjaman->created_at }}" disabled/>
+                                                    <label class="form-label" for="lama_peminjaman">Tanggal Peminjaman</label>
+                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pengembalian->created_at }}" disabled/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-12">
+                                                <div class="mb-2">
+                                                    <label class="form-label" for="tanggal_pengembalian">Tanggal Pengembalian</label>
+                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" value="{{ $pengembalian->updated_at }}" disabled/>
                                                 </div>
                                             </div>
                                         </div>
@@ -101,10 +107,10 @@
                                                     <label class="form-label" for="id_anggota">Anggota</label>
                                                     {{-- <input type="text" id="id_anggota" class="form-control" name="id_anggota" autocomplete="off" placeholder="Anggota"/> --}}
                                                     <select class="select2 form-select" name="id_anggota" id="select2" disabled>
-                                                        @if ($peminjaman->id_anggota != null)
-                                                        <option value="" selected disabled>{{$peminjaman->anggota->name}}</option>
+                                                        @if ($pengembalian->id_anggota != null)
+                                                        <option value="" selected disabled>{{$pengembalian->anggota->name}}</option>
                                                         @else
-                                                        <option value="" selected disabled>{{$peminjaman->user->name}}</option>
+                                                        <option value="" selected disabled>{{$pengembalian->user->name}}</option>
                                                         @endif
                                                     </select>
                                                     <input type="hidden" id="id_user" name="id_user" value="">
@@ -113,7 +119,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="lama_peminjaman">Lama Peminjaman (hari)</label>
-                                                    <input type="number" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $peminjaman->lama_peminjaman }}" disabled/>
+                                                    <input type="number" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pengembalian->lama_peminjaman }}" disabled/>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,19 +127,31 @@
                                         <div class="divider divider-success">
                                             <div class="divider-text">Deskripsi</div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="mb-2">
-                                                    <label class="form-label">Deskripsi</label><br>
-                                                    {!! $peminjaman->detail !!}
+                                        <form action="{{ route('pengembalian.update', $pengembalian->id) }}" method="POST" class="mt-2" enctype="multipart/form-data">
+                                        @csrf
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="mb-2">
+                                                        <div class="col-12">
+                                                            <div class="mb-2">
+                                                                <label class="form-label">Deskripsi</label><br>
+                                                                <textarea name="detail" id="textarea" cols="30" rows="5">{!!$pengembalian->detail!!}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
+                                            <div class="row">
+                                                <div class="col-12 mt-50">
+                                                    <button type="submit" class="btn btn-primary me-1">Save Changes</button>
+                                                    <a type="reset" class="btn btn-outline-secondary" href="{{url()->previous()}}">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </form>
                                         <div class="divider divider-success">
                                             <div class="divider-text">Jenis Buku</div>
                                         </div>
-                                        @foreach ($peminjaman->pivot as $pivot)
+                                        @foreach ($pengembalian->pivot as $pivot)
                                         {{-- @dd($pivot->buku->kode_buku); --}}
                                         <div class="border rounded p-2">
                                             <div class="row">
@@ -231,59 +249,6 @@
                 });
             }
         });
-    </script>
-
-    <script>
-        // Inisialisasi counter untuk membuat id unik
-        let counter = 1;
-
-        // Fungsi untuk menginisialisasi Select2 pada elemen select tertentu
-        function initializeSelect2() {
-            $('.select2').select2(); // Menginisialisasi Select2 pada semua elemen select dengan kelas select2
-
-            document.querySelectorAll('.select2').forEach((dropdown, index, dropdowns) => {
-            dropdown.addEventListener('change', function () {
-                // Fokus ke dropdown berikutnya jika ada
-                const nextDropdown = dropdowns[index + 1];
-                if (nextDropdown) {
-                    $(nextDropdown).select2('open'); // Buka dropdown berikutnya
-                }
-            });
-        })
-        }
-
-        document.getElementById('addKodeBuku').addEventListener('click', function() {
-            // Dapatkan container untuk grup kode buku
-            var container = document.getElementById('kodeBukuContainer');
-
-            // Dapatkan grup kode buku pertama untuk diduplikasi
-            var kodeBukuGroup = container.querySelector('.kode-buku-group');
-
-            // Hapus Select2 sebelum menduplikasi elemen
-            $(kodeBukuGroup.querySelector('select')).select2('destroy');
-
-            // Buat duplikat grup kode buku
-            var newKodeBukuGroup = kodeBukuGroup.cloneNode(true);
-
-            // Buat ID unik untuk select yang baru menggunakan counter
-            var newId = 'select2-nested-' + counter;
-            counter++; // Tingkatkan counter setelah membuat id
-
-            // Atur id baru pada elemen select yang diduplikasi
-            newKodeBukuGroup.querySelector('select').id = newId;
-
-            // Hapus nilai yang dipilih sebelumnya di select baru
-            newKodeBukuGroup.querySelector('select').selectedIndex = -1;
-
-            // Tambahkan grup kode buku baru ke dalam container
-            container.appendChild(newKodeBukuGroup);
-
-            // Inisialisasi ulang Select2 untuk elemen yang baru ditambahkan
-            initializeSelect2();
-        });
-
-        // Inisialisasi Select2 pada elemen yang ada saat pertama kali halaman dimuat
-        initializeSelect2();
     </script>
 
     <script>

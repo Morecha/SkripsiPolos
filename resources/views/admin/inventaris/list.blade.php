@@ -54,7 +54,6 @@
                         <div class="col-12">
                             <h2 class="content-header-title float-start mb-0">Inventaris</h2>
                             @if (session('error') or $errors->any())
-                            <h1>error masuk</h1>
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
                             @endif
@@ -232,7 +231,11 @@
                     customClass: {
                         confirmButton: 'btn btn-primary'
                     },
-                    buttonsStyling: false
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    color: '#d0d2d6',     // Warna teks default Vuexy
+                    // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    iconColor: '#ea5455',
                 });
             }
         });
