@@ -12,6 +12,22 @@
     <!-- Style Sheet -->
     @section('style')
         <link href="{{asset('assets/landing-page/food-delivery/css/select2.min.css')}}" rel="stylesheet">
+
+        <style>
+            .item-img-holder {
+                width: 347px; /* Lebar container */
+                height: 260px; /* Tinggi container */
+                position: relative;
+                overflow: hidden; /* Sembunyikan bagian gambar yang kelebihan */
+                border-radius: 8px; /* Jika ingin gambar dengan sudut membulat */
+            }
+
+            .item-img-holder img.item-image {
+                width: 100%; /* Gambar mengisi lebar container */
+                height: 100%; /* Gambar mengisi tinggi container */
+                object-fit: cover; /* Potong gambar agar sesuai ukuran */
+            }
+        </style>
     @endsection
 
     @section('content')
@@ -118,7 +134,7 @@
                                 data-paddingleft="[0,0,0,0]"
 
                                 style="z-index: 9;">
-                                <div class="rs-looped rs-pendulum"  data-easing="" data-startdeg="-5" data-enddeg="5" data-speed="3" data-origin="80% 60%"><img src="{{asset('assets/landing-page/food-delivery/img/slider-ele1.png')}}" alt="" data-ww="['267px','184px','145px','145px']" data-hh="['270px','186px','146px','146px']" data-no-retina> </div></div>
+                                <div class="rs-looped rs-pendulum"  data-easing="" data-startdeg="-5" data-enddeg="5" data-speed="3" data-origin="80% 60%"><img src="{{asset('assets/landing-page/food-delivery/img/butterfly-book.png')}}" alt="" data-ww="['267px','184px','145px','145px']" data-hh="['270px','186px','146px','146px']" data-no-retina> </div></div>
 
                             <!-- LAYER NR. 6 -->
                             <!--                    //ele 3-->
@@ -190,7 +206,15 @@
                                 data-paddingbottom="[0,0,0,0]"
                                 data-paddingleft="[0,0,0,0]"
 
-                                style="z-index: 15;"><img data-depth="0.05" src="{{asset('assets/landing-page/food-delivery/img/slider-ele4.png')}}" alt="" data-ww="['199px','191px','200px','150px']" data-hh="['270px','301px','259px','200px']" data-no-retina> </div>
+                                {{-- style="z-index: 15;"><img data-depth="0.05" src="{{asset('assets/landing-page/food-delivery/img/book-transparant.png')}}" alt="" data-ww="['199px','191px','200px','150px']" data-hh="['270px','301px','259px','200px']" data-no-retina> </div> --}}
+                                style="z-index: 15;">
+                                <img data-depth="0.05"
+                                    src="{{asset('assets/landing-page/food-delivery/img/book-transparant.png')}}"
+                                    alt=""
+                                    data-ww="['300px','300px','300px','200px']"
+                                    data-hh="['200px','200px','200px','150px']"
+                                    data-no-retina
+                                    style="object-fit: cover; width: auto; height: auto;">
                         </li>
                     </ul>
                     <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>	</div>
@@ -202,7 +226,7 @@
         <div class="slider-form">
             <div class="container">
                 <div class="row">
-                    <!--                <div class="col-12" id="result"></div>-->
+                    <!--<div class="col-12" id="result"></div>-->
                     <div class="col-12 wow fadeInUp">
                         <form class="row contact-form rounded-pill link no-gutters" id="contact-form-data">
 
@@ -241,21 +265,21 @@
                                         <div class="col-12 col-md-4">
                                             <div class="mini-service-card">
                                                 <i class="las la-swatchbook"></i>
-                                                <h4 class="number">1052+</h4>
+                                                <h4 class="number">{{$buku}}</h4>
                                                 <p class="text">Buku yang diMiliki</p>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="mini-service-card">
                                                 <i class="las la-book-open"></i>
-                                                <h4 class="number">9800+</h4>
+                                                <h4 class="number">{{$buku_tersedia}}</h4>
                                                 <p class="text">Buku yang tersedia saat ini</p>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
                                             <div class="mini-service-card">
                                                 <i class="las la-book"></i>
-                                                <h4 class="number">3785+</h4>
+                                                <h4 class="number">{{$buku_dipinjam}}</h4>
                                                 <p class="text">Buku yang dipinjam</p>
                                             </div>
                                         </div>
@@ -266,149 +290,33 @@
                     </div>
                     <div class="col-12">
                         <div class="row padding-top portfolio-area">
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="food-delivery/restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}">
-                                            {{-- <div class="item-badge rounded-circle">25<span>mins</span></div> --}}
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Mega Restaurant</h4>
-                                                {{-- <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul> --}}
+                            @foreach ($inventarisRekomendasi as $p)
+                                <div class="col-12 col-md-6 col-lg-4 portfolio-item">
+                                    <div class="portfolio-inner-content">
+                                        <a href="food-delivery/restaurant-detail.html">
+                                            <div class="item-img-holder position-relative">
+                                                @if ($p->image != null)
+                                                    <img src="{{asset('storage/gambar/inventaris/'.$p->image)}}">
+                                                @else
+                                                    <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}">
+                                                @endif
+                                                <div class="item-badge rounded-circle">{{$p->total_peminjaman}}<span>dipinjam</span></div>
                                             </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="food-delivery/restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item2.png')}}">
-                                            <div class="item-badge rounded-circle">50<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">The Fast Food</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
+                                            <div class="item-detail-area">
+                                                <div class="d-flex justify-content-between">
+                                                    <h4 class="item-name">{{$p->judul}}</h4>
+                                                </div>
+                                                <p class="text">{{$p->pengarang}}</p>
                                             </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="food-delivery/restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item3.png')}}">
-                                            <div class="item-badge rounded-circle">45<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Green Bakery</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="food-delivery/restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item4.png')}}">
-                                            <div class="item-badge rounded-circle">25<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Eat Frio</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="food-delivery/restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item5.png')}}">
-                                            <div class="item-badge rounded-circle">50<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Turkish Cousine</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="food-delivery/restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item6.png')}}">
-                                            <div class="item-badge rounded-circle">45<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Pizzario</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6 offset-lg-3">
-                                <a href="food-delivery/restaurant-listing.html" class="btn main-btn rounded-pill w-100">
-                                    Jelajahi Buku yang kamu cari disini
+                                <a href="{{ route('landing-page.list') }}" class="btn main-btn rounded-pill w-100">
+                                    Jelajahi Lebih Banyak Buku disini
                                 </a>
                             </div>
                         </div>

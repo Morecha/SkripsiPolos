@@ -51,7 +51,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Buku - {{$inventaris->judul}}</h2>
+                            <h2 class="content-header-title float-start mb-0">Edit Buku - {{$inventaris->judul}}</h2>
                             @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
@@ -184,7 +184,11 @@
                                                     <h4 class="mb-1">Buku Image</h4>
                                                     <div class="d-flex flex-column flex-md-row">
                                                         @if ($data->image == null)
-                                                            <img src="{{asset('storage/gambar/inventaris/'.$inventaris->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
+                                                            @if($inventaris->image != null)
+                                                                <img src="{{asset('storage/gambar/inventaris/'.$inventaris->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
+                                                            @else
+                                                                <img src="{{asset('app-assets/images/book/template/3fe9c8a1dbfb5b3910e306183ec5d669.jpg')}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
+                                                            @endif
                                                         @else
                                                             <img src="{{asset('storage/gambar/buku/'.$data->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
                                                         @endif

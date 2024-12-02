@@ -60,8 +60,8 @@
                         <nav class="navbar navbar-expand-lg">
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <div class="navbar-nav ml-auto mr-auto">
-                                    <a class="nav-link scroll link" href="#gallery-sec">Cari Buku</a>
-                                    <a class="nav-link scroll link" href="#app-sec">Daftar Buku</a>
+                                    <a class="nav-link link" href="{{route('landing-page.searching')}}">Cari Buku</a>
+                                    <a class="nav-link link" href="{{route('landing-page.list')}}">Daftar Buku</a>
                                     <a class="nav-link scroll link" href="#about-sec">Presensi</a>
                                 </div>
                             </div>
@@ -191,11 +191,11 @@
             </div>
         </div>
         <!--toggle btn-->
-        <a href="javascript:void(0)" class="sidemenu_btn link d-lg-none" id="sidemenu_toggle">
+        {{-- <a href="javascript:void(0)" class="sidemenu_btn link d-lg-none" id="sidemenu_toggle">
             <span></span>
             <span></span>
             <span></span>
-        </a>
+        </a> --}}
     </div>
     <!--Side Nav-->
     <div class="side-menu hidden side-menu-opacity">
@@ -211,10 +211,10 @@
                         <nav class="side-nav w-100">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link scroll" href="#gallery-sec">Cari Buku</a>
+                                    <a class="nav-link scroll" href="{{route('landing-page.searching')}}">Cari Buku</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link scroll" href="#app-sec">Daftar Buku</a>
+                                    <a class="nav-link scroll" href="{{route('landing-page.list')}}">Daftar Buku</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link scroll" href="#about-sec">Presensi</a>

@@ -53,6 +53,18 @@
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
                             <h2 class="content-header-title float-start mb-0">Peminjaman</h2>
+                            @if (session('error') or $errors->any())
+                                <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                                </div>
+                            @endif
+                            @if (session('warning'))
+                                <div id="type-warning" class="alert alert-warning" style="display: none;">
+                                </div>
+                            @endif
+                            @if (session('success'))
+                                <div id="type-success" class="alert alert-success" style="display: none;">
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -67,7 +79,7 @@
                                     <h4 class="card-title">Peminjaman List</h4>
                                 </div>
                                 <div class="card-datatable">
-                                    <table class="datatables-ajax table table-responsive table-hover">
+                                    <table class="datatables-ajax table table-responsive table-hover" id="dataTable">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -95,42 +107,6 @@
                                                     <td>{{ $data->pivot_count }}</td>
                                                     <td>{{ $data->lama_peminjaman }}</td>
                                                     <td>{{ $data->created_at }}</td>
-                                                    {{-- <td>
-                                                        <span class="badge badge-light-warning">{{ $data->status }}</span>
-                                                    </td> --}}
-                                                    {{-- <td>
-                                                        <div class="scrolling-inside-modal">
-                                                            <!-- Button trigger modal -->
-                                                            <button type="button" class="btn btn-sm btn-flat-info waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable{{ $data->id }}">
-                                                                Detail
-                                                            </button>
-
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="exampleModalScrollable{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-scrollable">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <ul class="custom-list">
-                                                                                <li><span class="label">Judul Buku</span> = {{$data->judul}}</li>
-                                                                                <li><span class="label">pengarang</span> = {{$data->pengarang}}</li>
-                                                                                <li><span class="label">penerbit</span> = {{$data->penerbit}}</li>
-                                                                                <li><span class="label">kode buku</span> = {{$data->kode_ddc}}</li>
-                                                                                <li><span class="label">status</span> = {{$data->status}}</li>
-                                                                                <li><span class="label">eksemplar</span> = {{$data->eksemplar}}</li>
-                                                                                <li><span class="label">tangga masuk</span> = {{$data->created_at}}</li>
-                                                                                <li><span class="label">Deskripsi</span> = {!!$data->deskripsi!!}</li>
-                                                                            </ul>
-                                                                            <br>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td> --}}
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button"
@@ -154,10 +130,9 @@
                                                                     <i data-feather="bookmark" class="me-50"></i>
                                                                     <span>Pengembalian</span>
                                                                 </a>
-                                                                <a class="dropdown-item"
+                                                                <a class="dropdown-item delete-button"
                                                                     href="{{route('peminjaman.delete', $data->id)}}"
-                                                                    onclick="event.preventDefault();
-                                                                    document.getElementById('delete-form-{{ $data->id }}').submit();">
+                                                                    data-id="{{ $data->id }}">
                                                                     <i data-feather="trash" class="me-50"></i>
                                                                     <form id="delete-form-{{ $data->id }}" method="POST" action="{{route('peminjaman.delete', $data->id)}}" style="display: none;">
                                                                         @csrf
@@ -193,10 +168,125 @@
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/datatables.checkboxes.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
     {{-- <script src="{{asset('app-assets/js/scripts/pages/app-invoice-list.js')}}"></script> --}}
-    <script src="{{ asset('app-assets/js/scripts/pages/datatables-demo.js') }}"></script>
+    {{-- <script src="{{ asset('app-assets/js/scripts/pages/datatables-demo.js') }}"></script> --}}
     <!-- END: Page JS-->
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-gagal');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Gagal !',
+                    text: '{{ session('error') }}',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    color: '#d0d2d6',     // Warna teks default Vuexy
+                    // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-warning');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Warning !',
+                    text: '{{ session('warning') }}',
+                    icon: 'warning',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-success');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Success !',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.delete-button').on('click', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                confirmDelete(id);
+            });
+            $('.datatables-ajax').dataTable({
+                dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            });
+        });
+
+        table.on('draw', function() {
+            $('.delete-button').on('click', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                confirmDelete(id);
+            });
+        })
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function(result) {
+                if (result.value) {
+                    // Tidak lagi submit form secara otomatis di sini
+                    // Form akan di-submit hanya jika pengguna menekan tombol "Yes"
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: 'Cancelled',
+                        text: 'Your data is safe :)',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
+        }
+    </script>
 @endsection

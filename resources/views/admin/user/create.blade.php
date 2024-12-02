@@ -41,6 +41,14 @@
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
                             @endif
+                            @if (session('warning'))
+                                <div id="type-warning" class="alert alert-warning" style="display: none;">
+                                </div>
+                            @endif
+                            @if (session('success'))
+                                <div id="type-success" class="alert alert-success" style="display: none;">
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -247,7 +255,53 @@
                     customClass: {
                         confirmButton: 'btn btn-primary'
                     },
-                    buttonsStyling: false
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    color: '#d0d2d6',     // Warna teks default Vuexy
+                    // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-warning');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Warning !',
+                    text: '{{ session('warning') }}',
+                    icon: 'warning',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-success');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Success !',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
                 });
             }
         });

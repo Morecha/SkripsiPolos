@@ -1,0 +1,860 @@
+{
+    "dewey": {
+        "000": {
+            "judul": " Computer sains, informasi dan karya umum",
+            "kategori": {
+                "000": {
+                    "judul": "Karya Umum",
+                    "subkategori": {
+                        "001": "Ilmu Pengetahuan Umum",
+                        "002": "Buku",
+                        "003": "Sistem-sistem",
+                        "004": "Pengolahan Data, Komputer",
+                        "005": "Program Komputer",
+                        "006": "Metode Komputer Khusus",
+                        "007": "(Belum digunakan)",
+                        "008": "(Belum digunakan)",
+                        "009": "(Belum digunakan)"
+                    }
+                },
+                "010": {
+                    "judul": "Bibliografi",
+                    "subkategori": {
+                        "011": "Bibliografi Umum",
+                        "012": "Bibliografi karya perorangan",
+                        "013": "Bibliografi kelompok pengarang khusus",
+                        "014": "Bibliografi karya anonym dan pseudonym",
+                        "015": "Bibliografi karya-karya wilayah",
+                        "016": "Bibliografi subyek",
+                        "017": "Katalog Subyek Umum",
+                        "018": "Katalog Pengarang",
+                        "019": "Katalog bentuk kamus"
+                    }
+                },
+                "020": {
+                    "judul": "Ilmu Perpustakaan dan Informasi",
+                    "subkategori": {
+                        "021": "Perpustakaan dan Ilmu Informasi",
+                        "022": "Hubungan-hubungan perpustakaan",
+                        "023": "Gedung perpustakaan",
+                        "024": "Personalia perpustakaan",
+                        "025": "(Belum digunakan)",
+                        "026": "Pelayanan dan pengelolaan perpustakaan",
+                        "027": "Perpustakaan khusus",
+                        "028": "Perpustakaan umum",
+                        "029": "Membaca"
+                    }
+                },
+                "030": {
+                    "judul": "Ensiklopedi Umum",
+                    "subkategori": {
+                        "031": "Ensiklopedi dalam bahasa Indonesia",
+                        "032": "Ensiklopedi dalam bahasa Inggris",
+                        "033": "Ensiklopedi dalam bahasa Jerman",
+                        "034": "Ensiklopedi dalam bahasa Perancis",
+                        "035": "Ensiklopedi dalam bahasa Itali",
+                        "036": "Ensiklopedi dalam bahasa Spanyol/Portugis",
+                        "037": "Ensiklopedi dalam bahasa Slavia",
+                        "038": "Ensiklopedi dalam bahasa Skandinavia",
+                        "039": "Ensiklopedi dalam bahasa lainnya"
+                    }
+                },
+                "050": {
+                    "judul": "Terbitan Berseri Umum",
+                    "subkategori": {
+                        "051": "Dalam bahasa Indonesia",
+                        "052": "Dalam bahasa Inggris",
+                        "053": "Dalam bahasa Jerman",
+                        "054": "Dalam bahasa Perancis",
+                        "055": "Dalam bahasa Italia",
+                        "056": "Dalam bahasa Spanyol dan Portugis",
+                        "057": "Dalam bahasa Slavia",
+                        "058": "Dalam bahasa Skandinavia",
+                        "059": "Dalam bahasa lain"
+                    }
+                },
+                "060": {
+                    "judul": "Organisasi Umum dan Museum",
+                    "subkategori": {
+                        "061": "di Indonesia",
+                        "062": "di Inggris",
+                        "063": "di Jerman",
+                        "064": "di Perancis",
+                        "065": "di Italia",
+                        "066": "di Spanyol dan Portugis",
+                        "067": "di Rusia dan Eropa Timur",
+                        "068": "di lain-lain",
+                        "069": "Museologi"
+                    }
+                },
+                "070": {
+                    "judul": "Jurnalisme, Surat Kabar",
+                    "subkategori": {
+                        "071": "di Indonesia",
+                        "072": "di Inggris",
+                        "073": "di Jerman",
+                        "074": "di Perancis",
+                        "075": "di Italia",
+                        "076": "di Spanyol dan Portugis",
+                        "077": "di Rusia dan Eropa Timur",
+                        "078": "di Skandinavia",
+                        "079": "di wilayah lain"
+                    }
+                },
+                "080": {
+                    "judul": "Kumpulan Karya Umum",
+                    "subkategori": {
+                        "081": "Bahasa Indonesia",
+                        "082": "Bahasa Inggris",
+                        "083": "Bahasa Jerman",
+                        "084": "Bahasa Perancis",
+                        "085": "Bahasa Italia",
+                        "086": "Bahasa Spanyol dan Portugis",
+                        "087": "Bahasa Slavia",
+                        "088": "Bahasa Skandinavia",
+                        "089": "Bahasa-bahasa lainnya"
+                    }
+                },
+                "090": {
+                    "judul": "Naskah-naskah dan Buku-buku Langka",
+                    "subkategori": {
+                        "091": "Naskah-naskah (manuskrip)",
+                        "092": "Buku-buku blok",
+                        "093": "Inkunabula",
+                        "094": "Buku-buku tercetak",
+                        "095": "Buku-buku jilidan khusus",
+                        "096": "Buku-buku ilustrasi khusus",
+                        "097": "Buku-buku pemilik khusus atau asal mula",
+                        "098": "Buku-buku terlarang",
+                        "099": "Buku-buku berformat khusus"
+                    }
+                }
+            }
+        },
+        "100":{
+            "judul": "Filsafat dan Psikologi",
+            "kategori": {
+                "100": {
+                    "judul": "Filsafat",
+                    "subkategori": {
+                        "101": "Teori Filsafat",
+                        "102": "Aneka ragam filsafat",
+                        "103": "Kamus, ensiklopedi dan konkordans",
+                        "104": "(Belum digunakan)",
+                        "105": "Terbitan berseri (majalah)",
+                        "106": "Organisasi di bidang filsafat",
+                        "107": "Pendidikan dan penelitian dalam bidang filsafat",
+                        "108": "Pengolahan Filsafat di antara Kelompok-kelompok Orang",
+                        "109": "Sejarah filsafat"
+                    }
+                },
+                "110": {
+                    "judul": "Metafisika",
+                    "subkategori": {
+                        "111": "Ontologi",
+                        "112": "(Belum digunakan)",
+                        "113": "Kosmologi",
+                        "114": "Ruang",
+                        "115": "Waktu",
+                        "116": "Perubahan",
+                        "117": "Struktur",
+                        "118": "Gaya dan energi",
+                        "119": "Bilangan dan kuantitas"
+                    }
+                },
+                "120": {
+                    "judul": "Epistemologi",
+                    "subkategori": {
+                        "121": "Teori ilmu pengetahuan",
+                        "122": "Sebab akibat",
+                        "123": "Determinasi dan indeterminasi yang berkaitan",
+                        "124": "Teleologi",
+                        "125": "(Belum digunakan)",
+                        "126": "Diri dan kepribadian",
+                        "127": "Tidak sadar dan bawah sadar",
+                        "128": "Manusia",
+                        "129": "Asal mula dan nasib jiwa orang"
+                    }
+                },
+                "130": {
+                    "judul": "Fenomena Paranormal",
+                    "subkategori": {
+                        "131": "Metode okultus untuk memperoleh sukses",
+                        "132": "(Belum digunakan)",
+                        "133": "Para psikologi dan okultisme",
+                        "134": "(Belum digunakan)",
+                        "135": "Mimpi dan misteri",
+                        "136": "(Belum digunakan)",
+                        "137": "Grafologi kedewaan",
+                        "138": "Fisiognomi",
+                        "139": "Frenologi"
+                    }
+                },
+                "140": {
+                    "judul": "Aliran-aliran Filsafat Khusus",
+                    "subkategori": {
+                        "141": "Idealisme",
+                        "142": "Filsafat kritis",
+                        "143": "Intuisionisme dan Bergsonisme",
+                        "144": "Humanisme dan yang berkaitan",
+                        "145": "Sensasionalisme",
+                        "146": "Naturalisme dan yang berkaitan",
+                        "147": "Panteisme dan system-sistem",
+                        "148": "Liberalisme, ekletisisme, tradisionalisme",
+                        "149": "Lain-lain system filsafat"
+                    }
+                },
+                "150": {
+                    "judul": "Psikologi",
+                    "subkategori": {
+                        "151": "(Belum digunakan)",
+                        "152": "Persepsi, gerakan, emosi",
+                        "153": "Proses mental dan inteligensi",
+                        "154": "Bawa sadar dan keadaan yang berubah",
+                        "155": "Psikologi diferensial dan perkembangan",
+                        "156": "Psikologi perbandingan",
+                        "157": "(Belum digunakan)",
+                        "158": "Psikologi terapan",
+                        "159": "(Belum digunakan)"
+                    }
+                },
+                "160": {
+                    "judul": "Logika",
+                    "subkategori": {
+                        "161": "Induksi",
+                        "162": "Deduksi",
+                        "163": "(Belum digunakan)",
+                        "164": "(Belum digunakan)",
+                        "165": "Kekeliruan dan sumber kesalahan",
+                        "166": "Silogisme",
+                        "167": "Hipotesis",
+                        "168": "Argumen dan persuasi",
+                        "169": "Analogi"
+                    }
+                },
+                "170": {
+                    "judul": "Etika (Filsafat Moral)",
+                    "subkategori": {
+                        "171": "Sistem dan doktrin",
+                        "172": "Etika politik",
+                        "173": "Etika hubungan keluarga",
+                        "174": "Etika ekonomi dan profesional",
+                        "175": "Etika di bidang rekreasi",
+                        "176": "Etika seksual",
+                        "177": "Etika hubungan sosial",
+                        "178": "Etika konsumsi",
+                        "179": "Lain-lain norma etik"
+                    }
+                },
+                "180": {
+                    "judul": "Filsafat Kuno, Abad Pertengahan, Filsafat Timur",
+                    "subkategori": {
+                        "181": "Filsafat Timur",
+                        "182": "Filsafat Yunani sebelum Sokrates",
+                        "183": "Sofisme dan Sokrates",
+                        "184": "Plato",
+                        "185": "Aristoteles",
+                        "186": "Skeptis dan Neoplatonisme",
+                        "187": "Epikuria",
+                        "188": "Stoik",
+                        "189": "Filsafat Barat dan abad pertengahan"
+                    }
+                },
+                "190": {
+                    "judul": "Filsafat Barat Modern",
+                    "subkategori": {
+                        "191": "Filsafat Amerika Serikat dan Kanada",
+                        "192": "Filsafat Inggris",
+                        "193": "Filsafat Jerman dan Austria",
+                        "194": "Filsafat Prancis",
+                        "195": "Filsafat Italia",
+                        "196": "Filsafat Spanyol dan Portugal",
+                        "197": "Filsafat Rusia",
+                        "198": "Filsafat Skandinavia",
+                        "199": "Filsafat lain-lain wilayah"
+                    }
+                }
+            }
+        },
+        "200": {
+            "judul": "Agama",
+            "kategori": {
+                "200": {
+                    "judul": "Agama",
+                    "subkategori": {
+                        "201": "Filsafat Kristiani",
+                        "202": "Aneka Ragam Kristiani",
+                        "203": "Kamus Kristiani",
+                        "204": "Topik-topik khusus",
+                        "205": "Terbitan berseri Kristiani",
+                        "206": "Organisasi Kristiani",
+                        "207": "Pendidikan, penelitian dalam Kristiani",
+                        "208": "Pengolahan diantara kelompok-kelompok orang",
+                        "209": "Sejarah Kristiani"
+                    }
+                },
+                "210": {
+                    "judul": "Agama Alam",
+                    "subkategori": {
+                        "211": "Konsep tentang Tuhan",
+                        "212": "Eksistensi dan sifat Tuhan",
+                        "213": "Ciptaan",
+                        "214": "Teodisi",
+                        "215": "Sains dan agama",
+                        "216": "Baik dan Jahat",
+                        "217": "(Belum digunakan)",
+                        "218": "Manusia",
+                        "219": "(Belum digunakan)"
+                    }
+                },
+                "220": {
+                    "judul": "Alkitab",
+                    "subkategori": {
+                        "221": "Perjanjian Lama",
+                        "222": "Buku sejarah dari perjanjian lama",
+                        "223": "Buku puisi dari perjanjian lama",
+                        "224": "Buku nabi dari perjanjian lama",
+                        "225": "Perjanjian Baru",
+                        "226": "Kisah para rasul",
+                        "227": "Surat-surat rasul",
+                        "228": "Wahyu",
+                        "229": "Buku apokrif"
+                    }
+                },
+                "230": {
+                    "judul": "Teologi Kristen",
+                    "subkategori": {
+                        "231": "Allah",
+                        "232": "Yesus Kristus",
+                        "233": "Manusia",
+                        "234": "Penyelamatan Manusia",
+                        "235": "Mahluk-mahluk spiritual",
+                        "236": "Eskatologi",
+                        "237": "(Belum digunakan)",
+                        "238": "Pengakuan dan Katekismus",
+                        "239": "Apologetika dan polemic"
+                    }
+                },
+                "240": {
+                    "judul": "MORAL KRISTEN & TEOLOGI KEBAKTIAN",
+                    "subkategori": {
+                        "241": "Teologi Moral",
+                        "242": "Bacaan-bacaan untuk ibadah",
+                        "243": "Penginjilan untuk pribadi dan keluarga",
+                        "244": "(Belum digunakan)",
+                        "245": "Teks-teks dari Himme",
+                        "246": "Kesenian dalam Kristiani",
+                        "247": "Perabotan gereja",
+                        "248": "Pengalaman, praktek dan hidup Kristiani",
+                        "249": "Ketaatan Kristen dalam kehidupan keluarga"
+                    }
+                },
+                "250": {
+                    "judul": "GEREJA KRISTEN SETEMPAT DAN JEMAAT",
+                    "subkategori": {
+                        "251": "Khotbah (Homiletika)",
+                        "252": "Naskah-naskah khotbah",
+                        "253": "Teologi pastoral",
+                        "254": "Pengurusan & Administrasi Jemaah",
+                        "255": "Kongregasi dan orde keagamaan",
+                        "256": "(Belum digunakan)",
+                        "257": "(Belum digunakan)",
+                        "258": "(Belum digunakan)",
+                        "259": "Kegiatan parokial"
+                    }
+                },
+                "260": {
+                    "judul": "TEOLOGI SOSIAL KRISTEN",
+                    "subkategori": {
+                        "261": "Teologi Sosial",
+                        "262": "Eklesiologi",
+                        "263": "Waktu dan tempat untuk menjalankan ibadah",
+                        "264": "Ibadah umum",
+                        "265": "Sakramen, lain-lain tata ibadah",
+                        "266": "Misi Kristiani",
+                        "267": "Perkumpulan-perkumpulan",
+                        "268": "Latihan dan pengajaran agama",
+                        "269": "Penyegaran Rohani"
+                    }
+                },
+                "270": {
+                    "judul": "SEJARAH GEREJA",
+                    "subkategori": {
+                        "271": "Kongregasi dan orde keagamaan",
+                        "272": "Penganiayaan",
+                        "273": "Bidah-bidah dalam sejarah gereja",
+                        "274": "Sejarah gereja di Eropa",
+                        "275": "Sejarah gereja di Asia",
+                        "276": "Sejarah gereja di Afrika",
+                        "277": "Sejarah gereja di Amerika Utara",
+                        "278": "Sejarah gereja di Amerika Selatan",
+                        "279": "Sejarah gereja di wilayah lain"
+                    }
+                },
+                "280": {
+                    "judul": "DENOMINASI DAN SEKTE-SEKTE",
+                    "subkategori": {
+                        "281": "Gereja purba dan timur",
+                        "282": "Gereja Roma Katolik",
+                        "283": "Gereja Anglikan",
+                        "284": "Gereja Protestan asal continental",
+                        "285": "Gereja Prebiterian",
+                        "286": "Gereja Baptis",
+                        "287": "Gereja Metodis",
+                        "288": "(Belum Digunakan)",
+                        "289": "Lain-lain denominasi dan sekte"
+                    }
+                },
+                "290": {
+                    "judul": "AGAMA-AGAMA LAIN DAN PERBANDINGAN AGAMA",
+                    "subkategori": {
+                        "291": "Perbandingan Agama",
+                        "292": "Agama Yunani dan Romawi Kuno",
+                        "293": "Agama Jermania",
+                        "294": "Agama-agama asal India",
+                        "295": "Zoroastrianisme",
+                        "296": "Agama Yahudi",
+                        "297": "(Belum Digunakan)",
+                        "298": "(Belum Digunakan)",
+                        "299": "Lain-lain"
+                    }
+                }
+            }
+        },
+        "300": {
+            "judul": "Ilmu-ilmu Sosial",
+            "kategori": {
+                "300": {
+                    "judul": "ILMU-ILMU SOSIAL",
+                    "subkategori": {
+                        "301": "Sosiologi dan Antropologi",
+                        "302": "Interaksi sosial",
+                        "303": "Proses-proses sosial",
+                        "304": "Faktor-faktor yang mempengaruhi tingkah laku sosial",
+                        "305": "Kelompok-kelompok sosial",
+                        "306": "Kebudayaan dan lembaga-lembaga",
+                        "307": "Masyarakat, persekutuan hidup",
+                        "308": "(Belum digunakan)",
+                        "309": "(Belum digunakan)"
+                    }
+                },
+                "310": {
+                    "judul": "STATISTIK",
+                    "subkategori": {
+                        "311": "Teori & Konsep Statistik",
+                        "312": "(Belum digunakan)",
+                        "313": "(Belum digunakan)",
+                        "314": "Statistik umum Eropa",
+                        "315": "Statistik umum Asia",
+                        "316": "Statistik umum Afrika",
+                        "317": "Statistik umum Amerika",
+                        "318": "Statustik umum Amerika Selatan",
+                        "319": "Statistik umum lain-lain wilayah"
+                    }
+                },
+                "320": {
+                    "judul": "ILMU POLITIK",
+                    "subkategori": {
+                        "321": "Sistem-sistem pemerintahan dan Negara",
+                        "322": "Hubungan Negara dengan kelompok terorganisir",
+                        "323": "Hak-hak sipil dan politik",
+                        "324": "Proses-proses politik",
+                        "325": "Migrasi internasional",
+                        "326": "Perbudakan dan emansipasi perbudakan",
+                        "327": "Hubungan internasional",
+                        "328": "Proses-proses legislative",
+                        "329": "(Belum digunakan)"
+                    }
+                },
+                "330": {
+                    "judul": "ILMU EKONOMI",
+                    "subkategori": {
+                        "331": "Ekonomi perburuhan",
+                        "332": "Ekonomi keuangan",
+                        "333": "Ekonomi tanah",
+                        "334": "Koperasi",
+                        "335": "Sosialisme",
+                        "336": "Keuangan Negara",
+                        "337": "Ekonomi internasional",
+                        "338": "Produksi dan industri",
+                        "339": "Makro ekonomi"
+                    }
+                },
+                "340": {
+                    "judul": "ILMU HUKUM",
+                    "subkategori": {
+                        "341": "Hukum Internasional",
+                        "342": "Hukum tata Negara",
+                        "343": "Aneka ragam hokum public",
+                        "344": "Hukum sosial",
+                        "345": "Hukum pidana",
+                        "346": "Hukum perdata",
+                        "347": "Hukum acara perdata dan pengadilan",
+                        "348": "Undang-undang, peraturan-peraturan, perkara-perkara",
+                        "349": "Hukum Negara bangsa tertentu"
+                    }
+                },
+                "350": {
+                    "judul": "Administrasi Negara",
+                    "subkategori": {
+                        "351": "Pemerintah Pusat",
+                        "352": "Pemerintah Lokal",
+                        "353": "Pemerintah Pusat Indonesia",
+                        "354": "Organisasi Internasional",
+                        "355": "Ilmu Kemiliteran",
+                        "356": "Infantri",
+                        "357": "Kavaleri",
+                        "358": "Pasukan Berlapis Baja, Zeni Angkatan Darat, Pasukan Udara",
+                        "359": "Angkatan Laut"
+                    }
+                },
+                "360": {
+                    "judul": "Layanan Sosial Asosiasi",
+                    "subkategori": {
+                        "361": "Kesejahteraan sosial",
+                        "362": "Masalah dan pelayanan sosial",
+                        "363": "Lain-lain masalah sosial",
+                        "364": "Kriminologi",
+                        "365": "Penjara (Lembaga pemasyarakatan)",
+                        "366": "Asosiasi (perkumpulan)",
+                        "367": "Klub-klub umum",
+                        "368": "Asuransi",
+                        "369": "Aneka ragam"
+                    }
+                },
+                "370": {
+                    "judul": "Pendidikan",
+                    "subkategori": {
+                        "371": "Manajemen sekolah, pendidikan khusus",
+                        "372": "Pendidikan dasar",
+                        "373": "Pendidikan lanjutan",
+                        "374": "Pendidikan Orang dewasa",
+                        "375": "Kurikulum",
+                        "376": "Pendidikan kaum wanita",
+                        "377": "Sekolah dan agama",
+                        "378": "Pendidikan tinggi",
+                        "379": "Pendidikan dan Negara"
+                    }
+                },
+                "380": {
+                    "judul": "Perdagangan, Komunikasi, Pengangkutan",
+                    "subkategori": {
+                        "381": "Perdagangan dalam negeri",
+                        "382": "Perdagangan luar negeri",
+                        "383": "Komunikasi pos",
+                        "384": "Lain-lain system komunikasi, telekomunikasi",
+                        "385": "Pengangkutan dengan kereta api",
+                        "386": "Pelayaran pedalaman dan Fery",
+                        "387": "Pengangkutan laut, udara, ruang angkasa",
+                        "388": "Pengangkutan jalan raya",
+                        "389": "Metrologi dan standarisasi"
+                    }
+                },
+                "390": {
+                    "judul": "Adat Istiadat & Kebiasaan, Etiket, Folklor",
+                    "subkategori": {
+                        "391": "Pakaian (Kostum), perhiasan diri",
+                        "392": "Kebiasaan yang berhubungan dengan kehidupan dan kehidupan rumah tangga",
+                        "393": "Kebiasaan yang berhubungan dengan kematian",
+                        "394": "Kebiasaan-kebiasaan umum",
+                        "395": "Etiket (sopan santun)",
+                        "396": "Belum Digunakan",
+                        "397": "Belum Digunakan",
+                        "398": "Folklor",
+                        "399": "Kebiasaan dalam perang dan diplomasi"
+                    }
+                }
+            }
+        },
+        "400": {
+            "judul": "Bahasa",
+            "kategori": {
+                "400": {
+                    "judul": "Bahasa & Linguistik",
+                    "subkategori": {
+                        "401": "Sistem-sistem tulisan",
+                        "402": "Etimologi",
+                        "403": "Kamus",
+                        "404": "Fonologi",
+                        "405": "Tata bahasa",
+                        "406": "(Belum digunakan)",
+                        "407": "Dialektologi",
+                        "408": "Penggunaan bahasa",
+                        "409": "Bahasa verbal"
+                    }
+                },
+                "410": {
+                    "judul": "Bahasa Indonesia",
+                    "subkategori": {
+                        "411": "Sistem tulisan dan fonologi",
+                        "412": "Etimologi bahasa Indonesia",
+                        "413": "Kamus Bahasa Indonesia",
+                        "414": "(Belum digunakan)",
+                        "415": "Tata bahasa Indonesia",
+                        "416": "(Belum digunakan)",
+                        "417": "Bahasa Indonesia bukan standar",
+                        "418": "Pemakaian bahasa Indonesia baku",
+                        "419": "Bahasa-bahasa daerah"
+                    }
+                },
+                "420": {
+                    "judul": "Bahasa Inggris",
+                    "subkategori": {
+                        "421": "Sistem tulisan dan fonologi",
+                        "422": "Etimologi bahasa Inggris",
+                        "423": "Kamus bahasa Inggris",
+                        "424": "(Belum Digunakan)",
+                        "425": "Tata bahasa Inggris",
+                        "426": "(Belum Digunakan)",
+                        "427": "Bahasa Inggris bukan standar",
+                        "428": "Pemakaian bahasa Inggris baku",
+                        "429": "Bahasa Inggris kuno (Anglo-Saxon)"
+                    }
+                },
+                "430": {
+                    "judul": "Bahasa Jerman",
+                    "subkategori": {
+                        "431": "Sistem tulisan dan fonologi",
+                        "432": "Etimologi bahasa Jerman",
+                        "433": "Kamus bahasa Jerman",
+                        "434": "(Belum digunakan)",
+                        "435": "Tata bahasa Jerman",
+                        "436": "(Belum Digunakan)",
+                        "437": "Bahasa Jerman bukan standar",
+                        "438": "Pemakaian bahasa Jerman baku",
+                        "439": "Lain-lain bahasa Teutonik"
+                    }
+                },
+                "440": {
+                    "judul": "Bahasa Prancis",
+                    "subkategori": {
+                        "441": "Sistem tulisan dan fonologi",
+                        "442": "Etimologi bahasa Perancis",
+                        "443": "Kamus bahasa Perancis",
+                        "444": "(Belum Digunakan)",
+                        "445": "Tata bahasa Perancis",
+                        "446": "(Belum Digunakan)",
+                        "447": "Bahasa Perancis bukan standar",
+                        "448": "Pemakaian bahasa Perancis baku",
+                        "449": "Bahasa Provensal dan Catalan"
+                    }
+                },
+                "450": {
+                    "judul": "Bahasa Italia",
+                    "subkategori": {
+                        "451": "Sistem tulisan dan fonologi",
+                        "452": "Etimologi bahasa Italia",
+                        "453": "Kamus bahasa Italia",
+                        "454": "(Belum digunakan)",
+                        "455": "Tata bahasa Italia",
+                        "456": "(Belum digunakan)",
+                        "457": "Bahasa Italia bukan standar",
+                        "458": "Pemakaian bahasa Italia baku",
+                        "459": "Bahasa Romawi"
+                    }
+                },
+                "460": {
+                    "judul": "Bahasa spanyol dan portugis",
+                    "subkategori": {
+                        "461": "Sistem tulisan dan fonologi",
+                        "462": "Etimologi bahasa Spanyol",
+                        "463": "Kamus bahasa Spanyol",
+                        "464": "(Belum digunakan)",
+                        "465": "Tata bahasa Spanyol",
+                        "466": "(Belum digunakan)",
+                        "467": "Bahasa Spanyol bukan standar",
+                        "468": "Pemakaian bahasa Spanyol baku",
+                        "469": "Bahasa Portugis"
+                    }
+                },
+                "470": {
+                    "judul": "Bahasa Latin",
+                    "subkategori": {
+                        "471": "Sistem tulisan dan fonologi",
+                        "472": "Etimologi bahasa Latin Klasik",
+                        "473": "Kamus bahasa Latin Klasik",
+                        "474": "(Belum digunakan)",
+                        "475": "Tata bahasa Latin Klasik",
+                        "476": "(Belum digunakan)",
+                        "477": "Bahasa Latin Lama",
+                        "478": "Pemakaian bahasa Latin Klasik",
+                        "479": "Lain-lain bahasa Italia"
+                    }
+                },
+                "480": {
+                    "judul": "Bahasa Yunani Klasik",
+                    "subkategori": {
+                        "481": "Sistem tulisan dan fonologi",
+                        "482": "Etimologi bahasa Yunani",
+                        "483": "Kamus bahasa Yunani Klasik",
+                        "484": "(Belum digunakan)",
+                        "485": "Tata bahasa Yunani Klasik",
+                        "486": "(Belum digunakan)",
+                        "487": "Bahasa Yunani sebelum dan sesudah Klasik",
+                        "488": "Pemakaian bahasa Yunani Klasik",
+                        "489": "Lain-lain bahasa Helenik"
+                    }
+                },
+                "490": {
+                    "judul": "BAHASA-BAHASA LAIN",
+                    "subkategori": {
+                        "491": "Bahasa-bahasa Indo Eropa Timur",
+                        "492": "Bahasa-bahasa Afro Asia",
+                        "493": "Bahasa Hamitis dan Chad",
+                        "494": "Bahasa-bahasa Ural Altaik",
+                        "495": "Bahasa-bahasa Asia Timur dan Asia Tenggara",
+                        "496": "Bahasa-bahasa Afrika",
+                        "497": "Bahasa-bahasa pribumi Amerika Utara",
+                        "498": "Bahasa-bahasa pribumi Amerika Selatan",
+                        "499": "Bahasa-bahasa lain"
+                    }
+                }
+            }
+        },
+        "500": {
+            "judul": "Ilmu-Ilmu Murni",
+            "kategori": {
+                "500": {
+                    "judul": "Ilmu Murni",
+                    "subkategori": {
+                        "501": "Filsafat dan teori",
+                        "502": "Aneka Ragam",
+                        "503": "Kamus dan Ensiklopedi",
+                        "504": "(Belum digunakan)",
+                        "505": "Terbitan Berseri",
+                        "506": "Organisasi dan manajemen",
+                        "507": "Pendidikan, Penelitian",
+                        "508": "Sejarah alamiah",
+                        "509": "Pengolahan histories, wilayah, perorangan"
+                    }
+                },
+                "510": {
+                    "judul": "Matematika",
+                    "subkategori": {
+                        "511": "Prinsip-prinsip umum",
+                        "512": "Aljabar",
+                        "513": "Ilmu hitung",
+                        "514": "Topologi",
+                        "515": "Analisis",
+                        "516": "Ilmu Ukur",
+                        "517": "(Belum digunakan)",
+                        "518": "(Belum digunakan)",
+                        "519": "Probabilitas dan matematika terapan"
+                    }
+                },
+                "520": {
+                    "judul": "Astronomi",
+                    "subkategori": {
+                        "521": "Mekanika angkasa",
+                        "522": "Teknik, perlengkapan, bahan-bahan",
+                        "523": "Benda-benda angkasa khusus dan fenomena",
+                        "524": "(Belum digunakan)",
+                        "525": "Bumi (Geografi astronomi)",
+                        "526": "Geografi Matematis",
+                        "527": "Navigasi angkasa",
+                        "528": "Almanak autika (Efemerida)",
+                        "529": "Kronologi (waktu)"
+                    }
+                },
+                "530": {
+                    "judul": "Fisika",
+                    "subkategori": {
+                        "531": "Mekanika",
+                        "532": "Mekanika zat cair",
+                        "533": "Mekanika gas",
+                        "534": "Bunyi",
+                        "535": "Optika (Cahaya)",
+                        "536": "Panas",
+                        "537": "Kelistrikan dan Elektronika",
+                        "538": "Magnetisme",
+                        "539": "Fisika Modern"
+                    }
+                },
+                "540": {
+                    "judul": "Kimia",
+                    "subkategori": {
+                        "541": "Kimia fisik dan teoritis",
+                        "542": "Teknik, Perlengkapan, bahan-bahan",
+                        "543": "Kimia analitis",
+                        "544": "Analisis Kualitatif",
+                        "545": "Analisis kuantitatif",
+                        "546": "Kimia anorganik",
+                        "547": "Kimia organik",
+                        "548": "Kristalografi",
+                        "549": "Mineralogi"
+                    }
+                },
+                "550": {
+                    "judul": "Iilmu Pengetahuan Tentang Bumi",
+                    "subkategori": {
+                        "551": "Geologi, meteorologi, hidrologi",
+                        "552": "Petrologi",
+                        "553": "Geologi ekonomis",
+                        "554": "Geologi Eropa",
+                        "555": "Geologi Asia",
+                        "556": "Geologi Afrika",
+                        "557": "Geologi Amerika Utara",
+                        "558": "Geologi Amerika Selatan",
+                        "559": "Geologi wilayah-wilayah lain"
+                    }
+                },
+                "560": {
+                    "judul": "Paleontologi",
+                    "subkategori": {
+                        "561": "Paleobotani",
+                        "562": "Fosil invertebrata",
+                        "563": "Fosil Protozoa",
+                        "564": "Fosil Molluska",
+                        "565": "Lain-lain fosil invertebrata",
+                        "566": "Fosil Vertebrata",
+                        "567": "Fosil invertebrata berdarah dingin",
+                        "568": "Fosil Burung",
+                        "569": "Fosil mamalia"
+                    }
+                },
+                "570": {
+                    "judul": "Ilmu-ilmu tentang kehidupan",
+                    "subkategori": {
+                        "571": "(Belum digunakan)",
+                        "572": "Ras Manusia",
+                        "573": "Antropologi fisik",
+                        "574": "Biologi",
+                        "575": "Evolusi dan Genetika",
+                        "576": "Mikrobiologi",
+                        "577": "Sifat umum dari kehidupan",
+                        "578": "Mikroskopi dalam biologi",
+                        "579": "Pengumpulan dan pengawetan contoh-contoh biologi"
+                    }
+                },
+                "580": {
+                    "judul": "Ilmu-ilmu tentang tumbuh-tuhmbuhan",
+                    "subkategori": {
+                        "581": "Botani",
+                        "582": "Spermatofita",
+                        "583": "Dikotiledon",
+                        "584": "Monokotiledon",
+                        "585": "Tanaman berbiji telanjang",
+                        "586": "Tanaman tak berbiji",
+                        "587": "Pteridofita",
+                        "588": "Briofita",
+                        "589": "Tallofita"
+                    }
+                },
+                "590": {
+                    "judul": "ILMU-ILMU TENTANG HEWAN",
+                    "subkategori": {
+                        "591": "Zoologi",
+                        "592": "Invertebrata",
+                        "593": "Protozoa",
+                        "594": "Molluska",
+                        "595": "Lain-lain invertebrata",
+                        "596": "Vertebrata",
+                        "597": "Vertebrata berdarah dingin",
+                        "598": "Burung",
+                        "599": "Mamalia"
+                    }
+                }
+            }
+        }
+    }
+}

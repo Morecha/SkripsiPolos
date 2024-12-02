@@ -25,6 +25,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/charts/chart-apex.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/plugins/extensions/ext-component-toastr.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/pages/app-invoice-list.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/charts/chart-apex.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-toastr.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/dashboard-ecommerce.css')}}">
 
     {{-- try leaflet --}}
     <link rel="stylesheet" type="text/css" href="{{ asset('app-assets/css/core/menu/menu-types/vertical-menu.css') }}">
@@ -34,6 +37,10 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- END: Custom CSS-->
+
+    <script>
+        window.chartData = @json($chartData);
+    </script>
 @endsection
 
 <!-- BEGIN: Body-->
@@ -50,64 +57,134 @@
                 <!-- Dashboard Analytics Start -->
                 <section id="dashboard-analytics">
                     <div class="row match-height">
-                        <!-- Greetings Card starts -->
-                        <div class="col-lg-6 col-md-12 col-sm-12">
-                            <div class="card card-congratulations">
-                                <div class="card-body text-center">
-                                    <img src="../../../app-assets/images/elements/decore-left.png" class="congratulations-img-left" alt="card-img-left" />
-                                    <img src="../../../app-assets/images/elements/decore-right.png" class="congratulations-img-right" alt="card-img-right" />
-                                    <div class="avatar avatar-xl bg-primary shadow">
-                                        <div class="avatar-content">
-                                            <i data-feather="award" class="font-large-1"></i>
-                                        </div>
-                                    </div>
-                                    <div class="text-center">
-                                        <h1 class="mb-1 text-white">Congratulations John,</h1>
-                                        <p class="card-text m-auto w-75">
-                                            You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Greetings Card ends -->
-
-                        <!-- Subscribers Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="col-lg-8 col-12">
                             <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-primary p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="users" class="font-medium-5"></i>
-                                        </div>
+                                <div class="card-header">
+                                    <div>
+                                        <h4 class="card-title">Statistics</h4>
+                                        <span class="card-subtitle text-muted">Commercial networks and enterprises</span>
                                     </div>
-                                    <h2 class="fw-bolder mt-1">92.6k</h2>
-                                    <p class="card-text">Subscribers Gained</p>
                                 </div>
-                                <div id="gained-chart"></div>
+                                <div class="card-body">
+                                    <canvas class="line-chart-ex chartjs" data-height="300"></canvas>
+                                </div>
                             </div>
                         </div>
-                        <!-- Subscribers Chart Card ends -->
 
-                        <!-- Orders Chart Card starts -->
-                        <div class="col-lg-3 col-sm-6 col-12">
-                            <div class="card">
-                                <div class="card-header flex-column align-items-start pb-0">
-                                    <div class="avatar bg-light-warning p-50 m-0">
-                                        <div class="avatar-content">
-                                            <i data-feather="package" class="font-medium-5"></i>
+                        <!-- Revenue Report Card -->
+                        <div class="col-lg-4 col-12">
+                            <div class="row match-height">
+                                <!-- Bar Chart - Orders -->
+                                <div class="col-lg-6 col-md-3 col-6">
+                                    <div class="card">
+                                        <div class="card-header flex-column align-items-start pb-0">
+                                            <div class="avatar bg-light-success p-50 m-0">
+                                                <div class="avatar-content">
+                                                    <i data-feather="book" class="font-medium-5"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder mt-1">{{ $buku }}</h2>
+                                            <p class="card-text">Total Buku</p><br>
                                         </div>
+                                        <div id="gained-chart"></div>
                                     </div>
-                                    <h2 class="fw-bolder mt-1">38.4K</h2>
-                                    <p class="card-text">Orders Received</p>
                                 </div>
-                                <div id="order-chart"></div>
+                                <!--/ Bar Chart - Orders -->
+
+                                <!-- Line Chart - Profit -->
+                                <div class="col-lg-6 col-md-3 col-6">
+                                    <div class="card">
+                                        <div class="card-header flex-column align-items-start pb-0">
+                                            <div class="avatar bg-light-warning p-50 m-0">
+                                                <div class="avatar-content">
+                                                    <i data-feather="archive" class="font-medium-5"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder mt-1">{{$inventaris}}</h2>
+                                            <p class="card-text">Inventaris</p><br>
+                                        </div>
+                                        <div id="gained-chart"></div>
+                                    </div>
+                                </div>
+                                <!--/ Line Chart - Profit -->
+
+                                <!-- Earnings Card -->
+                                <div class="col-lg-6 col-md-3 col-6">
+                                    <div class="card">
+                                        <div class="card-header flex-column align-items-start pb-0">
+                                            <div class="avatar bg-light-info p-50 m-0">
+                                                <div class="avatar-content">
+                                                    <i data-feather="users" class="font-medium-5"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder mt-1">{{$anggota}}</h2>
+                                            <p class="card-text">Anggota</p><br>
+                                        </div>
+                                        <div id="gained-chart"></div>
+                                    </div>
+                                </div>
+                                <!--/ Earnings Card -->
+
+                                <div class="col-lg-6 col-md-3 col-6">
+                                    <div class="card">
+                                        <div class="card-header flex-column align-items-start pb-0">
+                                            <div class="avatar bg-light-primary p-50 m-0">
+                                                <div class="avatar-content">
+                                                    <i data-feather="shopping-bag" class="font-medium-5"></i>
+                                                </div>
+                                            </div>
+                                            <h2 class="fw-bolder mt-1">{{$pengadaan}}</h2>
+                                            <p class="card-text">Pengadaan</p><br>
+                                        </div>
+                                        <div id="gained-chart"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <!-- Orders Chart Card ends -->
+                        <!--/ Revenue Report Card -->
                     </div>
 
-                    <div class="row match-height">
+                    <!-- List DataTable -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card invoice-list-wrapper">
+                                <div class="card-datatable table-responsive">
+                                    <table class="invoice-list-table table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Jenis Peminjaman</th>
+                                                <th>Nama</th>
+                                                <th>Total</th>
+                                                <th>lama peminjaman</th>
+                                                <th>tanggal Mulai</th>
+                                                <th>Tanggal Akhir</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $i = 1;
+                                            @endphp
+                                            @foreach ($tabel_peminjaman as $tabel_peminjaman)
+                                            <tr>
+                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $tabel_peminjaman->jenis_peminjaman }}</td>
+                                                <td>{{ $tabel_peminjaman->username }}</td>
+                                                <td>{{ $tabel_peminjaman->jumlah_buku }}</td>
+                                                <td>{{ $tabel_peminjaman->lama_peminjaman }}</td>
+                                                <td>{{ $tabel_peminjaman->created_at }}</td>
+                                                <td>{{ $tabel_peminjaman->due_date }}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ List DataTable -->
+
+                    {{-- <div class="row match-height">
                         <!-- Avg Sessions Chart Card starts -->
                         <div class="col-lg-6 col-12">
                             <div class="card">
@@ -379,33 +456,9 @@
                             </div>
                         </div>
                         <!--/ App Design Card -->
-                    </div>
+                    </div> --}}
 
-                    <!-- List DataTable -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card invoice-list-wrapper">
-                                <div class="card-datatable table-responsive">
-                                    <table class="invoice-list-table table">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>#</th>
-                                                <th><i data-feather="trending-up"></i></th>
-                                                <th>Client</th>
-                                                <th>Total</th>
-                                                <th class="text-truncate">Issued Date</th>
-                                                <th>Balance</th>
-                                                <th>Invoice Status</th>
-                                                <th class="cell-fit">Actions</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ List DataTable -->
+
                 </section>
                 <!-- Dashboard Analytics end -->
 
@@ -420,14 +473,16 @@
     <script src="{{ asset('app-assets/vendors/js/charts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/toastr.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/extensions/moment.min.js') }}"></script>
-
+    <script src="{{ asset('app-assets/vendors/js/charts/chart.min.js') }}"></script>
+    <script src="{{ asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js') }}"></script>
     {{-- try leaflet --}}
     <script src="{{ asset('app-assets/vendors/js/maps/leaflet.min.js') }}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
-
-    <!-- <script src="{{ asset('app-assets/js/scripts/pages/dashboard-analytics.js') }}"></script> -->
+    <script src="{{ asset('app-assets/js/scripts/charts/chart-chartjs.js') }}"></script>
+    {{-- <script src="{{asset('app-assets/js/scripts/pages/dashboard-ecommerce.js')}}"></script> --}}
+    {{-- <script src="{{ asset('app-assets/js/scripts/pages/dashboard-analytics.js') }}"></script> --}}
     {{-- <script src="{{asset('app-assets/js/scripts/pages/app-invoice-list.js')}}"></script> --}}
 
     {{-- try leaflet --}}

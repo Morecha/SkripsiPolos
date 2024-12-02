@@ -51,7 +51,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">User Create</h2>
+                            <h2 class="content-header-title float-start mb-0">Create Peminjaman</h2>
                             @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
@@ -185,8 +185,8 @@
                                                     <label class="form-label" for="id_anggota">Anggota</label>
                                                     {{-- <input type="text" id="id_anggota" class="form-control" name="id_anggota" autocomplete="off" placeholder="Anggota"/> --}}
                                                     <select class="select2 form-select" name="id_anggota" id="select2">
+                                                        <option value="" selected disabled>Pilih Anggota</option>
                                                         @foreach ($anggota as $isi)
-                                                            <option value="" selected disabled>Pilih Anggota</option>
                                                             <option value="{{$isi->id}}" @if ($isi->status != 'aktif') disabled @endif>
                                                                 {{$isi->name}}
                                                             </option>

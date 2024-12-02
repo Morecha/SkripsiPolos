@@ -18,7 +18,7 @@
 
     @section('content')
         <!--Banner Sec start-->
-        <section class="secondary-pages-banner cursor-light bg-1" id="main-banner">
+        {{-- <section class="secondary-pages-banner cursor-light bg-1" id="main-banner">
             <!-- END REVOLUTION SLIDER -->
             <img src="{{asset('assets/landing-page/food-delivery/img/slider-ele3.png')}}" class="secondary-item1">
             <img src="{{asset('assets/landing-page/food-delivery/img/slider-ele1.png')}}" class="secondary-item2">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!--Banner Sec End-->
 
         <!--Detail page-->
@@ -43,7 +43,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <ul class="row nav nav-pills" id="pills-tab" role="tablist">
+                        {{-- <ul class="row nav nav-pills" id="pills-tab" role="tablist">
                             <li class="col-6 col-lg-3 nav-item pr-1">
                                 <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
                                     <i class="lni lni-fresh-juice pill-icon"></i>
@@ -68,11 +68,11 @@
                                     <span class="pill-name">Deals</span>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> --}}
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                 <div class="row">
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-12">
                                         <div class="food-list ml-0">
                                             <div class="list-overlay"></div>
                                             <div class="rates d-flex justify-content-between">
@@ -83,49 +83,10 @@
                                                 <p class="rate">$85</p>
                                             </div>
                                         </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Toasted Jam</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$35</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Prawns Butter Garlic</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$80</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Plain Pancakes</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$70</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Organic Fruit Salad</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$120</p>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
-
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-8">
                                         <div class="food-list">
                                             <div class="list-overlay"></div>
                                             <div class="rates d-flex justify-content-between">
@@ -136,51 +97,22 @@
                                                 <p class="rate">$30</p>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
                                         <div class="food-list">
                                             <div class="list-overlay"></div>
                                             <div class="rates d-flex justify-content-between">
                                                 <div class="info">
-                                                    <h6 class="main-heading">Sode Kadai</h6>
+                                                    <h6 class="main-heading">Plain Pancakes</h6>
                                                     <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
                                                 </div>
-                                                <p class="rate">$60</p>
+                                                <p class="rate">$30</p>
                                             </div>
                                         </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Mutton Handi</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$25</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Twisted Sticks</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$70</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Garlic Chilli Karahi</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$50</p>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            {{-- <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                 <div class="row">
                                     <div class="col-12 col-md-6">
 
@@ -459,7 +391,7 @@
 
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

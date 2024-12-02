@@ -14,22 +14,38 @@
         <link href="{{asset('assets/landing-page/food-delivery/css/nouislider.min.css')}}" rel="stylesheet">
         <link href="{{asset('assets/landing-page/food-delivery/css/range-slider.css')}}" rel="stylesheet">
         <link href="{{asset('assets/landing-page/food-delivery/css/select2.min.css')}}" rel="stylesheet">
+
+        <style>
+            .item-img-holder {
+                width: 347px; /* Lebar container */
+                height: 260px; /* Tinggi container */
+                position: relative;
+                overflow: hidden; /* Sembunyikan bagian gambar yang kelebihan */
+                border-radius: 8px; /* Jika ingin gambar dengan sudut membulat */
+            }
+
+            .item-img-holder img.item-image {
+                width: 100%; /* Gambar mengisi lebar container */
+                height: 100%; /* Gambar mengisi tinggi container */
+                object-fit: cover; /* Potong gambar agar sesuai ukuran */
+            }
+        </style>
     @endsection
 
     @section('content')
         <!--Banner Sec start-->
         <section class="secondary-pages-banner cursor-light bg-1" id="main-banner">
             <!-- END REVOLUTION SLIDER -->
-            <img src="{{asset('assets/landing-page/food-delivery/img/slider-ele3.png')}}" class="secondary-item1">
-            <img src="{{asset('assets/landing-page/food-delivery/img/slider-ele1.png')}}" class="secondary-item2">
+            <img src="{{asset('assets/landing-page/food-delivery/img/percobaan.png')}}" class="secondary-item1">
+            <img src="{{asset('assets/landing-page/food-delivery/img/book-transparant.png')}}" class="secondary-item2">
             <div class="banner-content text-center">
                 <div class="heading-area">
-                    <h4 class="heading">Browse Our Food</h4>
+                    <h4 class="heading">Daftar Buku</h4>
                     <div class="crumbs">
                         <nav aria-label="breadcrumb" class="breadcrumb-items">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index-food-delivery.html" class="link">Home</a></li>
-                                <li class="breadcrumb-item"><a href="restaurant-listing.html" class="link">Restaurant Listing</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('landing-page.searching')}}" class="link">Home</a></li>
+                                <li class="breadcrumb-item"><a href="restaurant-listing.html" class="link">Daftar Buku</a></li>
                             </ol>
                         </nav>
                     </div>
@@ -39,7 +55,7 @@
         <!--Banner Sec End-->
 
         <!--Slider form start-->
-        <div class="filter-form product-filter-nav bg-2" id="filter-form">
+        {{-- <div class="filter-form product-filter-nav bg-2" id="filter-form">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -88,7 +104,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!--Slider form end-->
 
 
@@ -98,29 +114,28 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="row portfolio-area" id="portfolio-area">
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}">
-                                            <div class="item-badge rounded-circle">25<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Mega Restaurant</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
+                            @foreach ( $inventaris as $i)
+                                <div class="col-12 col-md-6 col-lg-4 portfolio-item">
+                                    <div class="portfolio-inner-content">
+                                        <a href="restaurant-detail.html">
+                                            <div class="item-img-holder position-relative">
+                                                @if ($i->image != null)
+                                                    <img src="{{asset('storage/gambar/inventaris/'.$i->image)}}">
+                                                @else
+                                                    <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}">
+                                                @endif
+                                                <div class="item-badge rounded-circle">{{$i->buku_count}}<span>buku</span></div>
                                             </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
+                                            <div class="item-detail-area">
+                                                <div class="d-flex justify-content-between">
+                                                    <h4 class="item-name">{{$i->judul}}</h4>
+                                                </div>
+                                                <p class="text">{{$i->pengarang}} </p>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                             <div class="col-12 col-md-6 col-lg-4 portfolio-item">
                                 <div class="portfolio-inner-content">
                                     <a href="restaurant-detail.html">
@@ -332,7 +347,7 @@
                         <div class="row">
                             <div class="col-12 col-lg-6 offset-lg-3">
                                 <a href="javascript:void(0);" id="loadMore" class="btn main-btn rounded-pill w-100">
-                                    <i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i>LOAD MORE FOOD OPTIONS
+                                    <i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i>TAMPILKAN LEBIH BANYAK BUKU
                                 </a>
                             </div>
                         </div>

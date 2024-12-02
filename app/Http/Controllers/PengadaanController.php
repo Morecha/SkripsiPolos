@@ -113,6 +113,10 @@ class PengadaanController extends Controller
 
     public function inventaris(string $id){
         $data = pengadaan::find($id);
+        // dd($data['pengarang'],$data['penerbit'],$data);
+        if($data['pengarang'] == null || $data['penerbit'] == null){
+            return redirect()->back()->with('error', 'Tidak ditemukan Data pengarang dan penerbit, Harap Edit data Terlebih dahulu');
+        }
         if($data->eksemplar - $data->diterima > 0){
             $inventaris = $data->inventaris;
             // dd($inventaris);

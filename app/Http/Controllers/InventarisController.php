@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\buku;
 use App\Models\inventaris;
 use App\Models\pengadaan;
+// use Faker\Core\File;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class InventarisController extends Controller
 {
@@ -30,7 +32,16 @@ class InventarisController extends Controller
     }
 
     public function create(){
-        return view('admin.inventaris.create');
+        $path = public_path('/dewey/test.json');
+        if(!File::exists($path)){
+            dd('File Tidak Ditemukan');
+            return view('admin.inventaris.list');
+        }
+
+        $json =  File::get($path);
+        $data = json_decode($json, true);
+        // dd($dewey);
+        return view('admin.inventaris.create', compact('data'));
     }
 
     public function store(Request $request){

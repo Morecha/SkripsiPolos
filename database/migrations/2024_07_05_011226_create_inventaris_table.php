@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('pengarang');
             $table->string('penerbit');
-            $table->string('kode_ddc');
+            $table->string('kode_ddc')->nullable();
             $table->string('status');
             $table->text('deskripsi')->nullable();
             $table->string('image')->nullable();

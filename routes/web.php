@@ -4,6 +4,7 @@ use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengadaanController;
@@ -13,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
 
 Route::get('/', function () {return view('welcome');})->name('home');
-Route::get('/search', function () {return view('landing-page.searching');});
-Route::get('/list', function () {return view('landing-page.list');});
+Route::get('/search', [HomepageController::class,'index'])->name('landing-page.searching');
+Route::get('/list', [HomepageController::class,'list_buku'])->name('landing-page.list');
 Route::get('/detail', function () {return view('landing-page.detail');});
 
 Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
@@ -22,7 +23,7 @@ Route::post('/login', [AuthController::class, 'authenticating'])->middleware('gu
 
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', function () {return view('admin.dashboard');})->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // users
     Route::get('/users', [UserController::class, 'index'])->name('users.list');
@@ -42,9 +43,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/anggota/store', [AnggotaController::class, 'store'])->name('anggota.store');
     Route::get('/anggota/{id}/edit', [AnggotaController::class, 'edit'])->name('anggota.edit');
     Route::post('/anggota/{id}/update', [AnggotaController::class, 'update'])->name('anggota.update');
-    Route::post('/anggota/{id}/delete', [AnggotaController::class, 'destroy'])->name('anggota.delete');
     Route::get('/anggota/masal', [AnggotaController::class, 'create_masal'])->name('anggota.create_masal');
     Route::post('/anggota/masal/store', [AnggotaController::class, 'store_masal'])->name('anggota.store_masal');
+    Route::post('/anggota/{id}/delete', [AnggotaController::class, 'destroy'])->name('anggota.delete');
 
 
     //presensi_kelompok

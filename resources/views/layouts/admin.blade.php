@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
     <meta name="author" content="PIXINVENT">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard analytics - Vuexy - Bootstrap HTML admin template</title>
+    <title>Admin - Perpustakaan</title>
 
     <!-- Meta: description, keywords || Begin: Vendor CSS, Page CSS, Custom CSS -->
     @yield('header')

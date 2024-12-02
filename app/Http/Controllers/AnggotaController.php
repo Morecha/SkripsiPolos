@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\AnggotaImport;
 use App\Models\anggota;
+use App\Models\peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -74,12 +75,22 @@ class AnggotaController extends Controller
             'data' => 'required|file|mimes:xls,xlsx',
         ]);
 
-        Excel::import(new AnggotaImport, $request->file('data'));
-        return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil ditambahkan');
+        try{
+            $test = Excel::import(new AnggotaImport, $request->file('data'));
+            return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil ditambahkan');
+            dd('berhasil');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'format excel salah');
+        }
     }
 
     public function destroy(string $id){
         $anggota = anggota::find($id);
+        $peminjaman = peminjaman::where('id_anggota', $id)->get()->count();
+        if($peminjaman > 0){
+            return redirect()->route('anggota.list')->with('error', 'Anggota masih memiliki PEMINJAMAN');
+        }
+        // dd($peminjaman);
         $anggota->delete();
         return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil dihapus');
     }

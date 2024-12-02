@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('id_anggota')->unsigned();
             $table->bigInteger('id_user')->unsigned();
             $table->enum('status', ['dipinjam','kembali']);
-            $table->text('detail');
+            $table->text('detail')->nullable();
             $table->integer('lama_peminjaman');
             $table->timestamps();
 

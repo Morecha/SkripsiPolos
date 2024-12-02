@@ -19,6 +19,11 @@ class BukuController extends Controller
         $judul = substr($inventaris['judul'], 0, 1);
         // $kode_buku = $kode_ddc."-".$tajuk_buku."-".$judul."-"."1";
 
+        //cek apakah ada nomor buku atau belum, jika belum silahkan tambahkan dahulu
+        if($inventaris['kode_ddc'] == null){
+            return redirect()->back()->with('warning', 'Tidak Ditemukan Kode Buku, Silahkan tambahkan terlebih dahulu!');
+        }
+
         $input = [];
         //klo buku kosong pada inven
         if($buku->count() == 0){
@@ -32,8 +37,8 @@ class BukuController extends Controller
                     'updated_at' => now(),
                 ];
             }
-        //klo buku ada di inven
         }else{
+            //klo buku ada di inven
             $string = $buku->last()->kode_buku;
             $pisah = explode('-', $string);
             $akhir = intval($pisah[3])+1;
@@ -62,21 +67,22 @@ class BukuController extends Controller
                     return back()->with('error', 'Terdapat buku yang dipinjam');
                 }
             }
+                //Tambahkan buku baru
+                $banyak = $inventaris['eksemplar'] - $buku->count();
+                // dd($banyak, $akhir,$inventaris['eksemplar']);
+                for($i=$akhir; $i<$akhir+$banyak; $i++){
+                    $input[] = [
+                        'id_inven' => $id,
+                        'kode_buku' => $kode_ddc."-".$tajuk_buku."-".$judul."-".$i,
+                        'posisi' => 'ada',
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
 
-            //Tambahkan buku baru
-            $banyak = $inventaris['eksemplar'] - $buku->count();
-            for($i=$akhir; $i<=$inventaris['eksemplar']+$banyak; $i++){
-                $input[] = [
-                    'id_inven' => $id,
-                    'kode_buku' => $kode_ddc."-".$tajuk_buku."-".$judul."-".$i,
-                    'posisi' => 'ada',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
-            }
         }
         buku::insert($input);
-        return redirect()->route('inventaris.list')->with('success', 'Data inventaris berhasil ditambahkan');
+        return redirect()->route('inventaris.list')->with('success', 'Data Buku berhasil digenerate');
     }
     /**
      * Display a listing of the resource.
@@ -187,7 +193,7 @@ class BukuController extends Controller
         }
 
         $buku->update($input);
-        return redirect()->route('buku.list', $inventaris->id)->with('success', 'Data inventaris berhasil diupdate');
+        return redirect()->route('buku.list', $inventaris->id)->with('success', 'Data Buku berhasil diupdate');
     }
 
     /**
@@ -196,6 +202,9 @@ class BukuController extends Controller
     public function destroy(string $id, string $id_buku)
     {
         $buku = buku::find($id_buku);
+        if($buku['posisi'] != 'ada'){
+            return redirect()->back()->with('error', 'Buku tidak berada diperpustakaan');
+        }
 
         if($buku->image != null){
             if(file_exists(public_path('storage/gambar/buku/'.$buku->image))){
@@ -204,6 +213,6 @@ class BukuController extends Controller
         }
 
         $buku->delete();
-        return redirect()->route('buku.list', $id)->with('success', 'Data inventaris berhasil dihapus');
+        return redirect()->route('buku.list', $id)->with('success', 'Data Buku berhasil dihapus');
     }
 }

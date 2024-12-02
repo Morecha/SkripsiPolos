@@ -57,6 +57,14 @@
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
                             @endif
+                            @if (session('warning'))
+                                <div id="type-warning" class="alert alert-warning" style="display: none;">
+                                </div>
+                            @endif
+                            @if (session('success'))
+                                <div id="type-success" class="alert alert-success" style="display: none;">
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -171,10 +179,9 @@
                                                                     <i data-feather="edit-2" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item"
+                                                                <a class="dropdown-item delete-button"
                                                                     href="{{route('inventaris.delete', $data->id)}}"
-                                                                    onclick="event.preventDefault();
-                                                                    document.getElementById('delete-form-{{ $data->id }}').submit();">
+                                                                    data-id="{{ $data->id }}">
                                                                     <i data-feather="trash" class="me-50"></i>
                                                                     <form id="delete-form-{{ $data->id }}" method="POST" action="{{route('inventaris.delete', $data->id)}}" style="display: none;">
                                                                         @csrf
@@ -212,12 +219,14 @@
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
     <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('app-assets/vendors/js/extensions/polyfill.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/ui/jquery.sticky.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
     {{-- <script src="{{asset('app-assets/js/scripts/pages/app-invoice-list.js')}}"></script> --}}
-    <script src="{{ asset('app-assets/js/scripts/pages/datatables-demo.js') }}"></script>
+    {{-- <script src="{{ asset('app-assets/js/scripts/pages/datatables-demo.js') }}"></script> --}}
     <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script>
     <!-- END: Page JS-->
 
     <script>
@@ -240,4 +249,139 @@
             }
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-warning');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Warning !',
+                    text: '{{ session('warning') }}',
+                    icon: 'warning',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-success');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Success !',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.delete-button').on('click', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                confirmDelete(id);
+            });
+            $('.datatables-ajax').dataTable({
+                dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            });
+        });
+
+        table.on('draw', function() {
+            $('.delete-button').on('click', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                confirmDelete(id);
+            });
+        })
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function(result) {
+                if (result.value) {
+                    // Tidak lagi submit form secara otomatis di sini
+                    // Form akan di-submit hanya jika pengguna menekan tombol "Yes"
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: 'Cancelled',
+                        text: 'Your data is safe :)',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+
+    {{-- <script>
+        $(document).ready(function() {
+            $('.delete-button').on('click', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                confirmDelete(id);
+            });
+        });
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false
+            }).then(function(result) {
+                if (result.value) {
+                    // Tidak lagi submit form secara otomatis di sini
+                    // Form akan di-submit hanya jika pengguna menekan tombol "Yes"
+                    document.getElementById('delete-form-' + id).submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: 'Cancelled',
+                        text: 'Your imaginary file is safe :)',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
+        }
+    </script> --}}
+
+
 @endsection

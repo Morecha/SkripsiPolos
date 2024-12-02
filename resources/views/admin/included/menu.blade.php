@@ -38,7 +38,7 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('dashboard')}}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
                 </li>
                 {{-- pembatas --}}
                 <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Peminjaman &amp;<br>Pengembalian Buku</span><i data-feather="more-horizontal"></i>
@@ -67,11 +67,11 @@
                 <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Presensi</span><i data-feather="more-horizontal"></i>
                 </li>
                 {{-- presensi kelompok --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="check-square"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Presensi Kelompok</a>
+                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="check-square"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Presensi</a>
                     <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('presensi.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                        <li><a class="d-flex align-items-center" href="{{route('presensi.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Presensi</span></a>
                         </li>
-                        <li><a class="d-flex align-items-center" href="{{route('presensi.kelompok.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
+                        <li><a class="d-flex align-items-center" href="{{route('presensi.kelompok.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Presensi Kelompok</span></a>
                         </li>
                     </ul>
                 </li>

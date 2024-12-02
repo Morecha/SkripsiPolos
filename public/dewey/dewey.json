@@ -1,0 +1,46 @@
+{
+    "kategori": {
+        "000": {
+            "judul": "Komputer Sains, Pengetahuan Umum dan Sistem",
+            "subkategori": {
+                "000": {
+                    "judul": "Karya Umum",
+                    "subkategori": {
+                        "001": "Ilmu Pengetahuan",
+                        "002": "Buku",
+                        "003": "Sistem-sistem"
+                    }
+                },
+                "010": {
+                    "judul": "Bibliografi",
+                    "subkategori": {
+                        "011": "Bibliografi Umum",
+                        "012": "Bibliografi Karya Perorangan"
+                    }
+                }
+            }
+        },
+        "100": {
+            "judul": "Filsafat & Psikologi",
+            "subkategori": {
+                "100": {
+                    "judul": "Filsafat",
+                    "subkategori": {
+                        "101": "Teori Filsafat"
+                    }
+                },
+                "110": {
+                    "judul": "Metafisika",
+                    "subkategori": {
+                        "111": "Ontology",
+                        "112": "<Kosong>"
+                    }
+                },
+                "120": {
+                    "judul": "Epistemologi",
+                    "subkategori": {}
+                }
+            }
+        }
+    }
+}

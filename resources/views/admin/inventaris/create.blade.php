@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/editors/quill/quill.snow.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/animate/animate.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/sweetalert2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/fonts/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/jstree.min.css')}}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Page CSS-->
@@ -19,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-quill-editor.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/page-blog.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-sweet-alerts.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-tree.css')}}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -51,7 +54,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">User Create</h2>
+                            <h2 class="content-header-title float-start mb-0">Inventaris Create</h2>
                             @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
@@ -59,14 +62,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                {{-- <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                     <div class="mb-1 breadcrumb-right">
                         <div class="dropdown">
                             <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
                             <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="app-todo.html"><i class="me-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="me-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="me-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="me-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="content-body">
                 <!-- Blog Edit -->
@@ -157,6 +160,86 @@
                                                     <input type="number" class="form-control" id="eksemplar" name="eksemplar" placeholder="eksemplar" autocomplete="false"/>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-2">
+                                                    <div class="scrolling-inside-modal">
+                                                        <!-- Button trigger modal -->
+                                                        <br>
+                                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
+                                                            Detail
+                                                        </button>
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="col-md-12">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h4 class="card-title">Dewey Decimal Clasification</h4>
+                                                                                </div>
+                                                                                <div class="card-body">
+                                                                                    <div id="jstree-basic">
+                                                                                        <ul>
+                                                                                            {{-- kategori utama --}}
+                                                                                            @foreach ($data['dewey'] as $key => $kategori)
+                                                                                                <li data-jstree='{"icon" : "far fa-folder"}'>
+                                                                                                    {{ $key }} - {{ $kategori['judul'] }}
+
+                                                                                                    {{-- sub kategori utama --}}
+                                                                                                    <ul>
+                                                                                                        @foreach ($kategori['kategori'] as $subKey => $subKategori)
+                                                                                                        <li data-jstree='{"icon" : "fab fa-css3-alt"}'>
+                                                                                                            {{ $subKey }} - {{ $subKategori['judul'] }}
+                                                                                                            <i data-feather='corner-down-right'></i>
+                                                                                                            {{-- sub sub kategori utama --}}
+                                                                                                            <ul>
+                                                                                                                @foreach ($subKategori['subkategori'] as $subSubKey => $subSubKategori)
+                                                                                                                    <li data-jstree='{"icon" : "fab fa-css3-alt"}'>
+                                                                                                                        {{ $subSubKey }} - {{ $subSubKategori }}
+                                                                                                                    </li>
+                                                                                                                @endforeach
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        @endforeach
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            @endforeach
+                                                                                            {{-- <li data-jstree='{"icon" : "far fa-folder"}'>
+                                                                                                img
+                                                                                                <ul data-jstree='{"icon" : "far fa-folder"}'>
+                                                                                                    <li data-jstree='{"icon" : "far fa-file-image"}'>bg.jpg</li>
+                                                                                                    <li data-jstree='{"icon" : "far fa-file-image"}'>logo.png</li>
+                                                                                                    <li data-jstree='{"icon" : "far fa-file-image"}'>avatar.png</li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                            <li class="jstree-open" data-jstree='{"icon" : "far fa-folder"}'>
+                                                                                                js
+                                                                                                <ul>
+                                                                                                    <li data-jstree='{"icon" : "fab fa-node-js"}'>jquery.js</li>
+                                                                                                    <li data-jstree='{"icon" : "fab fa-node-js"}'>app.js</li>
+                                                                                                </ul>
+                                                                                            </li>
+                                                                                            <li data-jstree='{"icon" : "fab fa-html5"}'>index.html</li>
+                                                                                            <li data-jstree='{"icon" : "fab fa-html5"}'>page-one.html</li>
+                                                                                            <li data-jstree='{"icon" : "fab fa-html5"}'>page-two.html</li> --}}
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
@@ -217,6 +300,8 @@
     <script src="{{asset('app-assets/vendors/js/editors/quill/highlight.min.js')}}"></script>
     <script src="{{asset('app-assets/vendors/js/editors/quill/quill.min.js')}}"></script> --}}
     <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/ui/jquery.sticky.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/jstree.min.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
@@ -224,6 +309,8 @@
     <script src="{{asset('app-assets/js/scripts/pages/page-portofolio-create.js')}}"></script>
     <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/extensions/ext-component-tree.js')}}"></script>
     <!-- END: Page JS-->
 
     <script>

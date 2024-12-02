@@ -29,7 +29,11 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">File Uploader</h2>
+                            <h2 class="content-header-title float-start mb-0">Tambah Anggota Masal</h2>
+                            @if (session('error'))
+                                <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                                </div>
+                            @endif
                             <div class="breadcrumb-wrapper">
                             </div>
                         </div>
@@ -95,9 +99,32 @@
 @section('script')
     <!-- BEGIN: Page Vendor JS-->
     <script src="{{asset('app-assets/vendors/js/file-uploaders/dropzone.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
     <script src="{{asset('app-assets/js/scripts/forms/form-file-uploader.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
     <!-- END: Page JS-->
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-gagal');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Gagal !',
+                    text: '{{ session('error') }}',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    color: '#d0d2d6',     // Warna teks default Vuexy
+                    // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
 @endsection

@@ -36,11 +36,11 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">User Create</h2>
-                            @if (session('error') or $errors->any())
+                            <h2 class="content-header-title float-start mb-0">Anggota Edit</h2>
+                            {{-- @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
-                            @endif
+                            @endif --}}
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="nama">Nama</label>
-                                                    <input type="text" id="nama" class="form-control" name="nama" autocomplete="false" value="{{$anggota->name}}"/>
+                                                    <input type="text" id="nama" class="form-control" name="name" autocomplete="false" value="{{$anggota->name}}"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
@@ -183,7 +183,7 @@
     <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
     <!-- END: Page JS-->
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             var gagal = $('#type-gagal');
             if (gagal.length) {
@@ -198,6 +198,6 @@
                 });
             }
         });
-    </script>
+    </script> --}}
 
 @endsection
