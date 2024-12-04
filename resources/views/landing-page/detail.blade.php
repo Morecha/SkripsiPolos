@@ -14,6 +14,15 @@
     <!-- Style Sheet -->
     <link href="{{asset('assets/landing-page/food-delivery/css/nouislider.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/landing-page/food-delivery/css/range-slider.css')}}" rel="stylesheet">
+
+    <style>
+        .text-white {
+            color: #ffffff; /* Warna putih */
+        }
+        .info p {
+            color: #ffffff;
+        }
+    </style>
     @endsection
 
     @section('content')
@@ -43,355 +52,69 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        {{-- <ul class="row nav nav-pills" id="pills-tab" role="tablist">
-                            <li class="col-6 col-lg-3 nav-item pr-1">
-                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
-                                    <i class="lni lni-fresh-juice pill-icon"></i>
-                                    <span class="pill-name">Breakfast</span>
-                                </a>
-                            </li>
-                            <li class="col-6 col-lg-3 nav-item pl-1">
-                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                                    <i class="lni lni-chef-hat pill-icon"></i>
-                                    <span class="pill-name">Lunch</span>
-                                </a>
-                            </li>
-                            <li class="col-6 col-lg-3 nav-item pr-1">
-                                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">
-                                    <i class="lni lni-dinner pill-icon"></i>
-                                    <span class="pill-name">Dinner</span>
-                                </a>
-                            </li>
-                            <li class="col-6 col-lg-3 nav-item pl-1">
-                                <a class="nav-link" id="pills-deal-tab" data-toggle="pill" href="#pills-deal" role="tab" aria-controls="pills-contact" aria-selected="false">
-                                    <i class="lni lni-gift pill-icon"></i>
-                                    <span class="pill-name">Deals</span>
-                                </a>
-                            </li>
-                        </ul> --}}
-                        <div class="tab-content" id="pills-tabContent">
+                        <div>
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                 <div class="row">
                                     <div class="col-12 col-md-12">
                                         <div class="food-list ml-0">
                                             <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Surmai Chilli</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="info">
+                                                        <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}">
+                                                    </div>
                                                 </div>
-                                                <p class="rate">$85</p>
+                                                <div class="col-md-4">
+                                                    <div class="mb-5 mb-md-0"></div>
+                                                    <h4 class="main-heading text-white">{{$inventaris->judul}}</h4>
+                                                    <div class="mb-3 mb-md-5"></div>
+                                                    <p class="text-white">
+                                                        <h6 class="text-white">Status : {{$inventaris->status}}</h6><br>
+                                                        <h6 class="text-white">Pengarang : {{$inventaris->pengarang}}</h6><br>
+                                                        <h6 class="text-white">Penerbit : {{$inventaris->penerbit}}</h6><br>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h5 class="text-white">Deskripsi</h5><br>
+                                                    <p class="rate text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit vel nunc nec mollis. Vestibulum fringilla lacinia varius. Sed vulputate eleifend semper. Nulla purus neque, semper vel tellus sed, rutrum accumsan felis. Morbi vestibulum tortor ac orci accumsan elementum. Curabitur augue erat, aliquet eu tincidunt sed,</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mb-5"></div>
                                 <div class="row">
                                     <div class="col-12 col-md-8">
                                         <div class="food-list">
-                                            <div class="list-overlay"></div>
+                                            {{-- <div class="list-overlay"></div> --}}
                                             <div class="rates d-flex justify-content-between">
                                                 <div class="info">
-                                                    <h6 class="main-heading">Plain Pancakes</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
+                                                    <h6 class="main-heading">Keterangan</h6>
+                                                    <p class="text text-white">{!! $inventaris->deskripsi !!}</p>
                                                 </div>
-                                                <p class="rate">$30</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4">
                                         <div class="food-list">
-                                            <div class="list-overlay"></div>
+                                            {{-- <div class="list-overlay"></div> --}}
                                             <div class="rates d-flex justify-content-between">
                                                 <div class="info">
-                                                    <h6 class="main-heading">Plain Pancakes</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
+                                                    <h6 class="main-heading">History Peminjaman</h6>
+                                                    <p class="text text-white">
+                                                        <ul class="text-white">
+                                                            @foreach ($pivot as $item)
+                                                                {{$item->created_at->format('d-m-Y')}} - {{$item->buku->kode_buku}}<br>
+                                                            @endforeach
+                                                        </ul>
+                                                    </p>
                                                 </div>
-                                                <p class="rate">$30</p>
+                                                {{-- <p class="rate">$30</p> --}}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Plain Pancakes</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$30</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Sode Kadai</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$60</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Mutton Handi</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$25</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Twisted Sticks</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$70</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Garlic Chilli Karahi</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$50</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Surmai Chilli</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$85</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Toasted Jam</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$35</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Prawns Butter Garlic</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$80</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Plain Pancakes</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$70</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Organic Fruit Salad</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$120</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Twisted Sticks</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$85</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Toasted Jam</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$35</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Prawns Butter Garlic</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$80</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Plain Pancakes</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$70</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Organic Fruit Salad</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$120</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Malai Boti</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$30</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Sode Kadai</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$60</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Mutton Handi</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$25</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Twisted Sticks</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$70</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Garlic Chilli Karahi</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$50</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="pills-deal" role="tabpanel" aria-labelledby="pills-deal-tab">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Prawns Butter Garlic</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$80</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Plain Pancakes</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$70</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list ml-0">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Organic Fruit Salad</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$120</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Malai Boti</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$30</p>
-                                            </div>
-                                        </div>
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Sode Kadai</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$60</p>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>

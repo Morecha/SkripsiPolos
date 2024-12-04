@@ -16,7 +16,8 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        $peminjaman = peminjaman::withCount('pivot')
+        $peminjaman = peminjaman::with(['pivot.buku.inventaris'])
+                    ->withCount('pivot')
                     ->where('status', 'dipinjam')
                     ->get();
 
@@ -29,7 +30,15 @@ class PeminjamanController extends Controller
                 $p['id_anggota'] = anggota::find($p->id_anggota)->name;
             }
         }
-        // dd($peminjaman);
+
+        // $tes = [];
+        // foreach ($peminjamantes as $peminjaman) {
+        //     foreach ($peminjaman->pivot as $pivot) {
+        //         $tes[] = $pivot->buku->kode_buku;
+        //     }
+        // }
+        // dd($tes);
+
         return view('admin.peminjaman.list',compact('peminjaman'));
     }
 
@@ -305,7 +314,9 @@ class PeminjamanController extends Controller
         $peminjaman->detail = $request->detail;
         foreach($peminjaman->pivot as $p){
             $buku = buku::find($p->id_buku);
-            $buku->posisi = 'ada';
+            if($buku['posisi'] != 'hilang'){
+                $buku->posisi = 'ada';
+            }
             $buku->save();
         }
         $peminjaman->save();

@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/editors/quill/quill.snow.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/animate/animate.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/sweetalert2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/fonts/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/jstree.min.css')}}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Page CSS-->
@@ -19,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-quill-editor.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/page-blog.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-sweet-alerts.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-tree.css')}}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -51,7 +54,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Edit Presensi</h2>
+                            <h2 class="content-header-title float-start mb-0">Inventaris Create</h2>
                             @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
@@ -59,6 +62,14 @@
                         </div>
                     </div>
                 </div>
+                {{-- <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                    <div class="mb-1 breadcrumb-right">
+                        <div class="dropdown">
+                            <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="app-todo.html"><i class="me-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="me-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="me-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="me-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
+                        </div>
+                    </div>
+                </div> --}}
             </div>
             <div class="content-body">
                 <!-- Blog Edit -->
@@ -95,49 +106,51 @@
                                             </div>
                                         </div>
                                     @endif
-                                    <form action="{{route('presensi.update', $data->id)}}" method="POST" class="mt-2" enctype="multipart/form-data">
+                                    <form action="{{route('laporan.store')}}" method="POST" class="mt-2" enctype="multipart/form-data">
                                         @csrf
                                         {{-- first line --}}
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="id_user">Nama</label>
-                                                    <select name="id_user" id="id_user" class="form-select">
-                                                        <option value="" selected disabled>Pilih Nama</option>
-                                                        @foreach ($user as $user)
-                                                            @if ($data->status_presensi == 'kelompok')
-                                                                @if ($user->id == $data->id_user)
-                                                                    <option value="{{$user->id}}" selected>{{$user->name}}</option>
-                                                                @else
-                                                                    <option value="{{$user->id}}">{{$user->name}}</option>
-                                                                @endif
-                                                            @elseif($data->status_presensi == 'individu')
-                                                                @if($user->id == $data->id_anggota)
-                                                                    <option value="{{$user->id}}" selected>{{$user->name}}</option>
-                                                                @else
-                                                                    <option value="{{$user->id}}">{{$user->name}}</option>
-                                                                @endif
-                                                            @endif
-                                                        @endforeach
+                                                    <label class="form-label" for="jenis">Jenis Laporan</label>
+                                                    <select name="jenis" id="jenis" class="form-select">
+                                                        <option value="" disabled selected>-Pilih Jenis-</option>
+                                                        <option value="inventaris">Laporan Inventaris</option>
+                                                        <option value="peminjaman">Laporan Peminjaman</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-12">
+                                            <div class="col-md-3 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="emaila">jumlah</label>
-                                                    <input type="number" id="jumlah" class="form-control" name="jumlah" autocomplete="false" value="{{$data->jumlah}}" {{$data->status_presensi == 'individu' ? 'readonly' : ''}}/>
+                                                    <label class="form-label" for="dari">Dari</label>
+                                                    <div class="input-group form-password-toggle input-group-merge">
+                                                        <input type="date" class="form-control" id="dari" name="dari" placeholder="dari" autocomplete="false"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-12">
+                                                <div class="mb-2">
+                                                    <label class="form-label" for="hingga">Hingga</label>
+                                                    <div class="input-group form-password-toggle input-group-merge">
+                                                        <input type="date" class="form-control" id="hingga" name="hingga" placeholder="hingga" autocomplete="false"/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {{-- image --}}
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="mb-2">
+                                                    <label class="form-label" for="keterangan">Keterangan</label>
+                                                    <input type="text" class="form-control" id="keterangan" name="keterangan" placeholder="keterangan" autocomplete="false">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- second line --}}
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label">Keterangan</label><br>
-                                                    <textarea name="keterangan" id="textarea" cols="30" rows="5">
-                                                        {{$data->keterangan}}
-                                                    </textarea>
+                                                    <label class="form-label">Deskripsi (didalam laporan)</label><br>
+                                                    <textarea name="deskripsi" id="textarea" cols="30" rows="5"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -171,6 +184,8 @@
     <script src="{{asset('app-assets/vendors/js/editors/quill/highlight.min.js')}}"></script>
     <script src="{{asset('app-assets/vendors/js/editors/quill/quill.min.js')}}"></script> --}}
     <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/ui/jquery.sticky.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/jstree.min.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
@@ -178,6 +193,8 @@
     <script src="{{asset('app-assets/js/scripts/pages/page-portofolio-create.js')}}"></script>
     <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/extensions/ext-component-tree.js')}}"></script>
     <!-- END: Page JS-->
 
     <script>
@@ -197,24 +214,23 @@
         });
     </script>
 
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#textarea'), {
-                toolbar: [
-                    'heading', '|',
-                    'bold', 'italic', 'link', '|',
-                    'insertTable', '|',
-                    'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo', '|',
-                    'indent', 'outdent',
-                ],
-            })
-            .then(editor => {
-                editor.ui.view.editable.element.style.height = '250px';
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-
+<script>
+    ClassicEditor
+        .create(document.querySelector('#textarea'), {
+            toolbar: [
+                'heading', '|',
+                'bold', 'italic', 'link', '|',
+                'insertTable', '|',
+                'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo', '|',
+                'indent', 'outdent',
+            ],
+        })
+        .then(editor => {
+            editor.ui.view.editable.element.style.height = '250px';
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 
 @endsection

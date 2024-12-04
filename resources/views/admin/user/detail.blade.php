@@ -24,21 +24,6 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
     <!-- END: Custom CSS-->
-
-    <style>
-        .ck-editor__editable {
-            min-height: 250px;
-        }
-
-        .ck-content .image {
-            max-width: 10%;
-            margin: 20px auto;
-        }
-
-        .ck.ck-editor {
-            background-color: #7367f0;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -51,11 +36,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Edit Buku - {{$inventaris->judul}}</h2>
-                            @if (session('error') or $errors->any())
-                                <div id="type-gagal" class="alert alert-danger" style="display: none;">
-                                </div>
-                            @endif
+                            <h2 class="content-header-title float-start mb-0">User Detail</h2>
                         </div>
                     </div>
                 </div>
@@ -92,7 +73,7 @@
                                         </div>
                                     </div>
                                     <!-- Form -->
-                                    @if ($errors->any())
+                                    {{-- @if ($errors->any())
                                         <br>
                                         <div class="alert alert-danger" role="alert">
                                             <h4 class="alert-heading">Error</h4>
@@ -102,21 +83,21 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                    @endif
-                                    <form action="{{route('buku.update',['id'=>$inventaris->id,'id_buku'=>$data->id])}}" method="POST" class="mt-2" enctype="multipart/form-data">
-                                        @csrf
+                                    @endif --}}
+                                    <form action="" method="" class="mt-2" enctype="multipart/form-data">
+                                        {{-- @csrf --}}
                                         {{-- first line --}}
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="judul">Judul</label>
-                                                    <input type="text" id="judul" class="form-control" autocomplete="false" placeholder="judul" value="{{$inventaris->judul}}" disabled/>
+                                                    <label class="form-label" for="name">Nama</label>
+                                                    <input type="text" id="name" class="form-control" name="name" autocomplete="false" value="{{$user->name}}" disabled/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="judul">status Inventaris</label>
-                                                    <input type="text" id="judul" class="form-control" autocomplete="false" placeholder="judul" value="{{$inventaris->status}}" disabled/>
+                                                    <label class="form-label" for="emaila">Email</label>
+                                                    <input type="email" id="email" class="form-control" name="email" autocomplete="false" value="{{$user->email}}" disabled/>
                                                 </div>
                                             </div>
                                         </div>
@@ -124,59 +105,71 @@
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="pengarang">pengarang</label>
-                                                    <input type="text" class="form-control" id="pengarang" placeholder="pengarang" autocomplete="false" value="{{$inventaris->pengarang}}" disabled/>
+                                                    <label class="form-label" for="password">Password</label>
+                                                    <div class="input-group form-password-toggle input-group-merge">
+                                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="false" disabled/>
+                                                        <div class="input-group-text cursor-pointer">
+                                                            <i data-feather="eye"></i>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="penerbit">penerbit</label>
-                                                    <input type="text" class="form-control" id="penerbit" placeholder="penerbit" autocomplete="false" value="{{$inventaris->penerbit}}" disabled/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="divider divider-primary">
-                                            <div class="divider-text"><b>Isi data dibawah ini</b></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 col-12">
-                                                <div class="mb-2">
-                                                    <label class="form-label" for="kode_buku">kode Buku, Dewey Decimal Clasification</label>
-                                                    <input type="text" class="form-control" id="kode_buku" name="kode_buku" placeholder="kode_buku" autocomplete="false" value="{{$data->kode_buku}}" disabled/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-12">
-                                                <div class="mb-2">
-                                                    <label class="form-label" for="status">Status</label>
-                                                    <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false" @if($data->status != null) value="{{$data->status}}" @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 col-12">
-                                                <div class="mb-2">
-                                                    <label class="form-label" for="posisi">posisi</label>
-                                                    <select name="posisi" id="posisi" class="form-select">
-                                                        @if ($data->posisi == 'dimusnahkan')
-                                                            <option value="ada" >Termusnahkan</option>
-                                                        @endif
-                                                        <option value="ada" @if($data->posisi == 'ada') selected @endif>Tersedia</option>
-                                                        <option value="dipinjam" @if($data->posisi == 'dipinjam') selected @endif>Dipinjam</option>
-                                                        <option value="kelas" @if($data->posisi == 'kelas') selected @endif>Buku Kelas</option>
-                                                        <option value="hilang" @if($data->posisi == 'hilang') selected @endif>Hilang</option>
+                                                    <label class="form-label" for="role">Role</label>
+                                                    <select name="role" id="role" class="form-select" disabled>
+                                                        <option value="Admin"  @if($user->role == 'Admin') selected @endif>Petugas Perpustakaan</option>
+                                                        <option value="PenanggungJawab"  @if($user->role == 'PenanggungJawab') selected @endif>Penanggung Jawab Perpustakaan</option>
+                                                        <option value="KepalaSekolah"  @if($user->role == 'KepalaSekolah') selected @endif>Kepala Sekolah</option>
+                                                        <option value="Administrasi"  @if($user->role == 'Administrasi') selected @endif>Administrasi</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-md-6 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label">keterangan</label><br>
-                                                    <textarea name="keterangan" id="textarea" cols="30" rows="5">
-                                                        @if ($data->keterangan != null)
-                                                            {!! $data->keterangan !!}
-                                                        @endif
-                                                    </textarea>
+                                                    <label class="form-label" for="password">NIP</label>
+                                                    <div class="input-group form-password-toggle input-group-merge">
+                                                        <input type="text" class="form-control" id="NIP" name="NIP" placeholder="NIP" autocomplete="false" value="{{$user->NIP}}" disabled/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-2">
+                                                    <label class="form-label" for="password">Tanggal Lahir</label>
+                                                    <div class="input-group form-password-toggle input-group-merge">
+                                                        <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" placeholder="tanggal_lahir" autocomplete="false" value="{{substr($user->tanggal_lahir, 0, 10)}}" disabled/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-2">
+                                                    <label class="form-label" for="password">Alamat</label>
+                                                    <div class="input-group form-password-toggle input-group-merge">
+                                                        <input type="text" class="form-control" id="alamat" name="alamat" placeholder="alamat" autocomplete="false" value="{{$user->alamat}}" disabled/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-2">
+                                                    <label class="form-label" for="password">Jabatan</label>
+                                                    <div class="input-group form-password-toggle input-group-merge">
+                                                        <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="jabatan" autocomplete="false" value="{{$user->jabatan}}" disabled/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-sm-6">
+                                                <div class="mb-2">
+                                                    <label class="form-label" for="status">Status</label>
+                                                    <select name="status" id="status" class="form-select" disabled>
+                                                        <option value="aktif" @if($user->status == 'aktif') selected @endif>Aktif</option>
+                                                        <option value="non-aktif" @if($user->status == 'non-aktif') selected @endif>Non-Aktif</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -185,24 +178,20 @@
                                         <div class="row">
                                             <div class="col-12 mb-2">
                                                 <div class="border rounded p-2">
-                                                    <h4 class="mb-1">Buku Image</h4>
+                                                    <h4 class="mb-1">ProfileImage</h4>
                                                     <div class="d-flex flex-column flex-md-row">
-                                                        @if ($data->image == null)
-                                                            @if($inventaris->image != null)
-                                                                <img src="{{asset('storage/gambar/inventaris/'.$inventaris->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
-                                                            @else
-                                                                <img src="{{asset('app-assets/images/book/template/3fe9c8a1dbfb5b3910e306183ec5d669.jpg')}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
-                                                            @endif
+                                                        @if ($user->image != null)
+                                                            <img src="{{asset('storage/gambar/profil/'.$user->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image"/>
                                                         @else
-                                                            <img src="{{asset('storage/gambar/buku/'.$data->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
+                                                            <img src="{{asset('app-assets/images/portrait/small/avatar-s-11.jpg')}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
                                                         @endif
                                                         <div class="featured-info">
-                                                            <small class="text-muted">image max size 2mb.</small>
+                                                            <small class="text-muted">Required image resolution 400x400, image size 2mb.</small>
                                                             <p class="my-50">
-                                                                <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a>
+                                                                <a id="blog-image-text">C:\fakepath\banner.jpg</a>
                                                             </p>
                                                             <div class="d-inline-block">
-                                                                <input class="form-control" type="file" name="image" id="blogCustomFile" accept="image/*"/>
+                                                                <input class="form-control" type="file" name="image" id="blogCustomFile" accept="image/*"  disabled/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -210,12 +199,12 @@
                                             </div>
                                         </div>
                                         {{-- button --}}
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-12 mt-50">
                                                 <button type="submit" class="btn btn-primary me-1">Save Changes</button>
                                                 <a type="reset" class="btn btn-outline-secondary" href="{{url()->previous()}}">Cancel</a>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </form>
                                     <!--/ Form -->
                                 </div>
@@ -245,7 +234,6 @@
     {{-- <script src="{{asset('app-assets/js/scripts/pages/page-blog-edit.js')}}"></script> --}}
     <script src="{{asset('app-assets/js/scripts/pages/page-portofolio-create.js')}}"></script>
     <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
-    <script src="{{ asset('app-assets/vendors/ckeditor5/ckeditor.js') }}"></script>
     <!-- END: Page JS-->
 
     <script>
@@ -259,29 +247,56 @@
                     customClass: {
                         confirmButton: 'btn btn-primary'
                     },
-                    buttonsStyling: false
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    color: '#d0d2d6',     // Warna teks default Vuexy
+                    // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    iconColor: '#ea5455',
                 });
             }
         });
     </script>
 
-<script>
-    ClassicEditor
-        .create(document.querySelector('#textarea'), {
-            toolbar: [
-                'heading', '|',
-                'bold', 'italic', 'link', '|',
-                'insertTable', '|',
-                'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo', '|',
-                'indent', 'outdent',
-            ],
-        })
-        .then(editor => {
-            editor.ui.view.editable.element.style.height = '250px';
-        })
-        .catch(error => {
-            console.error(error);
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-warning');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Warning !',
+                    text: '{{ session('warning') }}',
+                    icon: 'warning',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
         });
-</script>
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-success');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Success !',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
 
 @endsection

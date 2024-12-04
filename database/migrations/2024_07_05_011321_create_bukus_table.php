@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('id_inven')->unsigned();
             $table->string('kode_buku');
             $table->text('keterangan')->nullable();
-            $table->enum('posisi', ['dipinjam','ada','kelas']);
+            $table->enum('posisi', ['dipinjam','ada','kelas','dimusnahkan','hilang']);
             $table->string('status')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();

@@ -20,11 +20,9 @@ class PresensiController extends Controller
     public function index()
     {
         $data = presensi::all();
-        $testing = DB::table('presensis')
-            ->leftJoin('anggotas', 'presensis.id_anggota', '=', 'anggotas.id')
-            ->leftJoin('users', 'presensis.id_user', '=', 'users.id')
-            ->select('presensis.id as id_presensi', 'presensis.*', 'anggotas.*', 'users.*')
-            ->get();
+        $testing = Presensi::with(['anggota', 'user'])
+                    ->select('presensis.id as id_presensi', 'presensis.*')
+                    ->get();
         // dd($testing);
         return view('admin.presensi-kelompok.list',compact('testing'));
     }
@@ -60,13 +58,17 @@ class PresensiController extends Controller
         if($data['status_presensi'] == 'kelompok')
         {
             $user = User::whereIn('role', ['Admin', 'PenanggungJawab'])->get();
+            $pengguna = User::find($data['id_user']);
         }else{
             $user = anggota::all();
+            $pengguna = anggota::find($data['id_anggota']);
         }
-        return view('admin.presensi-kelompok.edit',compact('data','user'));
+        // dd($user,$pengguna);
+        return view('admin.presensi-kelompok.edit',compact('data','user','pengguna'));
     }
 
     public function update(Request $request, $id){
+        dd($request);
         $request->validate([
             'id_user' => 'required',
             'jumlah' => 'required',

@@ -148,39 +148,44 @@
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-md-6 mb-1">
-                                                <label class="form-label" for="select2-nested">Kode Buku</label>
-                                                <div id="kodeBukuContainer">
-                                                    <!-- Wrapper untuk duplikasi select -->
-                                                    @foreach ($dipinjam->pivot as $index => $item)
+                                            <label class="form-label" for="select2-nested">Kode Buku</label>
+                                            <div id="kodeBukuContainer">
+                                                <!-- Wrapper untuk duplikasi select -->
+                                                @foreach ($dipinjam->pivot as $index => $item)
                                                     <div class="kode-buku-group mb-2">
-                                                        <select class="select2 form-select" name="id_buku[]" id="select2-nested-{{$index}}">
-                                                            <option value="{{$item->buku->id}}" selected>{{$item->buku->kode_buku}}</option>
-                                                                @php
-                                                                    $judul = '';
-                                                                @endphp
-                                                                @foreach ($buku as $bukuItem)
-                                                                    @if ($judul != $bukuItem->inventaris->judul)
-                                                                        <optgroup label="{{$bukuItem->inventaris->judul}}">
-                                                                    @endif
-                                                                    <option value="{{$bukuItem->id}}" @if ($bukuItem->posisi != 'ada') disabled @endif>
-                                                                        {{$bukuItem->kode_buku}}
-                                                                    </option>
-                                                                    @if ($judul != $bukuItem->inventaris->judul)
-                                                                        </optgroup>
-                                                                        @php
-                                                                            $judul = $bukuItem->inventaris->judul;
-                                                                        @endphp
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <select class="select2 form-select" name="id_buku[]" id="select2-nested-{{$index}}">
+                                                                    <option value="{{$item->buku->id}}" selected>{{$item->buku->kode_buku}}</option>
+                                                                    @php
+                                                                        $judul = '';
+                                                                    @endphp
+                                                                    @foreach ($buku as $bukuItem)
+                                                                        @if ($judul != $bukuItem->inventaris->judul)
+                                                                            <optgroup label="{{$bukuItem->inventaris->judul}}">
+                                                                        @endif
+                                                                        <option value="{{$bukuItem->id}}" @if ($bukuItem->posisi != 'ada') disabled @endif>
+                                                                            {{$bukuItem->kode_buku}}
+                                                                        </option>
+                                                                        @if ($judul != $bukuItem->inventaris->judul)
+                                                                            </optgroup>
+                                                                            @php
+                                                                                $judul = $bukuItem->inventaris->judul;
+                                                                            @endphp
+                                                                        @endif
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <button type="button" class="btn btn-danger remove-btn" style="white-space: nowrap;" onclick="removeKodeBuku(this)">Hapus</button>
+                                                            </div>
                                                         </div>
-                                                    @endforeach
-                                                </div>
-                                                <!-- Button untuk menambah kolom baru -->
-                                                <button type="button" class="btn btn-secondary mt-2" id="addKodeBuku">Tambah Kode Buku</button>
+                                                    </div>
+                                                @endforeach
                                             </div>
+                                            <!-- Button untuk menambah kolom baru -->
                                         </div>
+                                        <button type="button" class="btn btn-secondary mb-2" id="addKodeBuku">Tambah Kode Buku</button>
 
                                         <div class="row">
                                             <div class="col-12">
@@ -350,10 +355,34 @@
 
             // Inisialisasi ulang Select2 untuk elemen yang baru ditambahkan
             initializeSelect2();
+            checkRemoveButton();
         });
+
+        function removeKodeBuku(button) {
+            // Cari elemen .kode-buku-group yang bersangkutan dengan tombol Hapus yang diklik
+            var kodeBukuGroup = button.closest('.kode-buku-group');
+
+            // Hapus elemen .kode-buku-group
+            kodeBukuGroup.remove();
+        }
+
+        function checkRemoveButton() {
+            const removeButtons = document.querySelectorAll('.remove-btn');
+            const container = document.getElementById('kodeBukuContainer');
+
+            // Jika hanya ada satu elemen, nonaktifkan tombol hapus pertama
+            if (container.children.length === 1) {
+                removeButtons[0].setAttribute('disabled', true);
+            } else {
+                removeButtons.forEach(button => {
+                    button.removeAttribute('disabled');
+                });
+            }
+        }
 
         // Inisialisasi Select2 pada elemen yang ada saat pertama kali halaman dimuat
         initializeSelect2();
+        checkRemoveButton();
     </script>
 
     <script>

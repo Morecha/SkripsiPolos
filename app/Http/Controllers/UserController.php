@@ -69,9 +69,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function detail(string $id)
     {
-        //
+        $user = User::find($id);
+        return view('admin.user.detail',compact('user'));
     }
 
     /**

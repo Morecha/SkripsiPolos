@@ -20,14 +20,20 @@ class InventarisController extends Controller
     }
 
     public function index(){
-        $data = inventaris::all();
-        $bukus_count = Buku::select('id_inven', DB::raw('COUNT(*) as buku_count'))
-            ->groupBy('id_inven')
+        // $data = inventaris::all();
+        $data = inventaris::with('buku')
+            ->withCount('buku')
             ->get();
-        foreach ($data as $inventaris) {
-            $bukuCount = $bukus_count->firstWhere('id_inven', $inventaris->id);
-            $inventaris->buku_count = $bukuCount ? $bukuCount->buku_count : 0;
-        }
+
+        // $bukus_count = Buku::select('id_inven', DB::raw('COUNT(*) as buku_count'))
+        //     ->groupBy('id_inven')
+        //     ->get();
+
+        // foreach ($data as $inventaris) {
+        //     $bukuCount = $bukus_count->firstWhere('id_inven', $inventaris->id);
+        //     $inventaris->buku_count = $bukuCount ? $bukuCount->buku_count : 0;
+        // }
+
         return view('admin.inventaris.list',compact('data'));
     }
 

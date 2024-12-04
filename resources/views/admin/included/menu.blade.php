@@ -101,7 +101,7 @@
                     <ul class="menu-content">
                         <li><a class="d-flex align-items-center" href=""><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
                         </li>
-                        <li><a class="d-flex align-items-center" href=""><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
+                        <li><a class="d-flex align-items-center" href="{{ route('laporan.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
                         </li>
                         {{-- <li><a class="d-flex align-items-center" href="{{route('buku.cetak')}}" target="_blank"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">testing</span></a>
                         </li> --}}

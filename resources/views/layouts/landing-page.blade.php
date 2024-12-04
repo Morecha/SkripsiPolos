@@ -62,7 +62,7 @@
                                 <div class="navbar-nav ml-auto mr-auto">
                                     <a class="nav-link link" href="{{route('landing-page.searching')}}">Cari Buku</a>
                                     <a class="nav-link link" href="{{route('landing-page.list')}}">Daftar Buku</a>
-                                    <a class="nav-link scroll link" href="#about-sec">Presensi</a>
+                                    <a class="nav-link link" href="{{route('landing-page.presensi.individu')}}">Presensi</a>
                                 </div>
                             </div>
                         </nav>
@@ -313,7 +313,7 @@
 <!-- custom script-->
 <script src="{{asset('assets/landing-page/food-delivery/js/slick.min.js')}}"></script>
 <script src="{{asset('assets/landing-page/food-delivery/js/notify.min.js')}}"></script>
-<script src="{{asset('assets/landing-page/vendor/js/contact_us.js')}}"></script>
+{{-- <script src="{{asset('assets/landing-page/vendor/js/contact_us.js')}}"></script> --}}
 <script src="{{asset('assets/landing-page/food-delivery/js/script.js')}}"></script>
 @yield('footer-script')
 

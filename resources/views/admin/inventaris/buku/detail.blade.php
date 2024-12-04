@@ -51,11 +51,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Edit Buku - {{$inventaris->judul}}</h2>
-                            @if (session('error') or $errors->any())
-                                <div id="type-gagal" class="alert alert-danger" style="display: none;">
-                                </div>
-                            @endif
+                            <h2 class="content-header-title float-start mb-0">Detail Buku - {{$inventaris->judul}} - {{$data->kode_buku}}</h2>
                         </div>
                     </div>
                 </div>
@@ -92,19 +88,9 @@
                                         </div>
                                     </div>
                                     <!-- Form -->
-                                    @if ($errors->any())
-                                        <br>
-                                        <div class="alert alert-danger" role="alert">
-                                            <h4 class="alert-heading">Error</h4>
-                                            <div class="alert-body">
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    @endif
-                                    <form action="{{route('buku.update',['id'=>$inventaris->id,'id_buku'=>$data->id])}}" method="POST" class="mt-2" enctype="multipart/form-data">
-                                        @csrf
+
+                                    <form action="" method="" class="mt-2" enctype="multipart/form-data">
+                                        {{-- @csrf --}}
                                         {{-- first line --}}
                                         <div class="row">
                                             <div class="col-md-6 col-12">
@@ -148,7 +134,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="status">Status</label>
-                                                    <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false" @if($data->status != null) value="{{$data->status}}" @endif>
+                                                    <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false" @if($data->status != null) value="{{$data->status}}" @endif disabled>
                                                 </div>
                                             </div>
                                         </div>
@@ -156,14 +142,11 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="posisi">posisi</label>
-                                                    <select name="posisi" id="posisi" class="form-select">
-                                                        @if ($data->posisi == 'dimusnahkan')
-                                                            <option value="ada" >Termusnahkan</option>
-                                                        @endif
+                                                    <select name="posisi" id="posisi" class="form-select" disabled>
+                                                        <option value="hilang" @if($data->posisi == 'hilang') selected @endif>Hilang</option>
                                                         <option value="ada" @if($data->posisi == 'ada') selected @endif>Tersedia</option>
                                                         <option value="dipinjam" @if($data->posisi == 'dipinjam') selected @endif>Dipinjam</option>
                                                         <option value="kelas" @if($data->posisi == 'kelas') selected @endif>Buku Kelas</option>
-                                                        <option value="hilang" @if($data->posisi == 'hilang') selected @endif>Hilang</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -172,11 +155,11 @@
                                             <div class="col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label">keterangan</label><br>
-                                                    <textarea name="keterangan" id="textarea" cols="30" rows="5">
-                                                        @if ($data->keterangan != null)
-                                                            {!! $data->keterangan !!}
-                                                        @endif
-                                                    </textarea>
+                                                    @if ($data->keterangan != null)
+                                                        {!! $data->keterangan !!}
+                                                    @else
+                                                        <p class="text-muted">tidak ada keterangan</p>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -202,7 +185,7 @@
                                                                 <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a>
                                                             </p>
                                                             <div class="d-inline-block">
-                                                                <input class="form-control" type="file" name="image" id="blogCustomFile" accept="image/*"/>
+                                                                <input class="form-control" type="file" name="image" id="blogCustomFile" accept="image/*" disabled/>
                                                             </div>
                                                         </div>
                                                     </div>

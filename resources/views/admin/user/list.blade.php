@@ -96,6 +96,11 @@
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item"
+                                                                    href="{{ route('user.detail', $user->id) }}">
+                                                                    <i data-feather="eye" class="me-50"></i>
+                                                                    <span>Detail</span>
+                                                                </a>
+                                                                <a class="dropdown-item"
                                                                     href="{{ route('user.edit', $user->id) }}">
                                                                     <i data-feather="edit-2" class="me-50"></i>
                                                                     <span>Edit</span>
@@ -243,7 +248,11 @@
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-outline-danger ms-1'
                 },
-                buttonsStyling: false
+                buttonsStyling: false,
+                background: '#283046', // Warna latar belakang Vuexy Dark
+                color: '#d0d2d6',     // Warna teks default Vuexy
+                // Opsional: Sesuaikan warna ikon untuk tema gelap
+                iconColor: '#ea5455',
             }).then(function(result) {
                 if (result.value) {
                     // Tidak lagi submit form secara otomatis di sini
@@ -256,7 +265,11 @@
                         icon: 'error',
                         customClass: {
                             confirmButton: 'btn btn-success'
-                        }
+                        },
+                        background: '#283046', // Warna latar belakang Vuexy Dark
+                        color: '#d0d2d6',     // Warna teks default Vuexy
+                        // Opsional: Sesuaikan warna ikon untuk tema gelap
+                        iconColor: '#ea5455',
                     });
                 }
             });

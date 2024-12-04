@@ -53,6 +53,14 @@
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
                             <h2 class="content-header-title float-start mb-0">Inventaris Buku - {{ $inventaris->judul }}</h2>
+                            @if (session('error') or $errors->any())
+                                <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                                </div>
+                            @endif
+                            @if (session('warning'))
+                                <div id="type-warning" class="alert alert-warning" style="display: none;">
+                                </div>
+                            @endif
                             @if (session('success'))
                                 <div id="type-success" class="alert alert-success" style="display: none;">
                                 </div>
@@ -104,9 +112,19 @@
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item"
+                                                                    href="{{ route('buku.detail',['id'=>$inventaris->id, 'id_buku'=>$data->id]) }}">
+                                                                    <i data-feather="eye" class="me-50"></i>
+                                                                    <span>Detail</span>
+                                                                </a>
+                                                                <a class="dropdown-item"
                                                                     href="{{ route('buku.edit',['id'=>$inventaris->id, 'id_buku'=>$data->id]) }}">
                                                                     <i data-feather="edit-2" class="me-50"></i>
                                                                     <span>Edit</span>
+                                                                </a>
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('buku.pemusnahan',['id'=>$inventaris->id, 'id_buku'=>$data->id]) }}">
+                                                                    <i data-feather="power" class="me-50"></i>
+                                                                    <span>Pemusnahan</span>
                                                                 </a>
                                                                 <a class="dropdown-item delete-button"
                                                                     href="{{route('buku.delete', ['id'=>$inventaris->id, 'id_buku'=>$data->id])}}"
@@ -174,6 +192,27 @@
                     // color: '#d0d2d6',     // Warna teks default Vuexy
                     // // Opsional: Sesuaikan warna ikon untuk tema gelap
                     // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-gagal');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Gagal !',
+                    text: '{{ session('error') }}',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    color: '#d0d2d6',     // Warna teks default Vuexy
+                    // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    iconColor: '#ea5455',
                 });
             }
         });

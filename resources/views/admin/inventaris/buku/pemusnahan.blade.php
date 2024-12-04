@@ -51,7 +51,7 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Edit Buku - {{$inventaris->judul}}</h2>
+                            <h2 class="content-header-title float-start mb-0">Pemusnahan Buku - {{$inventaris->judul}}</h2>
                             @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
@@ -103,7 +103,7 @@
                                             </div>
                                         </div>
                                     @endif
-                                    <form action="{{route('buku.update',['id'=>$inventaris->id,'id_buku'=>$data->id])}}" method="POST" class="mt-2" enctype="multipart/form-data">
+                                    <form action="{{route('buku.pemusnahan.update',['id'=>$inventaris->id,'id_buku'=>$data->id])}}" method="POST" class="mt-2" enctype="multipart/form-data">
                                         @csrf
                                         {{-- first line --}}
                                         <div class="row">
@@ -147,7 +147,7 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label" for="status">Status</label>
+                                                    <label class="form-label" for="status">Status<span style="color: red;">*</span></label>
                                                     <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false" @if($data->status != null) value="{{$data->status}}" @endif>
                                                 </div>
                                             </div>
@@ -156,14 +156,11 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="posisi">posisi</label>
-                                                    <select name="posisi" id="posisi" class="form-select">
-                                                        @if ($data->posisi == 'dimusnahkan')
-                                                            <option value="ada" >Termusnahkan</option>
-                                                        @endif
-                                                        <option value="ada" @if($data->posisi == 'ada') selected @endif>Tersedia</option>
-                                                        <option value="dipinjam" @if($data->posisi == 'dipinjam') selected @endif>Dipinjam</option>
-                                                        <option value="kelas" @if($data->posisi == 'kelas') selected @endif>Buku Kelas</option>
-                                                        <option value="hilang" @if($data->posisi == 'hilang') selected @endif>Hilang</option>
+                                                    <select name="posisi" id="posisi" class="form-select" disabled>
+                                                        <option value="dimusnahkan" selected>termusnahkan</option>
+                                                        <option value="ada">Tersedia</option>
+                                                        <option value="dipinjam">Dipinjam</option>
+                                                        <option value="kelas">Buku Kelas</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -171,7 +168,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="mb-2">
-                                                    <label class="form-label">keterangan</label><br>
+                                                    <label class="form-label">keterangan<span style="color: red;">*</span></label><br>
                                                     <textarea name="keterangan" id="textarea" cols="30" rows="5">
                                                         @if ($data->keterangan != null)
                                                             {!! $data->keterangan !!}
@@ -185,7 +182,7 @@
                                         <div class="row">
                                             <div class="col-12 mb-2">
                                                 <div class="border rounded p-2">
-                                                    <h4 class="mb-1">Buku Image</h4>
+                                                    <h4 class="mb-1">Buku Image<span style="color: red;">*</span></h4>
                                                     <div class="d-flex flex-column flex-md-row">
                                                         @if ($data->image == null)
                                                             @if($inventaris->image != null)

@@ -15,22 +15,31 @@
 
         <style>
             .item-img-holder {
-                width: 347px; /* Lebar container */
-                height: 260px; /* Tinggi container */
+                width: 100%; /* Atur sesuai kebutuhan layout */
+                height: 200px; /* Sesuaikan dengan tinggi yang diinginkan */
                 position: relative;
                 overflow: hidden; /* Sembunyikan bagian gambar yang kelebihan */
-                border-radius: 8px; /* Jika ingin gambar dengan sudut membulat */
+                border-radius: 8px; /* Opsional untuk sudut membulat */
             }
 
-            .item-img-holder img.item-image {
-                width: 100%; /* Gambar mengisi lebar container */
-                height: 100%; /* Gambar mengisi tinggi container */
-                object-fit: cover; /* Potong gambar agar sesuai ukuran */
+            .item-img-holder img.portfolio-image {
+                width: 100%; /* Gambar memenuhi lebar */
+                height: 100%; /* Gambar memenuhi tinggi */
+                object-fit: cover; /* Gambar diatur untuk menyesuaikan container */
             }
+
         </style>
     @endsection
 
     @section('content')
+
+        {{-- session --}}
+        @if (session('error') or $errors->any())
+            <div id="type-gagal" class="alert alert-danger" style="display: none;">
+            </div>
+        @endif
+        {{-- endsession --}}
+
         <!--Banner Sec start-->
         <section class="main-banner cursor-light bg-1" id="main-banner">
             <h4 class="d-none">heading</h4>
@@ -228,17 +237,16 @@
                 <div class="row">
                     <!--<div class="col-12" id="result"></div>-->
                     <div class="col-12 wow fadeInUp">
-                        <form class="row contact-form rounded-pill link no-gutters" id="contact-form-data">
-
+                        <form action="{{route('landing-page.list')}}" method="GET" class="row contact-form rounded-pill link no-gutters" id="contact-form-data">
                             <div class="col-12 col-lg-8 d-inline-block d-lg-flex align-items-center">
                                 <div class="form-group">
                                     <label><i class="fas fa-map-marker-alt" aria-hidden="true"></i></label>
-                                    <input type="text" name="userName" placeholder="Kata Kunci" class="form-control">
+                                    <input type="text" name="search" placeholder="Kata Kunci" class="form-control">
                                 </div>
                             </div>
                             <div class="col-12 col-lg-4">
-                                <a href="food-delivery/restaurant-listing.html" class="btn main-btn rounded-pill w-100 contact_btn"><i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i>CEK BUKU
-                                </a>
+                                <button type="submit" class="btn main-btn rounded-pill w-100 contact_btn"><i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i>CEK BUKU
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -266,7 +274,7 @@
                                             <div class="mini-service-card">
                                                 <i class="las la-swatchbook"></i>
                                                 <h4 class="number">{{$buku}}</h4>
-                                                <p class="text">Buku yang diMiliki</p>
+                                                <p class="text">Buku yang dimiliki</p>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4">
@@ -293,7 +301,7 @@
                             @foreach ($inventarisRekomendasi as $p)
                                 <div class="col-12 col-md-6 col-lg-4 portfolio-item">
                                     <div class="portfolio-inner-content">
-                                        <a href="food-delivery/restaurant-detail.html">
+                                        <a href="{{ route('landing-page.detail', $p->id) }}">
                                             <div class="item-img-holder position-relative">
                                                 @if ($p->image != null)
                                                     <img src="{{asset('storage/gambar/inventaris/'.$p->image)}}">
@@ -305,6 +313,7 @@
                                             <div class="item-detail-area">
                                                 <div class="d-flex justify-content-between">
                                                     <h4 class="item-name">{{$p->judul}}</h4>
+
                                                 </div>
                                                 <p class="text">{{$p->pengarang}}</p>
                                             </div>
@@ -327,7 +336,7 @@
         <!--Food Gallery End end-->
 
         <!--Testimonial sec start-->
-        <section id="client" class="testimonial padding-top padding-bottom position-relative parallax">
+        {{-- <section id="client" class="testimonial padding-top padding-bottom position-relative parallax">
             <div class="bg-overlay"></div>
             <div class="container">
                 <div class="row">
@@ -404,7 +413,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
         <!--Testimonial sec End-->
 
         <!--App D sec start-->
@@ -495,4 +504,26 @@
     @section('footer-script')
         <!-- custom script-->
         <script src="{{asset('assets/landing-page/food-delivery/js/select2.min.js')}}"></script>
+        <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+
+        <script>
+            $(document).ready(function() {
+                var gagal = $('#type-gagal');
+                if (gagal.length) {
+                    Swal.fire({
+                        title: 'Gagal !',
+                        text: '{{ session('error') }}',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-primary'
+                        },
+                        buttonsStyling: false,
+                        background: '#283046', // Warna latar belakang Vuexy Dark
+                        color: '#d0d2d6',     // Warna teks default Vuexy
+                        // Opsional: Sesuaikan warna ikon untuk tema gelap
+                        iconColor: '#ea5455',
+                    });
+                }
+            });
+        </script>
     @endsection

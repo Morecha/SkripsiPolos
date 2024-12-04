@@ -70,12 +70,18 @@
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
                                                     <td>{{ $data->status_presensi }}</td>
-                                                    <td>{{ $data->name }}</td>
+                                                    <td>
+                                                        @if ($data->status_presensi == 'kelompok')
+                                                                {{ $data->user->name }}
+                                                        @elseif ($data->status_presensi == 'individu')
+                                                                {{ $data->anggota->name }}
+                                                        @endif
+                                                    </td>
                                                     <td>
                                                         @if ($data->status_presensi == 'kelompok')
                                                             {{$data->jumlah}}
                                                         @else
-                                                            <p>1</p>
+                                                            1
                                                         @endif
                                                     </td>
                                                     <td>{{ Str::limit(strip_tags($data->keterangan), 100, '...') }}</td>
@@ -234,7 +240,11 @@
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-outline-danger ms-1'
                 },
-                buttonsStyling: false
+                buttonsStyling: false,
+                background: '#283046', // Warna latar belakang Vuexy Dark
+                color: '#d0d2d6',     // Warna teks default Vuexy
+                // Opsional: Sesuaikan warna ikon untuk tema gelap
+                iconColor: '#ea5455',
             }).then(function(result) {
                 if (result.value) {
                     // Tidak lagi submit form secara otomatis di sini
@@ -247,7 +257,11 @@
                         icon: 'error',
                         customClass: {
                             confirmButton: 'btn btn-success'
-                        }
+                        },
+                        background: '#283046', // Warna latar belakang Vuexy Dark
+                        color: '#d0d2d6',     // Warna teks default Vuexy
+                        // Opsional: Sesuaikan warna ikon untuk tema gelap
+                        iconColor: '#ea5455',
                     });
                 }
             });

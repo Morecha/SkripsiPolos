@@ -38,7 +38,7 @@ class BukuController extends Controller
                 ];
             }
         }else{
-            //klo buku ada di inven
+            //klo inven telah memiliki buku sebelumnya di dalamnya
             $string = $buku->last()->kode_buku;
             $pisah = explode('-', $string);
             $akhir = intval($pisah[3])+1;
@@ -49,7 +49,7 @@ class BukuController extends Controller
                 //kondisi klo disana regenerate tetapi kode invennya beda
                 //harus cek posisi buku (agar tidak crash dengan buku yang dipinjam)
                 $diluar = $buku->filter(function ($item) {
-                    return $item->posisi != 'ada';
+                    return $item->posisi != 'ada' || $item->posisi != 'dimusnahkan';
                 })->count();
 
                 // 1. rubah dulu data yang ada.
@@ -139,17 +139,59 @@ class BukuController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function pemusnahan(string $id, string $id_buku)
     {
-        //
+        $data = buku::find($id_buku);
+
+        if($data['posisi'] != 'ada' || 'dimusnahkan'){
+            return redirect()->back()->with('error', 'Buku tidak berada diperpustakaan');
+        }
+
+        $inventaris = inventaris::find($id);
+
+        return view('admin.inventaris.buku.pemusnahan', compact('data', 'inventaris'));
+    }
+
+    public function pemusnahan_update(Request $request, string $id, string $id_buku){
+        $request->validate([
+            'status' => 'required',
+            'keterangan' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $data = buku::find($id_buku);
+
+        $input = $request->all();
+        $input['posisi'] = 'dimusnahkan';
+
+        if($request->file('image')){
+            $destinationPath = 'gambar/buku';
+            $profileImage = date('YmdHis') . "." . $request->image->getClientOriginalExtension();
+
+            if($data->image != null){
+                $oldImage = $data->image;
+                if(file_exists(public_path('storage/gambar/buku/'.$oldImage))){
+                    unlink(public_path('storage/gambar/buku/'.$oldImage));
+                }
+            }
+
+            $request->file('image')->storeAs($destinationPath, $profileImage,'public');
+            $input['image'] = $profileImage;
+        }else{
+            unset($input['image']);
+        }
+
+        $data->update($input);
+        return redirect()->route('buku.list', $id)->with('success', 'Data Buku berhasil dimusnahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function detail(string $id, string $id_buku){
+        $data = buku::find($id_buku);
+        $inventaris = inventaris::find($id);
+        return view('admin.inventaris.buku.detail', compact('data', 'inventaris'));
     }
 
     /**

@@ -79,27 +79,27 @@
                 {!! $request->deskripsi !!}
             </p>
             <br>
-            <h1 class="text-center pb-1">Inventaris</h1>
+            <h1 class="text-center pb-1">Peminjaman</h1>
             <div class="row">
                 <div class="col-md-3">
-                    Total Inventaris: {{$totalInventaris}}
+                    Total Peminjaman: {{$total_peminjaman}}
                 </div>
                 <div class="col-md-3">
-                    Total Buku: {{$totalBuku}}
+                    Total Pengembalian: {{$total_pengembalian}}
                 </div>
                 <div class="col-md-3">
-                    Total Buku Pengadaan : {{$inventarisDariPengadaan->sum('buku_count')}}
+                    Total Buku Telah Dipinjam: {{$total_buku_dipinjam}}
                 </div>
                 <div class="col-md-3">
-                    Total Buku Sumbangan: {{$inventarisTidakDariPengadaan->sum('buku_count')}}
+                    Total Buku Hilang: {{$total_buku_hilang}}
                 </div>
             </div>
             <div class="row pb-2">
                 <div class="col-md-3">
-                    Total Jenis Inventaris Periode: {{count($dataInventarisBuku)}}
+                    Total Peminjaman Periode: {{$total_peminjaman_periode}}
                 </div>
                 <div class="col-md-3">
-                    Total Buku Periode: {{array_sum(array_column($dataInventarisBuku, 'buku_count'))}}
+                    Total Pengembalian Periode: {{$total_pengembalian_periode}}
                 </div>
                 <div class="col-md-3">
                     Periodo Mulai dari : {{$request->dari}}
@@ -108,44 +108,48 @@
                     Periode Hingga saat : {{$request->hingga}}
                 </div>
                 <div class="col-md-12">
-                    Total Buku Pengadaan Periode: {{$jumlahJenisPeriode['pengadaan']}}
+                    Total Buku Dipinjam Periode: {{$total_buku_dipinjam_periode}}
                 </div>
                 <div class="col-md-12">
-                    Total Buku Sumbangan Pediode: {{$jumlahJenisPeriode['sumbangan']}}
+                    Total Buku Hilang Pediode: {{$total_buku_hilang_periode}}
                 </div>
             </div>
             <div class="row pb-4">
-                <h2>Tabel inventaris</h2>
+                <h2>Tabel Peminjaman</h2>
                 <table class="table pt-3">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Jenis Inventaris</th>
-                            <th>Nama Buku</th>
+                            <th>Jenis Peminjaman</th>
+                            <th>Nama Peminjam</th>
                             <th>Jumlah Buku</th>
-                            <th>Penganrang</th>
-                            <th>Penerbit</th>
-                            <th>tanggal diterima</th>
+                            <th>Lama Peminjaman</th>
+                            <th>Status</th>
+                            <th>tanggal peminjaman</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $no = 1;
                         @endphp
-                        @foreach ($dataInventarisBuku as $key => $i)
+                        @foreach ($peminjaman as $d)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $i['tipe'] }}</td>
-                                <td>{{$i['judul']}}</td>
-                                <td>{{$i['buku_count']}}</td>
-                                <td>{{$i['pengarang']}}</td>
-                                <td>{{ $i['penerbit'] }}</td>
-                                <td>{{ \Carbon\Carbon::parse($i['created_at'])->format('d-m-Y') }}</td>
+                                <td>{{$d['jenis_peminjaman']}}</td>
+                                @if($d['jenis_peminjaman'] == 'kelompok')
+                                    <td>{{$d['id_user']}}</td>
+                                @else
+                                    <td>{{$d['id_anggota']}}</td>
+                                @endif
+                                <td>{{$d['pivot_count']}}</td>
+                                <td>{{$d['lama_peminjaman']}}</td>
+                                <td>{{$d['status']}}</td>
+                                <td>{{ Carbon\Carbon::parse($d['created_at'])->format('d-m-Y')}}</td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
+            </div>
 
 
         </div>

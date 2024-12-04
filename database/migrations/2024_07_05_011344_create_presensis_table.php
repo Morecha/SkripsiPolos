@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('id_anggota')->unsigned()->nullable();
             $table->bigInteger('id_user')->unsigned()->nullable();
             $table->bigInteger('jumlah'); //buat kelompok
-            $table->text('keterangan');
+            $table->text('keterangan')->nullable();
             $table->timestamps();
 
             $table->foreign('id_anggota')->references('id')->on('anggotas')->onDelete('cascade')->onUpdate('cascade');

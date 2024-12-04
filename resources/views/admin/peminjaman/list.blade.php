@@ -39,6 +39,9 @@
         .custom-list .label {
             min-width: 100px; /* Adjust width as needed */
         }
+        .hidden {
+            display: none;
+        }
     </style>
 @endsection
 
@@ -87,6 +90,7 @@
                                                 <th>Nama Peminjam</th>
                                                 <th>jumlah buku</th>
                                                 <th>Lama Peminjaman</th>
+                                                <th>Kode Buku</th>
                                                 <th>Mulai Peminjaman</th>
                                                 <th>options</th>
                                             </tr>
@@ -106,6 +110,35 @@
                                                     @endif
                                                     <td>{{ $data->pivot_count }}</td>
                                                     <td>{{ $data->lama_peminjaman }}</td>
+                                                    {{-- <td>{{$data->id}}</td> --}}
+                                                    <td>
+                                                        <div class="scrolling-inside-modal">
+                                                            <!-- Button trigger modal -->
+                                                            <button type="button" class="btn btn-sm btn-flat-info waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable{{ $data->id }}">
+                                                                Detail
+                                                            </button>
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="exampleModalScrollable{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-scrollable">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <ul class="custom-list">
+                                                                                    @foreach ($data->pivot as $q)
+                                                                                        {{-- {{$q->kode_buku}} --}}
+                                                                                        <li><span class="label">{{$q->buku->kode_buku}}</span></li>
+                                                                                    @endforeach
+                                                                            </ul>
+                                                                            <br>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     <td>{{ $data->created_at }}</td>
                                                     <td>
                                                         <div class="dropdown">
@@ -142,6 +175,13 @@
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    {{-- <td class="hidden">
+                                                        @foreach ($peminjaman as $p)
+                                                            @foreach ($p->pivot as $q)
+                                                                {{$q->kode_buku}}
+                                                            @endforeach
+                                                        @endforeach
+                                                    </td> --}}
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -174,6 +214,7 @@
     <!-- BEGIN: Page JS-->
     {{-- <script src="{{asset('app-assets/js/scripts/pages/app-invoice-list.js')}}"></script> --}}
     {{-- <script src="{{ asset('app-assets/js/scripts/pages/datatables-demo.js') }}"></script> --}}
+    <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script>
     <!-- END: Page JS-->
 
     <script>
@@ -248,6 +289,13 @@
             });
             $('.datatables-ajax').dataTable({
                 dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                // columnDefs: [
+                //     {
+                //         targets: [7],
+                //         visible: false,
+                //         searchable: true,
+                //     },
+                // ],
             });
         });
 
@@ -270,7 +318,11 @@
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-outline-danger ms-1'
                 },
-                buttonsStyling: false
+                buttonsStyling: false,
+                background: '#283046', // Warna latar belakang Vuexy Dark
+                color: '#d0d2d6',     // Warna teks default Vuexy
+                // Opsional: Sesuaikan warna ikon untuk tema gelap
+                iconColor: '#ea5455',
             }).then(function(result) {
                 if (result.value) {
                     // Tidak lagi submit form secara otomatis di sini
@@ -283,10 +335,28 @@
                         icon: 'error',
                         customClass: {
                             confirmButton: 'btn btn-success'
-                        }
+                        },
+                        background: '#283046', // Warna latar belakang Vuexy Dark
+                        color: '#d0d2d6',     // Warna teks default Vuexy
+                        // Opsional: Sesuaikan warna ikon untuk tema gelap
+                        iconColor: '#ea5455',
                     });
                 }
             });
         }
     </script>
+
+    {{-- <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                columnDefs: [
+                    {
+                        targets: [3], // Indeks kolom yang ingin disembunyikan
+                        visible: false, // Sembunyikan kolom
+                        searchable: true, // Tetap dapat dicari
+                    },
+                ],
+            });
+        });
+    </script> --}}
 @endsection

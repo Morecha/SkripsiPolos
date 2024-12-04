@@ -136,8 +136,17 @@
                                                                                 @if ($data->image != null)
                                                                                     <li><span class="label">Image</span> =
                                                                                         <img src="{{asset('storage/gambar/inventaris/'.$data->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" style="margin: 10px;"/>
-                                                                                    </li>
+                                                                                    </li><br>
                                                                                 @endif
+                                                                                <li><span class="label">Kode Buku</span> =
+                                                                                    <div class="row">
+                                                                                        @foreach ($data->buku as $b)
+                                                                                            <div class="col-5">
+                                                                                                {{$b->kode_buku}},
+                                                                                            </div>
+                                                                                        @endforeach
+                                                                                    </div>
+                                                                                </li>
                                                                             </ul>
                                                                             <br>
                                                                         </div>
@@ -169,11 +178,13 @@
                                                                     </form>
                                                                     <span>Generate Buku</span>
                                                                 </a>
-                                                                <a class="dropdown-item"
-                                                                    href="{{ route('buku.list_cetak',$data->id) }}">
-                                                                    <i data-feather="printer" class="me-50"></i>
-                                                                    <span>Cetak Nomor Buku</span>
-                                                                </a>
+                                                                @if ($data->buku_count > 0)
+                                                                    <a class="dropdown-item"
+                                                                        href="{{ route('buku.list_cetak',$data->id) }}">
+                                                                        <i data-feather="printer" class="me-50"></i>
+                                                                        <span>Cetak Nomor Buku</span>
+                                                                    </a>
+                                                                @endif
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('inventaris.edit',$data->id) }}">
                                                                     <i data-feather="edit-2" class="me-50"></i>
@@ -323,7 +334,11 @@
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-outline-danger ms-1'
                 },
-                buttonsStyling: false
+                buttonsStyling: false,
+                background: '#283046', // Warna latar belakang Vuexy Dark
+                color: '#d0d2d6',     // Warna teks default Vuexy
+                // Opsional: Sesuaikan warna ikon untuk tema gelap
+                iconColor: '#ea5455',
             }).then(function(result) {
                 if (result.value) {
                     // Tidak lagi submit form secara otomatis di sini
@@ -336,7 +351,11 @@
                         icon: 'error',
                         customClass: {
                             confirmButton: 'btn btn-success'
-                        }
+                        },
+                        background: '#283046', // Warna latar belakang Vuexy Dark
+                        color: '#d0d2d6',     // Warna teks default Vuexy
+                        // Opsional: Sesuaikan warna ikon untuk tema gelap
+                        iconColor: '#ea5455',
                     });
                 }
             });

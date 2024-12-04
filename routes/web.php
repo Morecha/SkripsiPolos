@@ -6,6 +6,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengadaanController;
 use App\Http\Controllers\PresensiController;
@@ -13,10 +14,13 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
 
-Route::get('/', function () {return view('welcome');})->name('home');
-Route::get('/search', [HomepageController::class,'index'])->name('landing-page.searching');
+// Route::get('/', function () {return view('welcome');})->name('home');
+Route::get('/', [HomepageController::class,'index'])->name('landing-page.searching');
 Route::get('/list', [HomepageController::class,'list_buku'])->name('landing-page.list');
-Route::get('/detail', function () {return view('landing-page.detail');});
+Route::get('/buku/{id}/detail', [HomepageController::class,'detail_buku'])->name('landing-page.detail');
+Route::get('/presensisiswa', [HomepageController::class,'presensi_individu'])->name('landing-page.presensi.individu');
+Route::get('/presensisiswa/{id}', [HomepageController::class,'store_presensi_individu'])->name('landing-page.store.presensi.individu');
+Route::get('/laporan', function() {return view('admin.laporan.anggota');});
 
 Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticating'])->middleware('guest');
@@ -29,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.list');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/user/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('/user/{id}/detail', [UserController::class, 'detail'])->name('user.detail');
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/user/{id}/update', [UserController::class, 'update'])->name('user.update');
     Route::post('/user/{id}/delete', [UserController::class, 'destroy'])->name('user.delete');
@@ -56,8 +61,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/presensi/{id}/update', [PresensiController::class, 'update'])->name('presensi.update');
     Route::post('/presensi/{id}/delete', [PresensiController::class, 'destroy'])->name('presensi.delete');
     //belum
-    Route::get('/presensi/create-individu', [PresensiController::class, 'create_individu'])->name('presensi.individu.create');
-    Route::post('/presensi/store-individu', [PresensiController::class, 'store_individu'])->name('presensi.individu.store');
 
     //pengadaan
     Route::get('/pengadaan', [PengadaanController::class, 'index'])->name('pengadaan.list');
@@ -85,6 +88,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/inventaris/{id}/edit-buku/{id_buku}', [BukuController::class, 'edit'])->name('buku.edit');
     Route::post('/inventaris/{id}/update-buku/{id_buku}', [BukuController::class, 'update'])->name('buku.update');
     Route::post('/inventaris/{id}/delete-buku/{id_buku}', [BukuController::class, 'destroy'])->name('buku.delete');
+    Route::get('/inventaris/{id}/detail-buku/{id_buku}', [BukuController::class, 'detail'])->name('buku.detail');
+    Route::get('/inventaris/{id}/pemusnahan-buku/{id_buku}', [BukuController::class, 'pemusnahan'])->name('buku.pemusnahan');
+    Route::post('/inventaris/{id}/pemusnahan-buku-update/{id_buku}', [BukuController::class, 'pemusnahan_update'])->name('buku.pemusnahan.update');
 
     //cetak nomor buku
     Route::get('/inventaris/{id}/list-cetak', [BukuController::class, 'list_cetak'])->name('buku.list_cetak');
@@ -107,4 +113,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pengembalian/{id}/edit', [PeminjamanController::class, 'pengembalian_edit'])->name('pengembalian.edit');
     Route::post('/pengembalian/{id}/update', [PeminjamanController::class, 'pengembalian_update'])->name('pengembalian.update');
     Route::post('/pengembalian/{id}/delete', [PeminjamanController::class, 'pengembalian_destroy'])->name('pengembalian.delete');
+
+    Route::get('/create-laporan', [LaporanController::class, 'create'])->name('laporan.create');
+    Route::post('/store-laporan', [LaporanController::class, 'store'])->name('laporan.store');
 });
