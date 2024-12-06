@@ -106,7 +106,7 @@
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('pengembalian.detail', $data->id) }}">
                                                                     <i data-feather="eye" class="me-50"></i>
-                                                                    <span>Detail Peminjaman</span>
+                                                                    <span>Detail Pengembalian</span>
                                                                 </a>
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('pengembalian.edit',$data->id) }}">

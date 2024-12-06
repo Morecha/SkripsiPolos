@@ -115,6 +115,10 @@ class BukuController extends Controller
     public function cetak(Request $request, $id)
     {
         $inventaris = inventaris::find($id);
+        if(count($request->all()) == 1){
+            // return back()->with('error', 'Tidak ada buku yang dipilih');
+            return redirect()->route('buku.list_cetak', $id)->with('error', 'Tidak ada buku yang dipilih');
+        }
         // dd($request,$inventaris);
         $kode = $request->all();
         unset($kode['_token']);

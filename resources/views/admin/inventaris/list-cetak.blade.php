@@ -42,6 +42,7 @@
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
                         <h2 class="content-header-title float-start mb-0">Cetak Nomor Buku</h2>
+                        {{-- @dd(session('error')) --}}
                     </div>
                 </div>
             </div>

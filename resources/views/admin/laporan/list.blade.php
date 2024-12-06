@@ -24,6 +24,22 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- END: Custom CSS-->
+    <style>
+        .custom-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .custom-list li {
+            display: flex;
+        }
+        .custom-list li::before {
+            content: '*';
+            margin-right: 8px;
+        }
+        .custom-list .label {
+            min-width: 100px; /* Adjust width as needed */
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -36,9 +52,13 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-start mb-0">Anggota</h2>
+                            <h2 class="content-header-title float-start mb-0">Inventaris</h2>
                             @if (session('error') or $errors->any())
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                                </div>
+                            @endif
+                            @if (session('warning'))
+                                <div id="type-warning" class="alert alert-warning" style="display: none;">
                                 </div>
                             @endif
                             @if (session('success'))
@@ -56,18 +76,16 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header border-bottom">
-                                    <h4 class="card-title">Anggota List</h4>
+                                    <h4 class="card-title">Inventaris List</h4>
                                 </div>
                                 <div class="card-datatable">
                                     <table class="datatables-ajax table table-responsive table-hover">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>name</th>
-                                                <th>angkatan</th>
-                                                <th>NIS</th>
-                                                <th>Detail</th>
-                                                <th>status</th>
+                                                <th>Nama File</th>
+                                                <th>Keterangan</th>
+                                                <th>Tanggal dibuat</th>
                                                 <th>options</th>
                                             </tr>
                                         </thead>
@@ -75,48 +93,12 @@
                                             @php
                                                 $i = 1;
                                             @endphp
-                                            @foreach ($anggota as $anggota)
+                                            @foreach ($data as $data)
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
-                                                    <td>{{ $anggota->name }}</td>
-                                                    <td>{{ $anggota->angkatan }}</td>
-                                                    <td>{{ $anggota->NIS }}</td>
-                                                    <td>
-                                                        <div class="scrolling-inside-modal">
-                                                            <!-- Button trigger modal -->
-                                                            <button type="button" class="btn btn-sm btn-flat-info waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable{{ $anggota->id }}">
-                                                                Detail
-                                                            </button>
-
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="exampleModalScrollable{{ $anggota->id }}" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-scrollable">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <ul class="custom-list">
-                                                                                <li><span class="label">nama</span> = {{$anggota->name}}</li>
-                                                                                {{-- <li><span class="label">pengadaan</span> = {{$data->id_pengadaan}}</li> --}}
-                                                                                <li><span class="label">angkatan</span> = {{$anggota->angkatan}}</li>
-                                                                                <li><span class="label">NIS</span> = {{$anggota->NIS}}</li>
-                                                                                <li><span class="label">alamat</span> = {{$anggota->alamat}}</li>
-                                                                                <li><span class="label">tanggal laihr</span> = {{$anggota->tanggal_lahir}}</li>
-                                                                                <li><span class="label">status</span> = {{$anggota->status}}</li>
-                                                                                <li><span class="label">tanggal dibuat</span> = {{$anggota->created_at}}</li>
-                                                                            </ul>
-                                                                            <br>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-warning">{{ $anggota->status }}</span>
-                                                    </td>
+                                                    <td>{{ $data->file }}</td>
+                                                    <td>{{ $data->keterangan }}</td>
+                                                    <td>{{ $data->created_at }}</td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button type="button"
@@ -126,32 +108,16 @@
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('anggota.edit', $anggota->id) }}">
-                                                                    <i data-feather="edit-2" class="me-50"></i>
-                                                                    <span>Edit</span>
+                                                                    {{-- href="{{ route('laporan.download',$data->id) }}"> --}}
+                                                                    href=" {{asset('storage/laporan/'.$data->file)}} " target="_blank">
+                                                                    <i data-feather="eye" class="me-50"></i>
+                                                                    <span>PDF File</span>
                                                                 </a>
                                                                 <a class="dropdown-item delete-button"
-                                                                    href="{{route('anggota.aktivasi', $anggota->id)}}"
-                                                                    {{-- onclick="event.preventDefault();
-                                                                    document.getElementById('delete-form-{{ $anggota->id }}').submit();"> --}}
-                                                                    data-id="{{ $anggota->id }}">
-                                                                    <i data-feather="shuffle" class="me-50"></i>
-                                                                    <form id="delete-form-{{ $anggota->id }}" method="POST" action="{{route('anggota.aktivasi', $anggota->id)}}" style="display: none;">
-                                                                        @csrf
-                                                                    </form>
-                                                                    @if ($anggota->status == 'aktif')
-                                                                        <span>Deaktifasi</span>
-                                                                    @else
-                                                                        <span>Aktifasi</span>
-                                                                    @endif
-                                                                </a>
-                                                                <a class="dropdown-item delete-button"
-                                                                    href="{{route('anggota.delete', $anggota->id)}}"
-                                                                    {{-- onclick="event.preventDefault();
-                                                                    document.getElementById('delete-form-{{ $anggota->id }}').submit();"> --}}
-                                                                    data-id="{{ $anggota->id }}">
+                                                                    href="{{route('laporan.delete', $data->id)}}"
+                                                                    data-id="{{ $data->id }}">
                                                                     <i data-feather="trash" class="me-50"></i>
-                                                                    <form id="delete-form-{{ $anggota->id }}" method="POST" action="{{route('anggota.delete', $anggota->id)}}" style="display: none;">
+                                                                    <form id="delete-form-{{ $data->id }}" method="POST" action="{{route('laporan.delete', $data->id)}}" style="display: none;">
                                                                         @csrf
                                                                     </form>
                                                                     <span>Delete</span>
@@ -186,11 +152,15 @@
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('app-assets/vendors/js/tables/datatable/responsive.bootstrap4.js') }}"></script>
     <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/polyfill.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/ui/jquery.sticky.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
     {{-- <script src="{{asset('app-assets/js/scripts/pages/app-invoice-list.js')}}"></script> --}}
     {{-- <script src="{{ asset('app-assets/js/scripts/pages/datatables-demo.js') }}"></script> --}}
+    <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script>
     <!-- END: Page JS-->
 
     <script>
@@ -209,6 +179,27 @@
                     color: '#d0d2d6',     // Warna teks default Vuexy
                     // Opsional: Sesuaikan warna ikon untuk tema gelap
                     iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-warning');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Warning !',
+                    text: '{{ session('warning') }}',
+                    icon: 'warning',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
                 });
             }
         });
@@ -333,4 +324,6 @@
             });
         }
     </script> --}}
+
+
 @endsection

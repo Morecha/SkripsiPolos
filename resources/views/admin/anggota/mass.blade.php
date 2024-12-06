@@ -30,6 +30,7 @@
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
                             <h2 class="content-header-title float-start mb-0">Tambah Anggota Masal</h2>
+                            {{-- @dd(session('error')) --}}
                             @if (session('error'))
                                 <div id="type-gagal" class="alert alert-danger" style="display: none;">
                                 </div>
@@ -51,19 +52,17 @@
                                     <h4 class="card-title">Single File Upload</h4>
                                 </div>
                                 <div class="card-body">
-                                    {{-- <p class="card-text">
-                                        By default, dropzone is a multiple file uploader and does not have specific option allowing us to switch to
-                                        single file uploading mode, but this functionality can be achieved by adding more options to the plugin
-                                        settings, such as
-                                        <code>maxfilesexceeded</code> callback and <code>maxFiles</code> option set to 1.
-                                        <code>maxFiles: 1</code> is used to tell dropzone that there should be only one file.
-                                    </p>
-                                    <button id="select-files" class="btn btn-outline-primary mb-1">
-                                        <i data-feather="file"></i> Click me to select files
-                                    </button>
-                                    <form action="{{route('anggota.store_masal')}}" class="dropzone dropzone-area" id="dpz-single-file" method="POST" enctype="multipart/form-data">
-                                        <div class="dz-message">Drop files here or click to upload.</div>
-                                    </form> --}}
+                                    @if ($errors->any())
+                                        <br>
+                                        <div class="alert alert-danger" role="alert">
+                                            <h4 class="alert-heading">Error</h4>
+                                            <div class="alert-body">
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @endif
                                     <form action="{{route('anggota.store_masal')}}" class="mt-2" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">

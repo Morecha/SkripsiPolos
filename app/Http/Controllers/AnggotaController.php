@@ -84,6 +84,20 @@ class AnggotaController extends Controller
         }
     }
 
+    public function aktivasi_anggota(string $id){
+        $anggota = anggota::find($id);
+        if($anggota['status'] == 'aktif'){
+            $anggota->status = 'non-aktif';
+            $anggota->save();
+        }
+        elseif($anggota['status'] == 'non-aktif')
+        {
+            $anggota->status = 'aktif';
+            $anggota->save();
+        }
+        return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil diupdate');
+    }
+
     public function destroy(string $id){
         $anggota = anggota::find($id);
         $peminjaman = peminjaman::where('id_anggota', $id)->get()->count();

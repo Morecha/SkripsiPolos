@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/bootstrap.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/bootstrap-extended.css')}}">
     <title>Laporan Sekolah</title>
     <style>
         body {
@@ -12,61 +10,124 @@
             margin: 40px;
         }
         .kop-surat {
+            width: 100%;
             text-align: center;
             margin-bottom: 40px;
         }
-        .kop-surat img {
-            width: 100px;
+
+        .kop-logo {
+            width: 100px; /* Ukuran logo */
             height: auto;
         }
-        .kop-surat h1 {
-            font-size: 24px;
-            margin: 10px 0 5px;
-        }
-        .kop-surat p {
-            margin: 5px 0;
-        }
-        .isi-laporan {
-            text-align: justify;
-        }
-        .isi-laporan h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        .isi-laporan p {
-            margin-bottom: 15px;
-        }
-        .footer {
-            margin-top: 50px;
+
+        .kop-text {
             text-align: center;
         }
-        .kop-logo {
-            width: 180px !important;
-            height: auto !important;
-            object-fit: contain !important;
+
+        .kop-text h1 {
+            font-size: 20px;
+            margin: 10px 0 5px;
+        }
+
+        .kop-text h2 {
+            font-size: 16px;
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .kop-text p {
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        hr {
+        border: 0;
+        border-top: 5px solid #000;
+        margin: 20px 0;
+        width: 100%;
+        }
+
+        .isi-laporan {
+            margin: 20px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .padding-top {
+            padding-top: 20px;
+        }
+
+        .pb-1 {
+            padding-bottom: 10px;
+        }
+
+        .pb-2 {
+            padding-bottom: 20px;
+        }
+
+        .pb-4 {
+            padding-bottom: 40px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            /* margin-bottom: 50px; */
+        }
+
+        .col {
+            flex: 1;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+
+        .col-3 {
+            flex: 0 0 25%;
+        }
+
+        .col-12 {
+            flex: 0 0 100%;
         }
     </style>
 </head>
 <body>
 
-    <div class="kop-surat">
-        <div class="row align-items-justify">
-            <div class="col-md-2 text-center">
-                <img src="{{asset('/storage/gambar/logo/tut-wuri-handayani.png')}}"
-                class="kop-logo" alt="tut wuri">
-            </div>
-            <div class="col-md-8 text-center">
+    <table class="kop-surat" cellspacing="0" cellpadding="0">
+        <tr>
+            <!-- Logo kiri -->
+            <td style="width: 20%; text-align: center;">
+                <img src="{{$base64TutWuri}}" class="kop-logo" alt="Logo Tut Wuri">
+            </td>
+            <!-- Teks tengah -->
+            <td class="kop-text" style="width: 60%; text-align: center;">
                 <h1>PEMERINTAH KOTA MALANG</h1>
-                <h2 style="font-weight: bold">SD NEGERI 4 BANDUNGREJOSARI MALANG</h2>
-                <h5>Jalan Danuri No.18, Bandungrejosari, Kec. Sukun, Kota Malang, Jawa Timur 65148</h5>
+                <h2>SD NEGERI 4 BANDUNGREJOSARI MALANG</h2>
+                <p>Jalan Danuri No.18, Bandungrejosari, Kec. Sukun, Kota Malang, Jawa Timur 65148</p>
                 <p>Telepon: (0341) 835344 | Email: info@sekolahcontoh.sch.id</p>
-            </div>
-            <div class="col-md-2 text-center">
-                <img src="{{asset('/storage/gambar/logo/logo-sd.png')}}"
-                class="kop-logo" alt="Logo Sekolah">
-            </div>
-        </div>
-    </div>
+            </td>
+            <!-- Logo kanan -->
+            <td style="width: 20%; text-align: center;">
+                <img src="{{$base64SD}}" class="kop-logo" alt="Logo Sekolah">
+            </td>
+        </tr>
+    </table>
 
     <hr style="border:0; border-top:5px solid #000000; margin:40px 0, width:100%">
 

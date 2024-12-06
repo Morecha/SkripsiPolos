@@ -146,10 +146,6 @@ class InventarisController extends Controller
         $data->delete();
         return redirect()->route('inventaris.list')->with('success', 'Data inventaris berhasil dihapus');
     }
-
-    public function cetak(){
-
-    }
 }
 
 

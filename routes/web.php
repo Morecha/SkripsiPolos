@@ -20,7 +20,7 @@ Route::get('/list', [HomepageController::class,'list_buku'])->name('landing-page
 Route::get('/buku/{id}/detail', [HomepageController::class,'detail_buku'])->name('landing-page.detail');
 Route::get('/presensisiswa', [HomepageController::class,'presensi_individu'])->name('landing-page.presensi.individu');
 Route::get('/presensisiswa/{id}', [HomepageController::class,'store_presensi_individu'])->name('landing-page.store.presensi.individu');
-Route::get('/laporan', function() {return view('admin.laporan.anggota');});
+// Route::get('/laporan', function() {return view('admin.laporan.anggota');});
 
 Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticating'])->middleware('guest');
@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/anggota/masal', [AnggotaController::class, 'create_masal'])->name('anggota.create_masal');
     Route::post('/anggota/masal/store', [AnggotaController::class, 'store_masal'])->name('anggota.store_masal');
     Route::post('/anggota/{id}/delete', [AnggotaController::class, 'destroy'])->name('anggota.delete');
-
+    Route::post('/anggota/{id}/aktivasi', [AnggotaController::class, 'aktivasi_anggota'])->name('anggota.aktivasi');
 
     //presensi_kelompok
     Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.list');
@@ -114,6 +114,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pengembalian/{id}/update', [PeminjamanController::class, 'pengembalian_update'])->name('pengembalian.update');
     Route::post('/pengembalian/{id}/delete', [PeminjamanController::class, 'pengembalian_destroy'])->name('pengembalian.delete');
 
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.list');
     Route::get('/create-laporan', [LaporanController::class, 'create'])->name('laporan.create');
     Route::post('/store-laporan', [LaporanController::class, 'store'])->name('laporan.store');
+    Route::post('/laporan/{id}/delete', [LaporanController::class, 'destroy'])->name('laporan.delete');
 });

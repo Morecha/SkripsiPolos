@@ -160,9 +160,9 @@
                                                         @if ($data->posisi == 'dimusnahkan')
                                                             <option value="ada" >Termusnahkan</option>
                                                         @endif
+                                                        <@if($data->posisi == 'dipinjam')option value="dipinjam" selected >Dipinjam</option @endif>
+                                                        <@if($data->posisi == 'kelas')option value="kelas"  selected >Buku Kelas</option @endif>
                                                         <option value="ada" @if($data->posisi == 'ada') selected @endif>Tersedia</option>
-                                                        <option value="dipinjam" @if($data->posisi == 'dipinjam') selected @endif>Dipinjam</option>
-                                                        <option value="kelas" @if($data->posisi == 'kelas') selected @endif>Buku Kelas</option>
                                                         <option value="hilang" @if($data->posisi == 'hilang') selected @endif>Hilang</option>
                                                     </select>
                                                 </div>

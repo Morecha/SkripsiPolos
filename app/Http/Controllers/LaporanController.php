@@ -5,16 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\anggota;
 use App\Models\buku;
 use App\Models\inventaris;
+use App\Models\laporan;
 use App\Models\peminjaman;
 use App\Models\pivot;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Faker\Core\File;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File as FacadesFile;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
+    public function index(){
+        $data = laporan::all();
+        // dd($data);
+        return view('admin.laporan.list',compact('data'));
+    }
+
     public function create(){
         return view('admin.laporan.create');
     }
@@ -30,7 +42,18 @@ class LaporanController extends Controller
         ]);
         $dari = Carbon::parse($request['dari'])->startOfDay();
         $hingga = Carbon::parse($request['hingga'])->endOfDay();
-        // dd($dari, $hingga);
+
+        $imagePathTutWuri = public_path('/storage/gambar/logo/tut-wuri-handayani.png');
+        $typeTutWuri = pathinfo($imagePathTutWuri, PATHINFO_EXTENSION);
+        $dataTutWuri = file_get_contents($imagePathTutWuri);
+        $base64TutWuri = 'data:image/'.$typeTutWuri.';base64,'.base64_encode($dataTutWuri);
+
+        $imagePathSD = public_path('/storage/gambar/logo/logo-sd.png');
+        $typeSD = pathinfo($imagePathSD, PATHINFO_EXTENSION);
+        $dataSD = file_get_contents($imagePathSD);
+        $base64SD = 'data:image/'.$typeSD.';base64,'.base64_encode($dataSD);
+
+        // dd($imagePathTutWuri);
         if($request['jenis'] == 'inventaris'){
             $totalInventaris = inventaris::all()->count();
             $totalBuku = buku::all()->count();
@@ -89,9 +112,23 @@ class LaporanController extends Controller
                                             ->withCount('buku')
                                             ->get();
             // dd($inventarisDariPengadaan,$inventarisTidakDariPengadaan,$dari, $hingga);
-            return view('admin.laporan.anggota',
-            compact('totalInventaris','totalBuku','request','dataInventarisBuku','jumlahInventarisBuku','inventarisDariPengadaan','inventarisTidakDariPengadaan','jumlahJenisPeriode'));
 
+            // return view('admin.laporan.anggota',
+            // compact('totalInventaris','totalBuku','request','dataInventarisBuku','jumlahInventarisBuku','inventarisDariPengadaan','inventarisTidakDariPengadaan','jumlahJenisPeriode','base64TutWuri','base64SD'));
+            $pdf = Pdf::loadView('admin.laporan.anggota',
+            compact('totalInventaris','totalBuku','request','dataInventarisBuku','jumlahInventarisBuku','inventarisDariPengadaan','inventarisTidakDariPengadaan','jumlahJenisPeriode','base64TutWuri','base64SD'));
+
+            $name = 'laporan-inventaris-'.date('Y-m-d-H-i-s').'.pdf';
+            $content = $pdf->download()->getOriginalContent();
+            $input = [
+                'file' => $name,
+                'keterangan' => $request['keterangan'],
+            ];
+
+            laporan::create($input);
+            Storage::put('public/laporan/'.$name, $content);
+
+            return $pdf->stream('laporan.pdf');
 
         }elseif($request['jenis'] == 'peminjaman'){
 
@@ -119,11 +156,33 @@ class LaporanController extends Controller
                 }
             }
             // dd($peminjaman);
-            return view('admin.laporan.peminjaman',
-            compact('request','total_peminjaman','total_pengembalian','total_buku_dipinjam','total_buku_hilang','total_peminjaman_periode','total_pengembalian_periode','total_buku_dipinjam_periode','total_buku_hilang_periode','peminjaman'));
-        }
-        // $pdf = Pdf::loadView('admin.laporan.anggota', compact('invetarisBuku', 'jumlahInventarisBuku','inventarisDariPengadaan', 'inventarisTidakDariPengadaan'));
-        // return $pdf->stream($request['keterangan'].'.pdf');
+            // return view('admin.laporan.peminjaman',
+            // compact('request','total_peminjaman','total_pengembalian','total_buku_dipinjam','total_buku_hilang','total_peminjaman_periode','total_pengembalian_periode','total_buku_dipinjam_periode','total_buku_hilang_periode','peminjaman','base64TutWuri','base64SD'));
 
+            $pdf = Pdf::loadView('admin.laporan.peminjaman',
+            compact('request','total_peminjaman','total_pengembalian','total_buku_dipinjam','total_buku_hilang','total_peminjaman_periode','total_pengembalian_periode','total_buku_dipinjam_periode','total_buku_hilang_periode','peminjaman','base64TutWuri','base64SD'));
+
+            $name = 'laporan-peminjaman-'.date('Y-m-d-H-i-s').'.pdf';
+            $content = $pdf->download()->getOriginalContent();
+            $input = [
+                'file' => $name,
+                'keterangan' => $request['keterangan'],
+            ];
+
+            laporan::create($input);
+            Storage::put('public/laporan/'.$name, $content);
+
+            return $pdf->stream('laporan.pdf');
+        }
+    }
+
+    public function destroy($id){
+        $data = laporan::find($id);
+        $path = public_path('/storage/laporan/'.$data->file);
+        if(file_exists($path)){
+            unlink($path);
+        }
+        $data->delete();
+        return redirect()->route('laporan.list');
     }
 }

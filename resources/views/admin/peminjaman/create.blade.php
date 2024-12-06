@@ -195,7 +195,7 @@
                                         {{-- button --}}
                                         <div class="row">
                                             <div class="col-12 mt-50">
-                                                <button type="submit" class="btn btn-primary me-1">Save Changes</button>
+                                                <button type="submit" class="btn btn-primary me-1">Save</button>
                                                 <a type="reset" class="btn btn-outline-secondary" href="{{url()->previous()}}">Cancel</a>
                                             </div>
                                         </div>

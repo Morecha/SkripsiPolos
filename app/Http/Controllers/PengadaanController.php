@@ -17,24 +17,6 @@ class PengadaanController extends Controller
         $data = pengadaan::all();
         // dd($data);
         return view('admin.pengadaan.list', compact('data'));
-
-        // $invenData = DB::table('inventaris')
-        //         ->select('id_pengadaan',DB::raw('sum(eksemplar) as total_buku'))
-        //         ->groupBy('id_pengadaan')
-        //         ->get();
-
-        // // Memasukkan data inventaris ke dalam data pengadaan berdasarkan id_pengadaan
-        // foreach ($data as $item) {
-        //     $item->total_buku = 0; // Menginisialisasi total_buku ke 0 jika tidak ada inventaris terkait
-        //     foreach ($invenData as $invenItem) {
-        //         if ($invenItem->id_pengadaan == $item->id) {
-        //             $item->total_buku = $invenItem->total_buku;
-        //             break;
-        //         }
-        //     }
-        // }
-        // // dd($data);
-        // return view('admin.pengadaan.list', compact('data'));
     }
 
 

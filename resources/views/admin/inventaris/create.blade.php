@@ -166,7 +166,7 @@
                                                         <!-- Button trigger modal -->
                                                         <br>
                                                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
-                                                            Detail
+                                                            Daftar Kode DDC
                                                         </button>
 
                                                         <!-- Modal -->

@@ -49,9 +49,6 @@ class PresensiController extends Controller
         return redirect()->route('presensi.list')->with('success', 'Data presensi kelompok berhasil ditambahkan');
     }
 
-    public function create_individu(){}
-    public function store_individu(){}
-
     public function edit($id){
         $data = presensi::find($id);
         // dd($data,$data['status_presensi']);
