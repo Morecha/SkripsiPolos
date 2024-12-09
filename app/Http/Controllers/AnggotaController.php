@@ -78,7 +78,6 @@ class AnggotaController extends Controller
         try{
             $test = Excel::import(new AnggotaImport, $request->file('data'));
             return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil ditambahkan');
-            dd('berhasil');
         }catch(\Exception $e){
             return redirect()->back()->with('error', 'format excel salah');
         }
@@ -86,15 +85,10 @@ class AnggotaController extends Controller
 
     public function aktivasi_anggota(string $id){
         $anggota = anggota::find($id);
-        if($anggota['status'] == 'aktif'){
-            $anggota->status = 'non-aktif';
-            $anggota->save();
+        if($anggota == null){
+            return redirect()->route('anggota.list')->with('error', 'Data anggota tidak ditemukan');
         }
-        elseif($anggota['status'] == 'non-aktif')
-        {
-            $anggota->status = 'aktif';
-            $anggota->save();
-        }
+        $anggota->toggleStatus();
         return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil diupdate');
     }
 
@@ -104,7 +98,7 @@ class AnggotaController extends Controller
         if($peminjaman > 0){
             return redirect()->route('anggota.list')->with('error', 'Anggota masih memiliki PEMINJAMAN');
         }
-        // dd($peminjaman);
+
         $anggota->delete();
         return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil dihapus');
     }

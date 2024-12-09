@@ -22,23 +22,9 @@ class PeminjamanController extends Controller
                     ->get();
 
         foreach($peminjaman as $p){
-            if ($p->id_anggota == null){
-                $p['jenis_peminjaman'] = 'kelompok';
-                $p['id_user'] = User::find($p->id_user)->name;
-            }elseif ($p->id_user == null){
-                $p['jenis_peminjaman'] = 'individu';
-                $p['id_anggota'] = anggota::find($p->id_anggota)->name;
-            }
+            $p['jenis_peminjaman'] = $p->jenisPeminjaman();
+            $p->namaPeminjaman();
         }
-
-        // $tes = [];
-        // foreach ($peminjamantes as $peminjaman) {
-        //     foreach ($peminjaman->pivot as $pivot) {
-        //         $tes[] = $pivot->buku->kode_buku;
-        //     }
-        // }
-        // dd($tes);
-
         return view('admin.peminjaman.list',compact('peminjaman'));
     }
 
@@ -48,12 +34,7 @@ class PeminjamanController extends Controller
                     ->withCount('pivot')
                     ->find($id);
 
-        // dd($peminjaman);
-        if ($peminjaman->id_anggota == null){
-            $peminjaman['jenis_peminjaman'] = 'kelompok';
-        }elseif ($peminjaman->id_user == null){
-            $peminjaman['jenis_peminjaman'] = 'individu';
-        }
+        $peminjaman['jenis_peminjaman'] = $peminjaman->jenisPeminjaman();
 
         return view('admin.peminjaman.detail', compact('peminjaman'));
     }
@@ -64,12 +45,7 @@ class PeminjamanController extends Controller
                     ->withCount('pivot')
                     ->find($id);
 
-        // dd($peminjaman);
-        if ($peminjaman->id_anggota == null){
-            $peminjaman['jenis_peminjaman'] = 'kelompok';
-        }elseif ($peminjaman->id_user == null){
-            $peminjaman['jenis_peminjaman'] = 'individu';
-        }
+        $peminjaman['jenis_peminjaman'] = $peminjaman->jenisPeminjaman();
 
         return view('admin.pengembalian.detail', compact('peminjaman'));
     }
@@ -84,8 +60,7 @@ class PeminjamanController extends Controller
         $buku = buku::with('inventaris')
                 ->where('posisi', 'ada')
                 ->orderBy('id_inven', 'asc')->get();
-        // dd($buku);
-        // dd($buku['status']);
+
         return view('admin.peminjaman.create', compact('buku', 'anggota'));
     }
 
@@ -117,7 +92,6 @@ class PeminjamanController extends Controller
         $peminjaman['status'] = 'dipinjam';
         $borrow = peminjaman::create($peminjaman);
 
-        // dd($request['id_buku'],$jumlah_buku,$request,$peminjaman);
         $cek_buku = [];
         $data_buku = [];
 
@@ -161,15 +135,14 @@ class PeminjamanController extends Controller
         $buku = buku::with('inventaris')
                 ->where('posisi', 'ada')
                 ->orderBy('id_inven', 'asc')->get();
-        // dd($buku->inventaris);
+
+        $dipinjam['jenis_peminjaman'] = $dipinjam->jenisPeminjaman();
+
         if($dipinjam->id_anggota == null){
-            $dipinjam['jenis_peminjaman'] = 'kelompok';
             return view('admin.peminjaman.edit', compact('dipinjam','buku'));
         }elseif ($dipinjam->id_user == null){
-            $dipinjam['jenis_peminjaman'] = 'individu';
             $list_anggota = anggota::where('id','!=',$dipinjam->id_anggota)
                         ->orderBy('id', 'asc')->get();
-            // dd($list_anggota);
             return view('admin.peminjaman.edit', compact('dipinjam','buku','list_anggota'));
         }
     }
@@ -269,13 +242,8 @@ class PeminjamanController extends Controller
                     ->where('status', 'kembali')
                     ->get();
         foreach($peminjaman as $p){
-            if ($p->id_anggota == null){
-                $p['jenis_peminjaman'] = 'kelompok';
-                $p['id_user'] = User::find($p->id_user)->name;
-            }elseif ($p->id_user == null){
-                $p['jenis_peminjaman'] = 'individu';
-                $p['id_anggota'] = anggota::find($p->id_anggota)->name;
-            }
+            $p['jenis_peminjaman'] = $p->jenisPeminjaman();
+            $p->namaPeminjaman();
         }
         // dd($peminjaman);
         return view('admin.pengembalian.list',compact('peminjaman'));
@@ -289,12 +257,12 @@ class PeminjamanController extends Controller
         $buku = buku::with('inventaris')
                 ->where('posisi', 'ada')
                 ->orderBy('id_inven', 'asc')->get();
-        // dd($buku->inventaris);
+
+        $dipinjam['jenis_peminjaman'] = $dipinjam->jenisPeminjaman();
+
         if($dipinjam->id_anggota == null){
-            $dipinjam['jenis_peminjaman'] = 'kelompok';
             return view('admin.pengembalian.create', compact('dipinjam','buku'));
         }elseif ($dipinjam->id_user == null){
-            $dipinjam['jenis_peminjaman'] = 'individu';
             $list_anggota = anggota::where('id','!=',$dipinjam->id_anggota)
                         ->orderBy('id', 'asc')->get();
             // dd($list_anggota);
@@ -323,11 +291,9 @@ class PeminjamanController extends Controller
         $pengembalian = peminjaman::with(['pivot.buku.inventaris'])
                     ->withCount('pivot')
                     ->find($id);
-        if ($pengembalian->id_anggota == null){
-            $pengembalian['jenis_peminjaman'] = 'kelompok';
-        }elseif ($pengembalian->id_user == null){
-            $pengembalian['jenis_peminjaman'] = 'individu';
-        }
+
+        $pengembalian['jenis_peminjaman'] = $pengembalian->jenisPeminjaman();
+
         return view('admin.pengembalian.edit',compact('pengembalian'));
     }
 

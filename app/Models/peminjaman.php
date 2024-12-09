@@ -38,4 +38,20 @@ class peminjaman extends Model
     {
         return $this->belongsToMany(Buku::class, 'pivot', 'id_peminjaman', 'id_buku');
     }
+
+    public function jenisPeminjaman(){
+        if ($this->id_anggota == null){
+            return 'kelompok';
+        }elseif ($this->id_user == null){
+            return 'individu';
+        }
+    }
+
+    public function namaPeminjaman(){
+        if ($this->id_anggota == null){
+            $this->id_user = User::find($this->id_user)?->name;
+        }elseif ($this->id_user == null){
+            $this->id_anggota = anggota::find($this->id_anggota)?->name;
+        }
+    }
 }

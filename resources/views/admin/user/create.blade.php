@@ -103,13 +103,13 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="name">Nama</label>
-                                                    <input type="text" id="name" class="form-control" name="name" autocomplete="false"/>
+                                                    <input type="text" id="name" class="form-control" name="name" autocomplete="false" value="{{old('name')}}"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="emaila">Email</label>
-                                                    <input type="email" id="email" class="form-control" name="email" autocomplete="false"/>
+                                                    <input type="email" id="email" class="form-control" name="email" autocomplete="false" value="{{old('email')}}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -143,7 +143,7 @@
                                                 <div class="mb-2">
                                                     <label class="form-label" for="password">NIP</label>
                                                     <div class="input-group form-password-toggle input-group-merge">
-                                                        <input type="text" class="form-control" id="NIP" name="NIP" placeholder="NIP" autocomplete="false"/>
+                                                        <input type="text" class="form-control" id="NIP" name="NIP" placeholder="NIP" autocomplete="false" value="{{old('NIP')}}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -151,7 +151,7 @@
                                                 <div class="mb-2">
                                                     <label class="form-label" for="password">Tanggal Lahir</label>
                                                     <div class="input-group form-password-toggle input-group-merge">
-                                                        <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" placeholder="tanggal_lahir" autocomplete="false"/>
+                                                        <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" placeholder="tanggal_lahir" autocomplete="false" value="{{old('tanggal_lahir')}}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -161,7 +161,7 @@
                                                 <div class="mb-2">
                                                     <label class="form-label" for="password">Alamat</label>
                                                     <div class="input-group form-password-toggle input-group-merge">
-                                                        <input type="text" class="form-control" id="alamat" name="alamat" placeholder="alamat" autocomplete="false"/>
+                                                        <input type="text" class="form-control" id="alamat" name="alamat" placeholder="alamat" autocomplete="false" value="{{old('alamat')}}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,7 +169,7 @@
                                                 <div class="mb-2">
                                                     <label class="form-label" for="password">Jabatan</label>
                                                     <div class="input-group form-password-toggle input-group-merge">
-                                                        <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="jabatan" autocomplete="false"/>
+                                                        <input type="text" class="form-control" id="jabatan" name="jabatan" placeholder="jabatan" autocomplete="false" value="{{old('jabatan')}}"/>
                                                     </div>
                                                 </div>
                                             </div>

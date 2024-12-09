@@ -95,9 +95,6 @@ class DashboardController extends Controller
             $pengunjungPerHari[] = $p + $pengunjungPerHariIndividu[$i];
         }
 
-        // dd($tanggalArray,$peminjamanPerHari,$peminjaman);
-        // dd($tanggalArray,$pengunjungPerHariKelompok,$pengunjungPerHariIndividu,$pengunjungPerHari);
-
         $chartData = [
             'label' => $tanggalArray,
             'peminjaman' => [
@@ -166,8 +163,6 @@ class DashboardController extends Controller
 
     public function updatePassword(Request $request, $id)
     {
-        // dd($request);
-
         $request->validate([
             'password' => 'required',
             'new_password' => 'required|min:6',
@@ -182,7 +177,6 @@ class DashboardController extends Controller
             return redirect()->back()->with('error', 'the new password field doesnt match with the confirm new password field');
         }
 
-        dd('berhasil');
         User::whereId(Auth::user()->id)->update([
             'password' => Hash::make($request->new_password),
             ]);

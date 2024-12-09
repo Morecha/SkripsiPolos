@@ -49,6 +49,18 @@
                             <div class="card">
                                 <div class="card-header border-bottom">
                                     <h4 class="card-title">Presensi List</h4>
+                                    @if (session('error') or $errors->any())
+                                        <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                                        </div>
+                                    @endif
+                                    @if (session('warning'))
+                                        <div id="type-warning" class="alert alert-warning" style="display: none;">
+                                        </div>
+                                    @endif
+                                    @if (session('success'))
+                                        <div id="type-success" class="alert alert-success" style="display: none;">
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="card-datatable">
                                     <table class="datatables-ajax table table-responsive table-hover">

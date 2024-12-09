@@ -103,11 +103,11 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="id_user">Nama</label>
-                                                    <select name="id_user" id="id_user" class="form-select">
-                                                        <option value="" selected disabled>Pilih Nama</option>
-                                                        @foreach ($user as $user)
+                                                    <select name="id_user" id="id_user" class="form-select" disabled>
+                                                        <option value="{{Auth::user()->id}}" selected disabled>{{Auth::user()->name}}</option>
+                                                        {{-- @foreach ($user as $user)
                                                             <option value="{{$user->id}}">{{$user->name}}</option>
-                                                        @endforeach
+                                                        @endforeach --}}
                                                     </select>
                                                 </div>
                                             </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -23,11 +24,14 @@ class AuthController extends Controller
             if(Auth::user()->status == 'aktif'){
                 $request->session()->regenerate();
                 return redirect()->intended('dashboard');
+            }else{
+                return back()->withErrors([
+                   'email' => 'anggota tidak aktif'
+                ]);
             }
         }
-
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'there is somethings wrong with your email or password',
         ])->onlyInput('email');
     }
 

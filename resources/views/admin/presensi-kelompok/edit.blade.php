@@ -102,7 +102,11 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="id_user">Nama</label>
-                                                    <select name="id_user" id="id_user" class="form-select">
+                                                    @if ($data->status_presensi == 'kelompok')
+                                                        <select name="id_user" id="id_user" class="form-select">
+                                                    @else
+                                                        <select name="id_anggota" id="id_user" class="form-select">
+                                                    @endif
                                                         <option value="" selected disabled>Pilih Nama</option>
                                                         @foreach ($user as $user)
                                                             @if ($data->status_presensi == 'kelompok')

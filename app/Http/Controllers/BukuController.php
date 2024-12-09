@@ -42,7 +42,6 @@ class BukuController extends Controller
             $string = $buku->last()->kode_buku;
             $pisah = explode('-', $string);
             $akhir = intval($pisah[3])+1;
-            // dd($kode_ddc!=$pisah[0], $tajuk_buku!=$pisah[1], $judul!=$pisah[2]);
 
             if($kode_ddc!=$pisah[0] || $tajuk_buku!=$pisah[1] || $judul!=$pisah[2])
             {
@@ -115,14 +114,15 @@ class BukuController extends Controller
     public function cetak(Request $request, $id)
     {
         $inventaris = inventaris::find($id);
-        if(count($request->all()) == 1){
-            // return back()->with('error', 'Tidak ada buku yang dipilih');
+        if(count($request->all()) <= 1){
             return redirect()->route('buku.list_cetak', $id)->with('error', 'Tidak ada buku yang dipilih');
+            // dd($response->status(), $response->getTargetUrl(), $response, session()->all());
         }
-        // dd($request,$inventaris);
+
         $kode = $request->all();
         unset($kode['_token']);
         $data = [];
+        // dd($kode);
         foreach($request->all() as $key => $value){
             if(strpos($key, 'print')===0){
                 $pisah = explode('-', $value);
@@ -134,10 +134,8 @@ class BukuController extends Controller
                 ];
             }
         }
-        // dd($data, $kode);
         $pdf = Pdf::loadView('admin.laporan.cetakBuku', compact('data','kode'));
         return $pdf->stream($inventaris['judul'].'.pdf');
-        // return view('admin.laporan.cetakBuku', compact('anggota'));
     }
 
     /**

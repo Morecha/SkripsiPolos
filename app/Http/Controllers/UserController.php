@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\File\File;
@@ -49,8 +50,8 @@ class UserController extends Controller
         ]);
 
         $input = $request->all();
-
         $logika = User::where('email', $input['email'])->first();
+
         if($logika != null){
             return redirect()->back()->with('error', 'user dengan email ini sudah ada');
         }
@@ -100,7 +101,7 @@ class UserController extends Controller
             'jabatan' => 'required',
             'status' => 'required',
         ]);
-
+        // dd($request);
         $user = User::find($id);
         $input = $request->all();
 

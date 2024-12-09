@@ -113,24 +113,24 @@
                                             </div>
                                         @endforeach
                                     @endif
-                                    {{-- <div class="col-12 col-md-6">
-                                        <div class="food-list">
-                                            <div class="list-overlay"></div>
-                                            <div class="rates d-flex justify-content-between">
-                                                <div class="info">
-                                                    <h6 class="main-heading">Plain Pancakes</h6>
-                                                    <p class="text">Lorem ipsum dolor sit amet, consectetur elit.</p>
-                                                </div>
-                                                <p class="rate">$30</p>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                 </div>
                             </div>
                         {{-- </div> --}}
                     </div>
                 </div>
             </div>
+            @if (session('error') or $errors->any())
+                <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                </div>
+            @endif
+            @if (session('warning'))
+                <div id="type-warning" class="alert alert-warning" style="display: none;">
+                </div>
+            @endif
+            @if (session('success'))
+                <div id="type-success" class="alert alert-success" style="display: none;">
+                </div>
+            @endif
         </section>
         <!--Food Gallery End end-->
     @endsection
@@ -138,4 +138,69 @@
     @section('footer-script')
         <!-- custom script-->
         <script src="{{asset('assets/landing-page/food-delivery/js/select2.min.js')}}"></script>
+        <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+        <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
+
+        <script>
+        $(document).ready(function() {
+            var gagal = $('#type-gagal');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Gagal !',
+                    text: '{{ session('error') }}',
+                    icon: 'error',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    color: '#d0d2d6',     // Warna teks default Vuexy
+                    // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-warning');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Warning !',
+                    text: '{{ session('warning') }}',
+                    icon: 'warning',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var gagal = $('#type-success');
+            if (gagal.length) {
+                Swal.fire({
+                    title: 'Success !',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false,
+                    background: '#283046', // Warna latar belakang Vuexy Dark
+                    // color: '#d0d2d6',     // Warna teks default Vuexy
+                    // // Opsional: Sesuaikan warna ikon untuk tema gelap
+                    // iconColor: '#ea5455',
+                });
+            }
+        });
+    </script>
     @endsection

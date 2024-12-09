@@ -7,6 +7,7 @@ use App\Models\presensi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PresensiController extends Controller
@@ -36,13 +37,13 @@ class PresensiController extends Controller
     public function store_kelompok(Request $request)
     {
         $request->validate([
-            'id_user' => 'required',
             'jumlah' => 'required',
             'keterangan' => 'nullable',
         ]);
 
         $input = $request->all();
         $input['status_presensi'] = 'kelompok';
+        $input['id_user'] = Auth::user()->id;
         $input['id_anggota'] = null;
 
         $data = presensi::create($input);
@@ -65,15 +66,14 @@ class PresensiController extends Controller
     }
 
     public function update(Request $request, $id){
-        dd($request);
         $request->validate([
-            'id_user' => 'required',
             'jumlah' => 'required',
             'keterangan' => 'nullable',
         ]);
 
         $input = $request->all();
         $data = presensi::find($id);
+        // dd($data,$input);
         $data->update($input);
 
         return redirect()->route('presensi.list')->with('success', 'Data presensi kelompok berhasil diupdate');

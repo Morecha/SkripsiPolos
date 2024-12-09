@@ -23,13 +23,13 @@ class HomepageController extends Controller
                                 ->map(function ($inventaris) {
                                     // Hitung total peminjaman dari semua buku di inventaris ini
                                     $totalPeminjaman = $inventaris->buku->sum(function ($buku) {
-                                        return $buku->pivot->count(); // Hitung jumlah peminjaman setiap buku
+                                        return $buku->pivot->count();
                                     });
 
                                     $inventaris['total_peminjaman'] = $totalPeminjaman;
                                     return $inventaris;
                                 })
-                                ->sortByDesc('total_peminjaman') // Urutkan berdasarkan total peminjaman
+                                ->sortByDesc('total_peminjaman')
                                 ->take(6);
         // dd($inventarisRekomendasi);
         return view('landing-page.searching', compact('buku','buku_tersedia','buku_dipinjam','inventarisRekomendasi'));
@@ -41,12 +41,9 @@ class HomepageController extends Controller
         if($request->input('search') != null){
             $inven_cari = inventaris::where('judul','like','%'.$request->input('search').'%')->get();
             if($inven_cari->isEmpty() == false){
-                // dd('ada');
                 return view('landing-page.list', compact('inventaris','inven_cari'));
             }else{
-                // dd('tidak ada');
-                redirect()->route('landing-page.list')->with('error', 'Data tidak ditemukan');
-                // return view('landing-page.list', compact('inventaris','inven_cari'))->with('error', 'Data tidak ditemukan');
+                return redirect()->route('landing-page.list')->with('error', 'Data tidak ditemukan');
             }
         }
         $inven_cari = null;
@@ -56,9 +53,7 @@ class HomepageController extends Controller
     public function detail_buku($id){
         $inventaris = inventaris::withCount('buku')->find($id);
         $id_inventaris = $inventaris->id;
-        $pivot = pivot::with([
-                    'buku.inventaris',          // Relasi ke DataInventaris melalui DataBuku
-                ])
+        $pivot = pivot::with(['buku.inventaris'])
                 ->whereHas('buku.inventaris', function ($query) use ($id_inventaris) {
                     $query->where('id', $id_inventaris); // Filter hanya inventaris tertentu
                 })
@@ -74,7 +69,6 @@ class HomepageController extends Controller
         } else{
             $anggota_cari = null;
         }
-        // dd($anggota_cari);
         return view('landing-page.presensi', compact('anggota_cari'));
     }
 
@@ -88,7 +82,6 @@ class HomepageController extends Controller
                 'keterangan' => 'absen individu',
             ];
         }
-        // dd($input);
         presensi::create($input);
         return redirect()->route('landing-page.presensi.individu')->with('success', 'Data presensi individu berhasil ditambahkan');
     }
