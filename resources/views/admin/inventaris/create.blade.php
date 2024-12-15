@@ -113,29 +113,22 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="judul">Judul</label>
-                                                    <input type="text" id="judul" class="form-control" name="judul" autocomplete="false" placeholder="judul"/>
+                                                    <input type="text" id="judul" class="form-control" name="judul" autocomplete="false" placeholder="judul" value="{{old('judul')}}"/>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-md-6 col-12">
-                                                <div class="mb-2">
-                                                    <label class="form-label" for="id_pengajuan">pengajuan</label>
-                                                    <input type="text" id="id_pengajuan" class="form-control" name="id_pengajuan" autocomplete="false" value="kosong" disabled/>
-                                                    <input type="hidden" name="id_pengajuan">
-                                                </div>
-                                            </div> --}}
                                         </div>
                                         {{-- second line --}}
                                         <div class="row">
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="pengarang">pengarang</label>
-                                                    <input type="text" class="form-control" id="pengarang" name="pengarang" placeholder="pengarang" autocomplete="false"/>
+                                                    <input type="text" class="form-control" id="pengarang" name="pengarang" placeholder="pengarang" autocomplete="false" value="{{old('pengarang')}}"/>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-6">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="penerbit">penerbit</label>
-                                                    <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="penerbit" autocomplete="false"/>
+                                                    <input type="text" class="form-control" id="penerbit" name="penerbit" placeholder="penerbit" autocomplete="false" value="{{old('penerbit')}}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -143,13 +136,37 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="kode_ddc">kode (DDC)</label>
-                                                    <input type="text" class="form-control" id="kode_ddc" name="kode_ddc" placeholder="kode_ddc" autocomplete="false"/>
+                                                    {{-- <input type="text" class="form-control" id="kode_ddc" name="kode_ddc" placeholder="kode_ddc" autocomplete="false"/> --}}
+                                                    <select class="select2 form-select" name="kode_ddc" id="select2">
+                                                        <option value="" selected disabled>Pilih Kode</option>
+                                                        @foreach ($data['dewey'] as $key => $kategori)
+                                                            <option value="{{$key}}" disabled>
+                                                                {{$key}} - {{$kategori['judul']}}
+                                                            </option>
+                                                            @foreach ($kategori['kategori'] as $subKey => $subKategori)
+                                                                <option value="{{$subKey}}">
+                                                                    {{$subKey}} - {{$subKategori['judul']}}
+                                                                </option>
+                                                                @foreach ($subKategori['subkategori'] as $subSubKey => $subSubKategori)
+                                                                    <option value="{{$subSubKey}}">
+                                                                        {{ $subSubKey }} - {{ $subSubKategori }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endforeach
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="status">Status</label>
-                                                    <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false"/>
+                                                    <select class="form-select" name="status" id="select2">
+                                                        <option value="" selected disabled>status</option>
+                                                        <option value="Baik">Baik</option>
+                                                        <option value="Usang">Usang</option>
+                                                        <option value="Kadaluarsa">Kadaluarsa</option>
+                                                    </select>
+                                                    {{-- <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false"/> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -157,7 +174,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="eksemplar">eksemplar</label>
-                                                    <input type="number" class="form-control" id="eksemplar" name="eksemplar" placeholder="eksemplar" autocomplete="false"/>
+                                                    <input type="number" class="form-control" id="eksemplar" name="eksemplar" placeholder="eksemplar" autocomplete="false" value="{{old('eksemplar')}}"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
@@ -245,7 +262,7 @@
                                             <div class="col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label">Deskripsi</label><br>
-                                                    <textarea name="deskripsi" id="textarea" cols="30" rows="5"></textarea>
+                                                    <textarea name="deskripsi" id="textarea" cols="30" rows="5">{!! old('deskripsi') !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -260,7 +277,7 @@
                                                         <div class="featured-info">
                                                             <small class="text-muted">image max size 2mb.</small>
                                                             <p class="my-50">
-                                                                <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a>
+                                                                {{-- <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a> --}}
                                                             </p>
                                                             <div class="d-inline-block">
                                                                 <input class="form-control" type="file" name="image" id="blogCustomFile" accept="image/*"/>
@@ -311,6 +328,7 @@
     <script src="{{ asset('app-assets/vendors/ckeditor5/ckeditor.js') }}"></script>
     <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script>
     <script src="{{asset('app-assets/js/scripts/extensions/ext-component-tree.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/forms/form-select2.js')}}"></script>
     <!-- END: Page JS-->
 
     <script>

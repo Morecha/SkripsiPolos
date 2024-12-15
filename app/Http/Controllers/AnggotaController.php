@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\AnggotaImport;
 use App\Models\anggota;
 use App\Models\peminjaman;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,15 +31,21 @@ class AnggotaController extends Controller
     public function store(Request $request){
 
         $request->validate([
-            'name' => 'required',
-            'angkatan' => 'required',
-            'NIS' => 'required',
-            'alamat' => 'required',
+            'name' => 'required|string|max:255',
+            'angkatan' => 'required|integer|max:10000',
+            'NIS' => 'required|string|min:4',
+            'alamat' => 'required|string|max:255',
             'tanggal_lahir' => 'required',
             'status' => 'required',
         ]);
 
         $input = $request->all();
+
+        $anggota = anggota::where('NIS', $input['NIS'])->first();
+        if($anggota != null){
+            return redirect()->route('anggota.list')->with('error', 'NIS sudah ada');
+        }
+
         anggota::create($input);
 
         return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil ditambahkan');
@@ -51,9 +58,9 @@ class AnggotaController extends Controller
 
     public function update(Request $request, string $id){
         $request->validate([
-            'name' => 'required',
-            'angkatan' => 'required',
-            'NIS' => 'required',
+            'name' => 'required|string|max:255',
+            'angkatan' => 'required|integer|max:10000',
+            'NIS' => 'required|string|min:4',
             'alamat' => 'required',
             'tanggal_lahir' => 'required',
             'status' => 'required',
@@ -79,7 +86,7 @@ class AnggotaController extends Controller
             $test = Excel::import(new AnggotaImport, $request->file('data'));
             return redirect()->route('anggota.list')->with('success', 'Data anggota berhasil ditambahkan');
         }catch(\Exception $e){
-            return redirect()->back()->with('error', 'format excel salah');
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 

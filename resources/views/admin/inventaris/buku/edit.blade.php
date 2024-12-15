@@ -59,14 +59,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                {{-- <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                     <div class="mb-1 breadcrumb-right">
                         <div class="dropdown">
                             <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
                             <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="app-todo.html"><i class="me-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="me-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="me-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="me-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="content-body">
                 <!-- Blog Edit -->
@@ -148,7 +148,13 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="status">Status</label>
-                                                    <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false" @if($data->status != null) value="{{$data->status}}" @endif>
+                                                    <select name="status" id="status" class="form-select">
+                                                        <option value="" @if($data->status == null) selected @endif disabled>Pilih status</option>
+                                                        <option value="baik" @if($data->status == 'baik') selected @endif>baik</option>
+                                                        <option value="kurang baik" @if($data->status == 'kurang baik') selected @endif>kurang baik</option>
+                                                        <option value="tidak baik" @if($data->status == 'tidak baik') selected @endif>tidak baik</option>
+                                                    </select>
+                                                    {{-- <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false" @if($data->status != null) value="{{$data->status}}" @endif> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -199,7 +205,7 @@
                                                         <div class="featured-info">
                                                             <small class="text-muted">image max size 2mb.</small>
                                                             <p class="my-50">
-                                                                <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a>
+                                                                {{-- <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a> --}}
                                                             </p>
                                                             <div class="d-inline-block">
                                                                 <input class="form-control" type="file" name="image" id="blogCustomFile" accept="image/*"/>

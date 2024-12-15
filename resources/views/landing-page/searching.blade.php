@@ -241,7 +241,7 @@
                             <div class="col-12 col-lg-8 d-inline-block d-lg-flex align-items-center">
                                 <div class="form-group">
                                     <label><i class="fas fa-map-marker-alt" aria-hidden="true"></i></label>
-                                    <input type="text" name="search" placeholder="Kata Kunci" class="form-control">
+                                    <input type="text" name="search" placeholder="Kata Kunci" class="form-control"  maxlength="50">
                                 </div>
                             </div>
                             <div class="col-12 col-lg-4">

@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('kepala-sekolah-or-superadmin');
+        $this->middleware('super-admin');
     }
     /**
      * Display a listing of the resource.
@@ -37,14 +37,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:6',
             'role' => 'required',
-            'NIP' => 'required',
+            'NIP' => 'required|string|min:18',
             'tanggal_lahir' => 'required',
-            'alamat' => 'required',
-            'jabatan' => 'required',
+            'alamat' => 'required|string|max:255',
+            'jabatan' => 'required|string|max:255',
             'status' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -92,13 +92,14 @@ class UserController extends Controller
     {
         // dd($id,$request);
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|min:6',
             'role' => 'required',
-            'NIP' => 'required',
+            'NIP' => 'required|string|min:18',
             'tanggal_lahir' => 'required',
-            'alamat' => 'required',
-            'jabatan' => 'required',
+            'alamat' => 'required||string|max:255',
+            'jabatan' => 'required||string|max:255',
             'status' => 'required',
         ]);
         // dd($request);

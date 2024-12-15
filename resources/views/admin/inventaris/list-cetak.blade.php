@@ -42,6 +42,10 @@
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
                         <h2 class="content-header-title float-start mb-0">Cetak Nomor Buku</h2>
+                        @if (session('error') or $errors->any())
+                            <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                            </div>
+                        @endif
                         {{-- @dd(session('error')) --}}
                     </div>
                 </div>
@@ -106,10 +110,28 @@
 <script src="{{asset('app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{asset('app-assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
 <script src="{{asset('app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js')}}"></script>
+<script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
 <!-- END: Page Vendor JS-->
 
 <!-- BEGIN: Page JS-->
 <script src="{{asset('app-assets/js/scripts/pages/app-user-edit.js')}}"></script>
 <script src="{{asset('app-assets/js/scripts/components/components-navs.js')}}"></script>
 <!-- END: Page JS-->
+
+<script>
+    $(document).ready(function() {
+        var gagal = $('#type-gagal');
+        if (gagal.length) {
+            Swal.fire({
+                title: 'Gagal !',
+                text: '{{ session('error') }}',
+                icon: 'error',
+                customClass: {
+                    confirmButton: 'btn btn-primary'
+                },
+                buttonsStyling: false
+            });
+        }
+    });
+</script>
 @endsection

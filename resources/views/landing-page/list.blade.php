@@ -74,48 +74,7 @@
                     <div class="row">
                         <div class="col-12">
                             <h1 class="text-white">Hasil Pencarian</h1>
-                            {{-- <form class="row contact-form" id="contact-form-data">
-                                <div class="col-12" id="result"></div>
-                                <div class="col-12 col-lg-10 d-inline-block d-lg-flex align-items-center text-center text-lg-left">
-                                    <div class="row no-gutters w-100">
-                                        <div class="col-12 col-lg-4">
-                                            <div class="form-group d-block">
-                                                <div class="product-price mt-4">
-                                                    <div id="slider-range" class="w-100"></div>
-                                                    <p class="price-num mt-3 mt-lg-2" style="color: #fff;">Price: <span id="min-p"></span>  <span id="max-p"></span></p>
-                                                </div>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-lg-4 m-auto">
-                                            <div class="form-group">
-                                                <label><i class="lni lni-dinner"></i></label>
-                                                <select class="form-control w-100" id="set1">
-                                                    <option class="selected hidden disabled" hidden>Restaurant Type</option>
-                                                    <option value="Mega Restaurant">Mega Restaurant</option>
-                                                    <option value="The Fast Food">The Fast Food</option>
-                                                    <option value="The Green Bakery">Green Bakery</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-lg-4 m-auto">
-                                            <div class="form-group">
-                                                <label><i class="lni lni-map-marker"></i></label>
-
-                                                <select class="form-control" id="set2">
-                                                    <option class="selected" hidden>Restaurant Location</option>
-                                                    <option value="New York">New York</option>
-                                                    <option value="London">London</option>
-                                                    <option value="Paris">Paris</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-lg-2 d-flex align-items-center">
-                                    <a href="restaurant-listing.html" class="btn main-btn rounded-pill w-100 contact_btn">FILTER</a>
-                                </div>
-                            </form> --}}
                         </div>
                     </div>
                 </div>
@@ -139,7 +98,11 @@
                                                         <div class="row">
                                                             <div class="col-md-3">
                                                                 <div class="info">
-                                                                    <img src="{{asset('assets/landing-page/food-delivery/img/test1.jpg')}}">
+                                                                    @if ($cari->image != null)
+                                                                        <img src="{{asset('storage/gambar/inventaris/'.$cari->image)}}">
+                                                                    @else
+                                                                        <img src="{{asset('assets/landing-page/food-delivery/img/test1.jpg')}}">
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">

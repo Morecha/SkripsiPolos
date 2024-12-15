@@ -39,6 +39,9 @@
         .custom-list .label {
             min-width: 100px; /* Adjust width as needed */
         }
+        /* .custom-list p {
+            margin: 0;
+        } */
     </style>
 @endsection
 
@@ -132,7 +135,7 @@
                                                                                 <li><span class="label">status</span> = {{$data->status}}</li>
                                                                                 <li><span class="label">eksemplar</span> = {{$data->eksemplar}}</li>
                                                                                 <li><span class="label">tangga masuk</span> = {{$data->created_at}}</li>
-                                                                                <li><span class="label">Deskripsi</span> = {!!$data->deskripsi!!}</li>
+                                                                                {{-- <li><span class="label">Deskripsi</span> = <p>{!!$data->deskripsi!!}</p></li> --}}
                                                                                 @if ($data->image != null)
                                                                                     <li><span class="label">Image</span> =
                                                                                         <img src="{{asset('storage/gambar/inventaris/'.$data->image)}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" style="margin: 10px;"/>
@@ -237,7 +240,7 @@
     {{-- <script src="{{asset('app-assets/js/scripts/pages/app-invoice-list.js')}}"></script> --}}
     {{-- <script src="{{ asset('app-assets/js/scripts/pages/datatables-demo.js') }}"></script> --}}
     <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
-    <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script>
+    {{-- <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script> --}}
     <!-- END: Page JS-->
 
     <script>
@@ -305,61 +308,60 @@
 
     <script>
         $(document).ready(function() {
-            $('.delete-button').on('click', function(e) {
-                e.preventDefault();
-                var id = $(this).data('id');
-                confirmDelete(id);
-            });
-            $('.datatables-ajax').dataTable({
+            // Inisialisasi DataTables
+            var table = $('.datatables-ajax').DataTable({
                 dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             });
-        });
 
-        table.on('draw', function() {
+            // Event delete-button saat halaman pertama kali dimuat
             $('.delete-button').on('click', function(e) {
                 e.preventDefault();
                 var id = $(this).data('id');
                 confirmDelete(id);
             });
-        })
 
-        function confirmDelete(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    cancelButton: 'btn btn-outline-danger ms-1'
-                },
-                buttonsStyling: false,
-                background: '#283046', // Warna latar belakang Vuexy Dark
-                color: '#d0d2d6',     // Warna teks default Vuexy
-                // Opsional: Sesuaikan warna ikon untuk tema gelap
-                iconColor: '#ea5455',
-            }).then(function(result) {
-                if (result.value) {
-                    // Tidak lagi submit form secara otomatis di sini
-                    // Form akan di-submit hanya jika pengguna menekan tombol "Yes"
-                    document.getElementById('delete-form-' + id).submit();
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire({
-                        title: 'Cancelled',
-                        text: 'Your data is safe :)',
-                        icon: 'error',
-                        customClass: {
-                            confirmButton: 'btn btn-success'
-                        },
-                        background: '#283046', // Warna latar belakang Vuexy Dark
-                        color: '#d0d2d6',     // Warna teks default Vuexy
-                        // Opsional: Sesuaikan warna ikon untuk tema gelap
-                        iconColor: '#ea5455',
-                    });
-                }
+            // Tambahkan event listener pada event draw DataTables
+            table.on('draw', function() {
+                // Re-bind event delete-button
+                $('.delete-button').off('click').on('click', function(e) {
+                    e.preventDefault();
+                    var id = $(this).data('id');
+                    confirmDelete(id);
+                });
+
+                // Render ulang ikon Feather (dropdown tetap bekerja)
+                feather.replace();
             });
-        }
+
+            // Fungsi konfirmasi delete
+            function confirmDelete(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    customClass: {
+                        confirmButton: 'btn btn-primary',
+                        cancelButton: 'btn btn-outline-danger ms-1'
+                    },
+                    buttonsStyling: false
+                }).then(function(result) {
+                    if (result.value) {
+                        document.getElementById('delete-form-' + id).submit();
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire({
+                            title: 'Cancelled',
+                            text: 'Your data is safe :)',
+                            icon: 'error',
+                            customClass: {
+                                confirmButton: 'btn btn-success'
+                            }
+                        });
+                    }
+                });
+            }
+        });
     </script>
 
     {{-- <script>

@@ -130,13 +130,13 @@
                                                                     <i data-feather="edit-2" class="me-50"></i>
                                                                     <span>Edit</span>
                                                                 </a>
-                                                                <a class="dropdown-item delete-button"
+                                                                <a class="dropdown-item aktivasi-button"
                                                                     href="{{route('anggota.aktivasi', $anggota->id)}}"
                                                                     {{-- onclick="event.preventDefault();
                                                                     document.getElementById('delete-form-{{ $anggota->id }}').submit();"> --}}
                                                                     data-id="{{ $anggota->id }}">
                                                                     <i data-feather="shuffle" class="me-50"></i>
-                                                                    <form id="delete-form-{{ $anggota->id }}" method="POST" action="{{route('anggota.aktivasi', $anggota->id)}}" style="display: none;">
+                                                                    <form id="aktivasi-form-{{ $anggota->id }}" method="POST" action="{{route('anggota.aktivasi', $anggota->id)}}" style="display: none;">
                                                                         @csrf
                                                                     </form>
                                                                     @if ($anggota->status == 'aktif')
@@ -235,7 +235,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('.delete-button').on('click', function(e) {
                 e.preventDefault();
@@ -246,6 +246,14 @@
                 dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
             });
         });
+
+        table.on('draw', function() {
+            $('.delete-button').on('click', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                confirmDelete(id);
+            });
+        })
 
         table.on('draw', function() {
             $('.delete-button').on('click', function(e) {
@@ -292,17 +300,50 @@
                 }
             });
         }
-    </script>
+    </script> --}}
 
-    {{-- <script>
+    <script>
+        // Definisikan table di luar scope $(document).ready()
+        var table;
+
         $(document).ready(function() {
+            // Inisialisasi DataTable dan simpan dalam variabel 'table'
+            table = $('.datatables-ajax').DataTable({
+                dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            });
+
+            // Tambahkan event listener untuk tombol delete-button saat halaman pertama dimuat
             $('.delete-button').on('click', function(e) {
                 e.preventDefault();
                 var id = $(this).data('id');
                 confirmDelete(id);
             });
+
+            // Tambahkan event listener untuk tombol aktivasi-button saat halaman pertama dimuat
+            $('.aktivasi-button').on('click', function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                confirmActivate(id);
+            });
+
+            // Re-attach event listeners setiap kali DataTable di-draw ulang
+            table.on('draw', function() {
+                $('.delete-button').on('click', function(e) {
+                    e.preventDefault();
+                    var id = $(this).data('id');
+                    confirmDelete(id);
+                });
+
+                $('.aktivasi-button').on('click', function(e) {
+                    e.preventDefault();
+                    var id = $(this).data('id');
+                    confirmActivate(id);
+                });
+                feather.replace();
+            });
         });
 
+        // Konfirmasi untuk delete
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Are you sure?',
@@ -314,23 +355,65 @@
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-outline-danger ms-1'
                 },
-                buttonsStyling: false
+                buttonsStyling: false,
+                background: '#283046',
+                color: '#d0d2d6',
+                iconColor: '#ea5455',
             }).then(function(result) {
                 if (result.value) {
-                    // Tidak lagi submit form secara otomatis di sini
-                    // Form akan di-submit hanya jika pengguna menekan tombol "Yes"
                     document.getElementById('delete-form-' + id).submit();
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     Swal.fire({
                         title: 'Cancelled',
-                        text: 'Your imaginary file is safe :)',
+                        text: 'Your data is safe :)',
                         icon: 'error',
                         customClass: {
                             confirmButton: 'btn btn-success'
-                        }
+                        },
+                        background: '#283046',
+                        color: '#d0d2d6',
+                        iconColor: '#ea5455',
                     });
                 }
             });
         }
-    </script> --}}
+
+        // Konfirmasi untuk aktivasi/deaktivasi
+        function confirmActivate(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will toggle the activation status!",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, proceed!',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-outline-danger ms-1'
+                },
+                buttonsStyling: false,
+                background: '#283046',
+                color: '#d0d2d6',
+                iconColor: '#39c0ed',
+            }).then(function(result) {
+                if (result.value) {
+                    document.getElementById('aktivasi-form-' + id).submit();
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: 'Cancelled',
+                        text: 'No changes were made :)',
+                        icon: 'error',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        },
+                        background: '#283046',
+                        color: '#d0d2d6',
+                        iconColor: '#ea5455',
+                    });
+                }
+            });
+        }
+    </script>
+
+
+
 @endsection

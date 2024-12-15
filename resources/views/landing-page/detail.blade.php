@@ -61,7 +61,11 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="info">
-                                                        <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}">
+                                                        @if ($inventaris->image == null)
+                                                            <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}">
+                                                        @else
+                                                            <img src="{{asset('storage/gambar/inventaris/'.$inventaris->image)}}">
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">

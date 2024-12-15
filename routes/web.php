@@ -115,7 +115,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pengembalian/{id}/delete', [PeminjamanController::class, 'pengembalian_destroy'])->name('pengembalian.delete');
 
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.list');
-    Route::get('/create-laporan', [LaporanController::class, 'create'])->name('laporan.create');
-    Route::post('/store-laporan', [LaporanController::class, 'store'])->name('laporan.store');
+    Route::get('/create-laporan', [LaporanController::class, 'createLaporan'])->name('laporan.create');
+    Route::post('/store-laporan', [LaporanController::class, 'storeLaporan'])->name('laporan.store');
     Route::post('/laporan/{id}/delete', [LaporanController::class, 'destroy'])->name('laporan.delete');
 });

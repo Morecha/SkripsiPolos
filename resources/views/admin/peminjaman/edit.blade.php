@@ -59,14 +59,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
+                {{-- <div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
                     <div class="mb-1 breadcrumb-right">
                         <div class="dropdown">
                             <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
                             <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="app-todo.html"><i class="me-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="me-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="me-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="me-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="content-body">
                 <!-- Blog Edit -->
@@ -158,7 +158,7 @@
                                                                 <select class="select2 form-select" name="id_buku[]" id="select2-nested-{{$index}}">
                                                                     <option value="{{$item->buku->id}}" selected>{{$item->buku->kode_buku}}</option>
                                                                     @php
-                                                                        $judul = '';
+                                                                        $judul = null;
                                                                     @endphp
                                                                     @foreach ($buku as $bukuItem)
                                                                         @if ($judul != $bukuItem->inventaris->judul)
@@ -254,60 +254,6 @@
         });
     </script>
 
-    {{-- <script>
-        // Inisialisasi counter untuk membuat id unik
-        let counter = 1;
-
-        // Fungsi untuk menginisialisasi Select2 pada elemen select tertentu
-        function initializeSelect2() {
-            $('.select2').select2(); // Menginisialisasi Select2 pada semua elemen select dengan kelas select2
-
-            document.querySelectorAll('.select2').forEach((dropdown, index, dropdowns) => {
-            dropdown.addEventListener('change', function () {
-                // Fokus ke dropdown berikutnya jika ada
-                const nextDropdown = dropdowns[index + 1];
-                if (nextDropdown) {
-                    $(nextDropdown).select2('open'); // Buka dropdown berikutnya
-                }
-            });
-        })
-        }
-
-        document.getElementById('addKodeBuku').addEventListener('click', function() {
-            // Dapatkan container untuk grup kode buku
-            var container = document.getElementById('kodeBukuContainer');
-
-            // Dapatkan grup kode buku pertama untuk diduplikasi
-            var kodeBukuGroup = container.querySelector('.kode-buku-group');
-
-            // Hapus Select2 sebelum menduplikasi elemen
-            $(kodeBukuGroup.querySelector('select')).select2('destroy');
-
-            // Buat duplikat grup kode buku
-            var newKodeBukuGroup = kodeBukuGroup.cloneNode(true);
-
-            // Buat ID unik untuk select yang baru menggunakan counter
-            var newId = 'select2-nested-' + counter;
-            counter++; // Tingkatkan counter setelah membuat id
-
-            // Atur id baru pada elemen select yang diduplikasi
-            newKodeBukuGroup.querySelector('select').id = newId;
-
-            // Hapus nilai yang dipilih sebelumnya di select baru
-            newKodeBukuGroup.querySelector('select').selectedIndex = -1;
-
-            // Tambahkan grup kode buku baru ke dalam container
-            container.appendChild(newKodeBukuGroup);
-
-            // Inisialisasi ulang Select2 untuk elemen yang baru ditambahkan
-            initializeSelect2();
-        });
-
-        // Inisialisasi Select2 pada elemen yang ada saat pertama kali halaman dimuat
-        initializeSelect2();
-    </script> --}}
-
-
     <script>
         // Inisialisasi counter untuk membuat id unik
         let counter = {{$dipinjam->pivot->count()}}; // Mulai dari jumlah buku yang dipilih
@@ -364,21 +310,29 @@
 
             // Hapus elemen .kode-buku-group
             kodeBukuGroup.remove();
+
+            // Perbarui status tombol hapus setelah elemen dihapus
+            checkRemoveButton();
         }
+
 
         function checkRemoveButton() {
             const removeButtons = document.querySelectorAll('.remove-btn');
             const container = document.getElementById('kodeBukuContainer');
 
-            // Jika hanya ada satu elemen, nonaktifkan tombol hapus pertama
+            // Jika hanya ada satu elemen, nonaktifkan semua tombol hapus
             if (container.children.length === 1) {
-                removeButtons[0].setAttribute('disabled', true);
+                removeButtons.forEach(button => {
+                    button.setAttribute('disabled', true);
+                });
             } else {
+                // Aktifkan kembali semua tombol hapus jika elemen lebih dari satu
                 removeButtons.forEach(button => {
                     button.removeAttribute('disabled');
                 });
             }
         }
+
 
         // Inisialisasi Select2 pada elemen yang ada saat pertama kali halaman dimuat
         initializeSelect2();

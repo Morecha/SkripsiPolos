@@ -8,9 +8,14 @@ use App\Models\peminjaman;
 use App\Models\pivot;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class PeminjamanController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('superadmin-or-admin');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -25,6 +30,7 @@ class PeminjamanController extends Controller
             $p['jenis_peminjaman'] = $p->jenisPeminjaman();
             $p->namaPeminjaman();
         }
+
         return view('admin.peminjaman.list',compact('peminjaman'));
     }
 
@@ -71,7 +77,7 @@ class PeminjamanController extends Controller
     {
         $rules =[
             'jenis_peminjaman' => 'required',
-            'lama_peminjaman' => 'required',
+            'lama_peminjaman' => 'required|integer|max:10000',
             'id_buku' => 'required',
             'deskripsi' => 'nullable',
         ];
@@ -153,10 +159,11 @@ class PeminjamanController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'lama_peminjaman' => 'required',
+            'lama_peminjaman' => 'required|integer|max:10000',
             'id_buku' => 'required',
             'deskripsi' => 'nullable',
         ]);
+
         $input = $request->all();
         $peminjaman = peminjaman::with('pivot')->find($id);
         $buku = buku::find($request['id_buku']);
@@ -209,6 +216,12 @@ class PeminjamanController extends Controller
                 $update->save();
             }
         }
+
+        if($peminjaman->id_user != null){
+            $input['id_user'] = $peminjaman->id_user;
+        }
+
+        $peminjaman->update($input);
         // dd('cek',$id_buku_peminjaman_id_buku,$deleted,$input['id_buku'],$added);
         return redirect('/peminjaman')->with('success', 'Pembaruan Peminjaman Berhasil');
     }

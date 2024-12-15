@@ -239,7 +239,7 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('.delete-button').on('click', function(e) {
                 e.preventDefault();
@@ -257,6 +257,7 @@
                 var id = $(this).data('id');
                 confirmDelete(id);
             });
+            feather.replace();
         })
 
         function confirmDelete(id) {
@@ -288,17 +289,36 @@
                 }
             });
         }
-    </script>
+    </script> --}}
 
-    {{-- <script>
-        $(document).ready(function() {
-            $('.delete-button').on('click', function(e) {
+   <script>
+    $(document).ready(function() {
+        // Inisialisasi DataTables
+        var table = $('.datatables-ajax').DataTable({
+            dom: '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+        });
+
+        // Event delete-button saat halaman pertama kali dimuat
+        $('.delete-button').on('click', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            confirmDelete(id);
+        });
+
+        // Tambahkan event listener pada event draw DataTables
+        table.on('draw', function() {
+            // Re-bind event delete-button
+            $('.delete-button').off('click').on('click', function(e) {
                 e.preventDefault();
                 var id = $(this).data('id');
                 confirmDelete(id);
             });
+
+            // Render ulang ikon Feather (dropdown tetap bekerja)
+            feather.replace();
         });
 
+        // Fungsi konfirmasi delete
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Are you sure?',
@@ -313,8 +333,6 @@
                 buttonsStyling: false
             }).then(function(result) {
                 if (result.value) {
-                    // Tidak lagi submit form secara otomatis di sini
-                    // Form akan di-submit hanya jika pengguna menekan tombol "Yes"
                     document.getElementById('delete-form-' + id).submit();
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     Swal.fire({
@@ -328,5 +346,7 @@
                 }
             });
         }
-    </script> --}}
+    });
+</script>
+
 @endsection

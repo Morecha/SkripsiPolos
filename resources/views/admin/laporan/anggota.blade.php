@@ -160,6 +160,7 @@
         <div class="row">
             <div class="col col-12">Total Buku Pengadaan Periode: {{$jumlahJenisPeriode['pengadaan']}}</div>
             <div class="col col-12">Total Buku Sumbangan Periode: {{$jumlahJenisPeriode['sumbangan']}}</div>
+            <div class="col col-12">Total Buku dimusnahkan Periode: {{$bukumusnah->count()}}</div>
         </div>
 
         <div class="row pb-4">
@@ -192,6 +193,39 @@
                 </tbody>
             </table>
         </div>
+        <br><br>
+        @if ($bukumusnah->count() > 0)
+            <div class="row pb-4">
+                <h2>Tabel Pemusnahan Inven</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Buku</th>
+                            <th>kode_buku</th>
+                            <th>Pengarang</th>
+                            <th>Penerbit</th>
+                            <th>keterangan</th>
+                            <th>Tanggal Diterima</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php $no = 1; @endphp
+                        @foreach ($bukumusnah as $j)
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $j->inventaris->judul }}</td>
+                                <td>{{ $j->kode_buku }}</td>
+                                <td>{{ $j->inventaris->pengarang }}</td>
+                                <td>{{ $j->inventaris->penerbit }}</td>
+                                <td>{!! $j->keterangan !!}</td>
+                                <td>{{ \Carbon\Carbon::parse($j->updated_at)->format('d-m-Y') }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @endif
     </div>
 </body>
 </html>

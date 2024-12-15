@@ -53,6 +53,18 @@
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
                             <h2 class="content-header-title float-start mb-0">Pengembalian</h2>
+                            @if (session('error') or $errors->any())
+                                <div id="type-gagal" class="alert alert-danger" style="display: none;">
+                                </div>
+                            @endif
+                            @if (session('warning'))
+                                <div id="type-warning" class="alert alert-warning" style="display: none;">
+                                </div>
+                            @endif
+                            @if (session('success'))
+                                <div id="type-success" class="alert alert-success" style="display: none;">
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

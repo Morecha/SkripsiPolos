@@ -85,14 +85,19 @@
                                         </div>
                                     </div>
                                     <!-- Form -->
-                                    @if ($errors->any())
+                                    @if ($errors->any() || session('error'))
                                         <br>
                                         <div class="alert alert-danger" role="alert">
                                             <h4 class="alert-heading">Error</h4>
                                             <div class="alert-body">
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
+                                                @if ($errors->any())
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                @endif
+                                                @if (session('error'))
+                                                    <li>{{ session('error') }}</li>
+                                                @endif
                                             </div>
                                         </div>
                                     @endif
@@ -194,9 +199,9 @@
                                                     <div class="d-flex flex-column flex-md-row">
                                                         <img src="{{asset('app-assets/images/portrait/small/avatar-s-11.jpg')}}" id="blog-feature-image" class="rounded me-2 mb-1 mb-md-0" width="110" height="110" alt="Blog Featured Image" />
                                                         <div class="featured-info">
-                                                            <small class="text-muted">Required image resolution 400x400, image size 2mb.</small>
+                                                            <small class="text-muted">Required image image size 2mb.</small>
                                                             <p class="my-50">
-                                                                <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a>
+                                                                {{-- <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a> --}}
                                                             </p>
                                                             <div class="d-inline-block">
                                                                 <input class="form-control" type="file" name="image" id="blogCustomFile" accept="image/*"/>

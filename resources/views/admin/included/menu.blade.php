@@ -38,97 +38,115 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                {{-- dashboard --}}
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('dashboard')}}"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboards</span></a>
                 </li>
+                {{-- peminjaman, pengembalian, presensi kelompok --}}
+                @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'PenanggungJawab')
+                    {{-- pembatas --}}
+                    <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Peminjaman &amp;<br>Pengembalian Buku</span><i data-feather="more-horizontal"></i>
+                    </li>
+                    {{-- Peminjaman --}}
+                    <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="file-plus"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Peminjaman Buku</a>
+                        <ul class="menu-content">
+                            <li><a class="d-flex align-items-center" href="{{route('peminjaman.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Peminjaman</span></a>
+                            </li>
+                            <li><a class="d-flex align-items-center" href="{{route('peminjaman.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Tambah Peminjaman</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- Pengembalian --}}
+                    <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('pengembalian.list')}}"><i data-feather="file-minus"></i><span class="menu-title text-truncate" data-i18n="Product">Pengembalian Buku</span></a>
+                    </li>
+                    {{-- pembatas --}}
+                    <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Presensi</span><i data-feather="more-horizontal"></i>
+                    </li>
+                    {{-- presensi kelompok --}}
+                    <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="check-square"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Presensi</a>
+                        <ul class="menu-content">
+                            <li><a class="d-flex align-items-center" href="{{route('presensi.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Presensi</span></a>
+                            </li>
+                            <li><a class="d-flex align-items-center" href="{{route('presensi.kelompok.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Presensi Kelompok</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+                {{-- pengadaan, inventaris --}}
+                @if (Auth::user()->role == 'PenanggungJawab' || Auth::user()->role == 'Administrasi')
+                    {{-- pembatas --}}
+                    <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Inventaris</span><i data-feather="more-horizontal"></i>
+                    </li>
+                    {{-- Pengadaan --}}
+                    @if(Auth::user()->role == 'Administrasi')
+                        <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="arrow-down-circle"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Pengadaan</a>
+                            <ul class="menu-content">
+                                <li><a class="d-flex align-items-center" href="{{route('pengadaan.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                                </li>
+                                <li><a class="d-flex align-items-center" href="{{route('pengadaan.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                    {{-- Inventaris --}}
+                    @if (Auth::user()->role == 'PenanggungJawab')
+                        <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="layers"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Inventaris Perpus</a>
+                            <ul class="menu-content">
+                                <li><a class="d-flex align-items-center" href="{{route('inventaris.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                                </li>
+                                <li><a class="d-flex align-items-center" href="{{route('inventaris.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                @endif
+                {{-- laporan --}}
+                @if(Auth::user()->role == 'PenanggungJawab' || Auth::user()->role == 'KepalaSekolah')
+                    {{-- pembatas --}}
+                    <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Laporan</span><i data-feather="more-horizontal"></i>
+                    </li>
+                    {{-- Laporan --}}
+                    <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="paperclip"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Laporan</a>
+                        <ul class="menu-content">
+                            <li><a class="d-flex align-items-center" href="{{route('laporan.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
+                            </li>
+                            <li><a class="d-flex align-items-center" href="{{ route('laporan.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
+                            </li>
+                            {{-- <li><a class="d-flex align-items-center" href="{{route('buku.cetak')}}" target="_blank"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">testing</span></a>
+                            </li> --}}
+                        </ul>
+                    </li>
+                @endif
+                {{-- anggota, user --}}
+                @if(Auth::user()->role == 'PenanggungJawab' || Auth::user()->role == 'Admin')
+                    {{-- pembatas --}}
+                    <li class=" navigation-header"><span data-i18n="Users">Otoritas Pengguna</span><i data-feather="more-horizontal"></i>
+                    </li>
+                    {{-- Anggota Perpustakaan --}}
+                    <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='user-check'></i><span class="menu-title text-truncate" data-i18n="User">Anggota Perpus</span></a>
+                        <ul class="menu-content">
+                            <li><a class="d-flex align-items-center" href="{{route('anggota.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+                            </li>
+                            <li><a class="d-flex align-items-center" href="{{route('anggota.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">Tambah Anggota</span></a>
+                            </li>
+                            <li><a class="d-flex align-items-center" href="{{route('anggota.create_masal')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">Tambah Anggota<br>Masal</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    @if(Auth::user()->role == 'PenanggungJawab')
+                        {{-- user --}}
+                        <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='users'></i><span class="menu-title text-truncate" data-i18n="User">User</span></a>
+                            <ul class="menu-content">
+                                <li><a class="d-flex align-items-center" href="{{route('users.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
+                                </li>
+                                <li><a class="d-flex align-items-center" href="{{route('users.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">Create</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                @endif
+
                 {{-- pembatas --}}
-                <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Peminjaman &amp;<br>Pengembalian Buku</span><i data-feather="more-horizontal"></i>
-                </li>
-                {{-- Peminjaman --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="file-plus"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Peminjaman Buku</a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('peminjaman.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Peminjaman</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="{{route('peminjaman.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Tambah Peminjaman</span></a>
-                        </li>
-                    </ul>
-                </li>
-                {{-- Pengembalian --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('pengembalian.list')}}"><i data-feather="file-minus"></i><span class="menu-title text-truncate" data-i18n="Product">Pengembalian Buku</span></a>
-                </li>
-                {{-- <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="file-minus"></i><span class="menu-title text-truncate" data-i18n="Product">Pengembalian Buku</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href=""><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Pengembalian</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href=""><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Tambah  Pengembalian</span></a>
-                        </li>
-                    </ul>
-                </li> --}}
-                {{-- pembatas --}}
-                <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Presensi</span><i data-feather="more-horizontal"></i>
-                </li>
-                {{-- presensi kelompok --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="check-square"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Presensi</a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('presensi.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Presensi</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="{{route('presensi.kelompok.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Presensi Kelompok</span></a>
-                        </li>
-                    </ul>
-                </li>
-                {{-- pembatas --}}
-                <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Inventaris</span><i data-feather="more-horizontal"></i>
-                </li>
-                {{-- Pengadaan --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="arrow-down-circle"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Pengadaan</a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('pengadaan.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="{{route('pengadaan.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
-                        </li>
-                    </ul>
-                </li>
-                {{-- Inventaris --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="layers"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Inventaris Perpus</a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('inventaris.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="{{route('inventaris.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
-                        </li>
-                    </ul>
-                </li>
-                {{-- Laporan --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="paperclip"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Laporan</a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('laporan.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="{{ route('laporan.create') }}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">Create</span></a>
-                        </li>
-                        {{-- <li><a class="d-flex align-items-center" href="{{route('buku.cetak')}}" target="_blank"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Details">testing</span></a>
-                        </li> --}}
-                    </ul>
-                </li>
-                {{-- pembatas --}}
-                <li class=" navigation-header"><span data-i18n="Users">Otoritas Pengguna</span><i data-feather="more-horizontal"></i>
-                </li>
-                {{-- Anggota Perpustakaan --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='user-check'></i><span class="menu-title text-truncate" data-i18n="User">Anggota Perpus</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('anggota.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="{{route('anggota.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">Tambah Anggota</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="{{route('anggota.create_masal')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">Tambah Anggota<br>Masal</span></a>
-                        </li>
-                    </ul>
-                </li>
-                {{-- user --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather='users'></i><span class="menu-title text-truncate" data-i18n="User">User</span></a>
-                    <ul class="menu-content">
-                        <li><a class="d-flex align-items-center" href="{{route('users.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="List">List</span></a>
-                        </li>
-                        <li><a class="d-flex align-items-center" href="{{route('users.create')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="View">Create</span></a>
-                        </li>
-                    </ul>
+                <li class=" navigation-header"><span data-i18n="Users">profile</span><i data-feather="more-horizontal"></i>
                 </li>
                 {{--Profile--}}
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{route('profile')}}"><i data-feather='user'></i><span class="menu-title text-truncate" data-i18n="Profile">Profile</span></a>

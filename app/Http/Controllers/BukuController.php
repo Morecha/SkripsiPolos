@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\anggota;
 use App\Models\buku;
 use App\Models\inventaris;
+use Illuminate\Routing\Controller;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class BukuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('super-admin');
+    }
+
     public function generate_buku($id){
         $inventaris = inventaris::find($id);
         $buku = buku::where('id_inven', $id)->get();
@@ -63,9 +70,10 @@ class BukuController extends Controller
                     }
                 }
                 else{
-                    return back()->with('error', 'Terdapat buku yang dipinjam');
+                    return back()->with('error', 'Terdapat buku yang dipinjam atau hilang');
                 }
             }
+
                 //Tambahkan buku baru
                 $banyak = $inventaris['eksemplar'] - $buku->count();
                 // dd($banyak, $akhir,$inventaris['eksemplar']);
@@ -145,8 +153,8 @@ class BukuController extends Controller
     {
         $data = buku::find($id_buku);
 
-        if($data['posisi'] != 'ada' || 'dimusnahkan'){
-            return redirect()->back()->with('error', 'Buku tidak berada diperpustakaan');
+        if($data['posisi'] != 'ada' && 'dimusnahkan'){
+            return redirect()->back()->with('error', 'Buku tidak berada diperpustakaan atau telah berhasil dimusnahkan');
         }
 
         $inventaris = inventaris::find($id);

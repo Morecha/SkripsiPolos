@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('angkatan');
-            $table->bigInteger('NIS');
+            $table->bigInteger('NIS')->unique();
             $table->string('alamat');
             $table->timestamp('tanggal_lahir')->nullable();
             $table->enum('status', ['aktif','non-aktif']);

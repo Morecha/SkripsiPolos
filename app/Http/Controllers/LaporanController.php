@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Faker\Core\File;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Redirect;
@@ -21,23 +22,28 @@ use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('kepala-sekolah-or-superadmin');
+    }
+
     public function index(){
         $data = laporan::all();
         // dd($data);
         return view('admin.laporan.list',compact('data'));
     }
 
-    public function create(){
+    public function createLaporan(){
         return view('admin.laporan.create');
     }
 
-    public function store(Request $request){
+    public function storeLaporan(Request $request){
         // dd($request);
         $request->validate([
            'jenis' => 'required',
            'dari' => 'required',
            'hingga' => 'required',
-           'keterangan' => 'required',
+           'keterangan' => 'required|string|max:255',
            'deskripsi' => 'nullable',
         ]);
         $dari = Carbon::parse($request['dari'])->startOfDay();
@@ -69,9 +75,9 @@ class LaporanController extends Controller
                     $dataInventarisBuku[$inventaris->id]['buku_count'] = 1;
                     //kalau tidak ada relasi ke pengadaan
                     if($dataInventarisBuku[$inventaris->id]['pengadaan'] != null){
-                        $dataInventarisBuku[$inventaris->id]['tipe'] = 'Pengadaan';
+                        $dataInventarisBuku[$inventaris->id]['tipe'] = 'pengadaan';
                     }else{
-                        $dataInventarisBuku[$inventaris->id]['tipe'] = 'Sumbangan';
+                        $dataInventarisBuku[$inventaris->id]['tipe'] = 'sumbangan';
                     }
                 }
                 $tipe = $dataInventarisBuku[$inventaris->id]['tipe'];
@@ -81,9 +87,12 @@ class LaporanController extends Controller
             $jumlahInventarisBuku = $bukuInventaris->count();
             $inventarisDariPengadaan = inventaris::whereHas('pengadaan')->with(['pengadaan', 'buku'])->withCount('buku')->get();
             $inventarisTidakDariPengadaan = inventaris::whereDoesntHave('pengadaan')->with(['buku'])->withCount('buku')->get();
-
+            $bukumusnah = buku::where('posisi', 'dimusnahkan')->with('inventaris')->whereBetween('created_at', [$dari, $hingga])->get();
+            // dd($bukumusnah);
+            // return view('admin.laporan.anggota',
+            // compact('totalInventaris','totalBuku','request','dataInventarisBuku','jumlahInventarisBuku','inventarisDariPengadaan','inventarisTidakDariPengadaan','jumlahJenisPeriode','base64TutWuri','base64SD','bukumusnah'));
             $pdf = Pdf::loadView('admin.laporan.anggota',
-            compact('totalInventaris','totalBuku','request','dataInventarisBuku','jumlahInventarisBuku','inventarisDariPengadaan','inventarisTidakDariPengadaan','jumlahJenisPeriode','base64TutWuri','base64SD'));
+            compact('totalInventaris','totalBuku','request','dataInventarisBuku','jumlahInventarisBuku','inventarisDariPengadaan','inventarisTidakDariPengadaan','jumlahJenisPeriode','base64TutWuri','base64SD','bukumusnah'));
             $name = 'laporan-inventaris-'.date('Y-m-d-H-i').'.pdf';
 
         }elseif($request['jenis'] == 'peminjaman'){

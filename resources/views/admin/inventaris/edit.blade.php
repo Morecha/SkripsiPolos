@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/editors/quill/quill.snow.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/animate/animate.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/sweetalert2.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/fonts/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/vendors/css/extensions/jstree.min.css')}}">
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Page CSS-->
@@ -19,6 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/forms/form-quill-editor.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/pages/page-blog.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-sweet-alerts.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('app-assets/css/plugins/extensions/ext-component-tree.css')}}">
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
@@ -144,13 +147,41 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="kode_ddc">kode (DDC)</label>
-                                                    <input type="text" class="form-control" id="kode_ddc" name="kode_ddc" placeholder="kode_ddc" autocomplete="false" value="{{$data->kode_ddc}}"/>
+                                                    {{-- <input type="text" class="form-control" id="kode_ddc" name="kode_ddc" placeholder="kode_ddc" autocomplete="false" value="{{$data->kode_ddc}}"/> --}}
+                                                    <select class="select2 form-select" name="kode_ddc" id="select2">
+                                                        @if ($data->kode_ddc != null)
+                                                            <option value="{{$data->kode_ddc}}" selected>{{$data->kode_ddc}}</option>
+                                                        @else
+                                                            <option value="" selected disabled>Pilih Kode</option>
+                                                        @endif
+                                                        @foreach ($kode['dewey'] as $key => $kategori)
+                                                            <option value="{{$key}}" disabled>
+                                                                {{$key}} - {{$kategori['judul']}}
+                                                            </option>
+                                                            @foreach ($kategori['kategori'] as $subKey => $subKategori)
+                                                                <option value="{{$subKey}}">
+                                                                    {{$subKey}} - {{$subKategori['judul']}}
+                                                                </option>
+                                                                @foreach ($subKategori['subkategori'] as $subSubKey => $subSubKategori)
+                                                                    <option value="{{$subSubKey}}">
+                                                                        {{ $subSubKey }} - {{ $subSubKategori }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endforeach
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="status">Status</label>
-                                                    <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false" value="{{$data->status}}"/>
+                                                    <select class="form-select" name="status" id="select2">
+                                                        <option value="" selected disabled>status</option>
+                                                        <option value="Baik" @if($data->status == 'Baik') selected @endif>Baik</option>
+                                                        <option value="Usang" @if($data->status == 'Usang') selected @endif>Usang</option>
+                                                        <option value="Kadaluarsa" @if($data->status == 'Kadaluarsa') selected @endif>Kadaluarsa</option>
+                                                    </select>
+                                                    {{-- <input type="text" class="form-control" id="status" name="status" placeholder="status" autocomplete="false" value="{{$data->status}}"/> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -166,6 +197,68 @@
                                                         min="{{$jumlah_buku}}"
                                                     @endif
                                                     />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-2">
+                                                    <div class="scrolling-inside-modal">
+                                                        <!-- Button trigger modal -->
+                                                        <br>
+                                                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">
+                                                            Daftar Kode DDC
+                                                        </button>
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-scrollable">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="col-md-12">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h4 class="card-title">Dewey Decimal Clasification</h4>
+                                                                                </div>
+                                                                                <div class="card-body">
+                                                                                    <div id="jstree-basic">
+                                                                                        <ul>
+                                                                                            {{-- kategori utama --}}
+                                                                                            @foreach ($kode['dewey'] as $key => $kategori)
+                                                                                                <li data-jstree='{"icon" : "far fa-folder"}'>
+                                                                                                    {{ $key }} - {{ $kategori['judul'] }}
+
+                                                                                                    {{-- sub kategori utama --}}
+                                                                                                    <ul>
+                                                                                                        @foreach ($kategori['kategori'] as $subKey => $subKategori)
+                                                                                                        <li data-jstree='{"icon" : "fab fa-css3-alt"}'>
+                                                                                                            {{ $subKey }} - {{ $subKategori['judul'] }}
+                                                                                                            <i data-feather='corner-down-right'></i>
+                                                                                                            {{-- sub sub kategori utama --}}
+                                                                                                            <ul>
+                                                                                                                @foreach ($subKategori['subkategori'] as $subSubKey => $subSubKategori)
+                                                                                                                    <li data-jstree='{"icon" : "fab fa-css3-alt"}'>
+                                                                                                                        {{ $subSubKey }} - {{ $subSubKategori }}
+                                                                                                                    </li>
+                                                                                                                @endforeach
+                                                                                                            </ul>
+                                                                                                        </li>
+                                                                                                        @endforeach
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            @endforeach
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -192,7 +285,7 @@
                                                         <div class="featured-info">
                                                             <small class="text-muted">image max size 2mb.</small>
                                                             <p class="my-50">
-                                                                <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a>
+                                                                {{-- <a href="#" id="blog-image-text">C:\fakepath\banner.jpg</a> --}}
                                                             </p>
                                                             <div class="d-inline-block">
                                                                 <input class="form-control" type="file" name="image" id="blogCustomFile" accept="image/*"/>
@@ -232,6 +325,8 @@
     <script src="{{asset('app-assets/vendors/js/editors/quill/highlight.min.js')}}"></script>
     <script src="{{asset('app-assets/vendors/js/editors/quill/quill.min.js')}}"></script> --}}
     <script src="{{asset('app-assets/vendors/js/extensions/sweetalert2.all.min.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/ui/jquery.sticky.js')}}"></script>
+    <script src="{{asset('app-assets/vendors/js/extensions/jstree.min.js')}}"></script>
     <!-- END: Page Vendor JS-->
 
     <!-- BEGIN: Page JS-->
@@ -239,6 +334,9 @@
     <script src="{{asset('app-assets/js/scripts/pages/page-portofolio-create.js')}}"></script>
     <script src="{{asset('app-assets/js/scripts/extensions/ext-component-sweet-alerts.js')}}"></script>
     <script src="{{ asset('app-assets/vendors/ckeditor5/ckeditor.js') }}"></script>
+    <script src="{{asset('app-assets/js/scripts/components/components-modals.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/extensions/ext-component-tree.js')}}"></script>
+    <script src="{{asset('app-assets/js/scripts/forms/form-select2.js')}}"></script>
     <!-- END: Page JS-->
 
     <script>

@@ -40,8 +40,7 @@ class InventarisController extends Controller
     public function create(){
         $path = public_path('/dewey/test.json');
         if(!File::exists($path)){
-            dd('File Tidak Ditemukan');
-            return view('admin.inventaris.list');
+            return view('admin.inventaris.list')->with('error', 'File dewey tidak ditemukan');
         }
 
         $json =  File::get($path);
@@ -53,13 +52,13 @@ class InventarisController extends Controller
     public function store(Request $request){
         // dd($request);
         $request->validate([
-            'judul' => 'required',
-            'pengarang' => 'required',
-            'penerbit' => 'required',
-            'kode_ddc' => 'required',
-            'status' => 'required',
+            'judul' => 'required|string|max:255',
+            'pengarang' => 'required|string|max:255',
+            'penerbit' => 'required|string|max:255',
+            'kode_ddc' => 'required|string|max:10',
+            'status' => 'required|string|max:255',
             'deskripsi' => 'nullable',
-            'eksemplar' => 'required',
+            'eksemplar' => 'required|integer|max:10000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -81,19 +80,27 @@ class InventarisController extends Controller
         $data = inventaris::find($id);
         $pengadaan = pengadaan::where('id_inventaris', $data->id)->first();
         $jumlah_buku = buku::where('id_inven', $id)->get()->count();
+
+        $path = public_path('/dewey/test.json');
+        if(!File::exists($path)){
+            return view('admin.inventaris.list')->with('error', 'File dewey tidak ditemukan');
+        }
+
+        $json =  File::get($path);
+        $kode = json_decode($json, true);
         // dd($data, $pengadaan);
-        return view('admin.inventaris.edit',compact('data','pengadaan','jumlah_buku'));
+        return view('admin.inventaris.edit',compact('data','pengadaan','jumlah_buku', 'kode'));
     }
 
     public function update(Request $request, $id){
         $request->validate([
-            'judul' => 'required',
-            'pengarang' => 'required',
-            'penerbit' => 'required',
-            'kode_ddc' => 'required',
-            'status' => 'required',
+            'judul' => 'required|string|max:255',
+            'pengarang' => 'required|string|max:255',
+            'penerbit' => 'required|string|max:255',
+            'kode_ddc' => 'required|string|max:10',
+            'status' => 'required|string|max:255',
             'deskripsi' => 'nullable',
-            'eksemplar' => 'required',
+            'eksemplar' => 'required|integer|max:10000',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 

@@ -66,9 +66,14 @@ class HomepageController extends Controller
     public function presensi_individu(Request $request){
         if($request->input('search') != null){
             $anggota_cari = anggota::where('name','like','%'.$request->input('search').'%')->get();
-        } else{
-            $anggota_cari = null;
+            if($anggota_cari->isEmpty() == false){
+                return view('landing-page.presensi', compact('anggota_cari'));
+            }else{
+                return redirect()->route('landing-page.presensi.individu')->with('error', 'Data tidak ditemukan');
+            }
         }
+        $anggota_cari = null;
+
         return view('landing-page.presensi', compact('anggota_cari'));
     }
 

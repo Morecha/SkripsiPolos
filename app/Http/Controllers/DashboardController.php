@@ -14,12 +14,18 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon as SupportCarbon;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $buku = buku::all()->count();
@@ -118,13 +124,12 @@ class DashboardController extends Controller
     public function updateGeneral(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'jabatan' => 'required',
-            'alamat' => 'required',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'jabatan' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
         ]);
-
 
         $user = User::find(Auth::user()->id);
         // dd($user->id);

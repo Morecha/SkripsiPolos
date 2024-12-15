@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\inventaris;
 use App\Models\pengadaan;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
 class PengadaanController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('administrasi');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -34,12 +41,12 @@ class PengadaanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required',
-            'pengarang'=> 'nullable',
-            'penerbit' => 'nullable',
-            'kode_ddc' => 'nullable',
-            'status' => 'required',
-            'eksemplar' => 'required',
+            'judul' => 'required|string|max:255',
+            'pengarang'=> 'nullable|string|max:255',
+            'penerbit' => 'nullable|string|max:255',
+            'kode_ddc' => 'nullable|string|max:6',
+            'status' => 'required|string|max:255',
+            'eksemplar' => 'required|integer|max:10000',
             'deskripsi' => 'nullable',
         ]);
         $request['diterima'] = 0;
@@ -72,12 +79,12 @@ class PengadaanController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'judul' => 'required',
-            'pengarang'=> 'nullable',
-            'penerbit' => 'nullable',
-            'kode_ddc' => 'nullable',
-            'status' => 'required',
-            'eksemplar' => 'required',
+            'judul' => 'required|string|max:255',
+            'pengarang'=> 'nullable|string|max:255',
+            'penerbit' => 'nullable|string|max:255',
+            'kode_ddc' => 'nullable|string|max:6',
+            'status' => 'required|string|max:255',
+            'eksemplar' => 'required|integer|max:10000',
             'deskripsi' => 'nullable',
         ]);
         $input = $request->all();
