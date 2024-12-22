@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item me-auto">
-                    <a class="navbar-brand" href="">
+                    <a class="navbar-brand">
                         <span class="brand-logo">
                             <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
                                 <defs>
@@ -47,7 +47,7 @@
                     <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Peminjaman &amp;<br>Pengembalian Buku</span><i data-feather="more-horizontal"></i>
                     </li>
                     {{-- Peminjaman --}}
-                    <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="file-plus"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Peminjaman Buku</a>
+                    <li class=" nav-item"><a class="d-flex align-items-center"><i data-feather="file-plus"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Peminjaman Buku</a>
                         <ul class="menu-content">
                             <li><a class="d-flex align-items-center" href="{{route('peminjaman.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Peminjaman</span></a>
                             </li>
@@ -62,7 +62,7 @@
                     <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Presensi</span><i data-feather="more-horizontal"></i>
                     </li>
                     {{-- presensi kelompok --}}
-                    <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="check-square"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Presensi</a>
+                    <li class=" nav-item"><a class="d-flex align-items-center"><i data-feather="check-square"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Presensi</a>
                         <ul class="menu-content">
                             <li><a class="d-flex align-items-center" href="{{route('presensi.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List Presensi</span></a>
                             </li>
@@ -78,7 +78,7 @@
                     </li>
                     {{-- Pengadaan --}}
                     @if(Auth::user()->role == 'Administrasi')
-                        <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="arrow-down-circle"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Pengadaan</a>
+                        <li class=" nav-item"><a class="d-flex align-items-center"><i data-feather="arrow-down-circle"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Pengadaan</a>
                             <ul class="menu-content">
                                 <li><a class="d-flex align-items-center" href="{{route('pengadaan.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
                                 </li>
@@ -89,7 +89,7 @@
                     @endif
                     {{-- Inventaris --}}
                     @if (Auth::user()->role == 'PenanggungJawab')
-                        <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="layers"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Inventaris Perpus</a>
+                        <li class=" nav-item"><a class="d-flex align-items-center"><i data-feather="layers"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Inventaris Perpus</a>
                             <ul class="menu-content">
                                 <li><a class="d-flex align-items-center" href="{{route('inventaris.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
                                 </li>
@@ -105,7 +105,7 @@
                     <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Laporan</span><i data-feather="more-horizontal"></i>
                     </li>
                     {{-- Laporan --}}
-                    <li class=" nav-item"><a class="d-flex align-items-center" href=""><i data-feather="paperclip"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Laporan</a>
+                    <li class=" nav-item"><a class="d-flex align-items-center"><i data-feather="paperclip"></i><span class="menu-title text-truncate" data-i18n="Product"></span>Laporan</a>
                         <ul class="menu-content">
                             <li><a class="d-flex align-items-center" href="{{route('laporan.list')}}"><i data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Shop">List</span></a>
                             </li>

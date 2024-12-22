@@ -111,7 +111,8 @@
                                                                     <span>Edit</span>
                                                                 </a>
                                                                 <a class="dropdown-item delete-button"
-                                                                    href="{{route('presensi.delete', $data->id_presensi)}}"
+                                                                    {{-- href="{{route('presensi.delete', $data->id_presensi)}}" --}}
+                                                                    href="javascript:void(0)"
                                                                     {{-- onclick="event.preventDefault();
                                                                     document.getElementById('delete-form-{{ $data->id_presensi }}').submit();"> --}}
                                                                     data-id="{{$data->id_presensi}}">
