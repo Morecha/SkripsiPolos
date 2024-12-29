@@ -47,11 +47,40 @@ class peminjaman extends Model
         }
     }
 
-    public function namaPeminjaman(){
+    public function getjenisPeminjamanAttribute(){
         if ($this->id_anggota == null){
-            $this->id_user = User::find($this->id_user)?->name;
+            return 'kelompok';
         }elseif ($this->id_user == null){
-            $this->id_anggota = anggota::find($this->id_anggota)?->name;
+            return 'individu';
         }
+    }
+
+    public function getNamaPeminjamanAttribute(){
+        $data = $this->jenisPeminjaman === 'kelompok'
+        ? User::find($this->id_user)?->name
+        : anggota::find($this->id_anggota)?->name;
+        return $data;
+    }
+
+    // public function namaPeminjaman(){
+    //     if ($this->id_anggota == null){
+    //         $this->id_user = User::find($this->id_user)?->name;
+    //     }elseif ($this->id_user == null){
+    //         $this->id_anggota = anggota::find($this->id_anggota)?->name;
+    //     }
+    // }
+
+    public function getDueDateAttribute(){
+        $data = $this->created_at->addDays($this->lama_peminjaman);
+        return $data;
+    }
+
+    public function getTenggatWaktuAttribute()
+    {
+        $hingga = $this->due_date;
+        $tenggat = now()->diff($hingga);
+        $tanda = $tenggat->invert ? '-' : '';
+
+        return "{$tanda} {$tenggat->d} hari {$tenggat->h} jam {$tenggat->i} menit {$tenggat->s} detik";
     }
 }

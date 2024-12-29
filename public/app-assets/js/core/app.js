@@ -49,6 +49,22 @@ window.colors = {
   }
 
   $(window).on('load', function () {
+    var currentLocalStorageLayout = localStorage.getItem(dataLayout + '-current-skin');
+    console.log('Current Local Storage Layout:', currentLocalStorageLayout);
+    // Jika tema ada di localStorage, terapkan tema tersebut
+    if (currentLocalStorageLayout) {
+        setLayout(currentLocalStorageLayout);
+    } else {
+        // Jika tidak ada, gunakan default 'light-layout'
+        setLayout('light-layout');
+    }
+
+    // Lanjutkan dengan kode lainnya, seperti menu collapse
+    var compactMenu = false;
+    if ($body.hasClass('menu-collapsed') || localStorage.getItem('menuCollapsed') === 'true') {
+        compactMenu = true;
+    }
+    $.app.menu.init(compactMenu);
     var rtl;
     var compactMenu = false;
 
@@ -964,7 +980,7 @@ window.colors = {
   $('.nav-link-style').on('click', function () {
     var currentLayout = getCurrentLayout(),
       switchToLayout = '',
-      prevLayout = localStorage.getItem(dataLayout + '-prev-skin', currentLayout);
+      prevLayout = localStorage.getItem(dataLayout + '-prev-skin');
 
     // If currentLayout is not dark layout
     if (currentLayout !== 'dark-layout') {
@@ -992,7 +1008,7 @@ window.colors = {
 
   // Get current local storage layout
   var currentLocalStorageLayout = localStorage.getItem(dataLayout + '-current-skin');
-
+  console.log('Current Local Storage Layout:', currentLocalStorageLayout);
   // Set layout on screen load
   //? Comment it if you don't want to sync layout with local db
   // setLayout(currentLocalStorageLayout);

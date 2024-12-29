@@ -68,10 +68,9 @@
                     width: 14,
                     height: 14
                 });
-            }
+            };
         })
     </script>
-
 
 </body>
 <!-- END: Body-->

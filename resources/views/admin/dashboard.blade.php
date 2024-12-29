@@ -159,6 +159,7 @@
                                                 <th>lama peminjaman</th>
                                                 <th>tanggal Mulai</th>
                                                 <th>Tanggal Akhir</th>
+                                                <th>tenggat waktu</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -169,11 +170,14 @@
                                             <tr>
                                                 <td>{{ $i++ }}</td>
                                                 <td>{{ $tabel_peminjaman->jenis_peminjaman }}</td>
-                                                <td>{{ $tabel_peminjaman->username }}</td>
+                                                <td>{{ $tabel_peminjaman->nama_peminjaman }}</td>
                                                 <td>{{ $tabel_peminjaman->jumlah_buku }}</td>
                                                 <td>{{ $tabel_peminjaman->lama_peminjaman }}</td>
                                                 <td>{{ $tabel_peminjaman->created_at }}</td>
                                                 <td>{{ $tabel_peminjaman->due_date }}</td>
+                                                <td>
+                                                    <span class="badge badge-light-warning">{{ $tabel_peminjaman->tenggat_waktu }}</span>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>

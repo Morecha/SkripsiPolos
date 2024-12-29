@@ -137,7 +137,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="mb-2">
                                                     <label class="form-label" for="lama_peminjaman">Lama Peminjaman (hari)</label>
-                                                    <input type="number" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman"/>
+                                                    <input type="number" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" min="1"/>
                                                 </div>
                                             </div>
                                         </div>

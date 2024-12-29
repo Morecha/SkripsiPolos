@@ -28,7 +28,6 @@ class PeminjamanController extends Controller
 
         foreach($peminjaman as $p){
             $p['jenis_peminjaman'] = $p->jenisPeminjaman();
-            $p->namaPeminjaman();
         }
 
         return view('admin.peminjaman.list',compact('peminjaman'));
@@ -256,7 +255,6 @@ class PeminjamanController extends Controller
                     ->get();
         foreach($peminjaman as $p){
             $p['jenis_peminjaman'] = $p->jenisPeminjaman();
-            $p->namaPeminjaman();
         }
         // dd($peminjaman);
         return view('admin.pengembalian.list',compact('peminjaman'));

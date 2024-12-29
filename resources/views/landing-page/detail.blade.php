@@ -26,27 +26,6 @@
     @endsection
 
     @section('content')
-        <!--Banner Sec start-->
-        {{-- <section class="secondary-pages-banner cursor-light bg-1" id="main-banner">
-            <!-- END REVOLUTION SLIDER -->
-            <img src="{{asset('assets/landing-page/food-delivery/img/slider-ele3.png')}}" class="secondary-item1">
-            <img src="{{asset('assets/landing-page/food-delivery/img/slider-ele1.png')}}" class="secondary-item2">
-            <div class="banner-content text-center">
-                <div class="heading-area">
-                    <h4 class="heading">Restaurant Detail</h4>
-                    <div class="crumbs">
-                        <nav aria-label="breadcrumb" class="breadcrumb-items">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="../index-food-delivery.html" class="link">Home</a></li>
-                                <li class="breadcrumb-item"><a href="restaurant-detail.html" class="link">Restaurant Detail</a></li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
-        <!--Banner Sec End-->
-
         <!--Detail page-->
         <section class="detail-page-sec padding-top padding-bottom bg-2" id="detail-page-sec">
             <div class="container">
@@ -68,7 +47,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="mb-5 mb-md-0"></div>
                                                     <h4 class="main-heading text-white">{{$inventaris->judul}}</h4>
                                                     <div class="mb-3 mb-md-5"></div>
@@ -78,10 +57,10 @@
                                                         <h6 class="text-white">Penerbit : {{$inventaris->penerbit}}</h6><br>
                                                     </p>
                                                 </div>
-                                                <div class="col-md-4">
+                                                {{-- <div class="col-md-4">
                                                     <h5 class="text-white">Deskripsi</h5><br>
-                                                    <p class="rate text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis blandit vel nunc nec mollis. Vestibulum fringilla lacinia varius. Sed vulputate eleifend semper. Nulla purus neque, semper vel tellus sed, rutrum accumsan felis. Morbi vestibulum tortor ac orci accumsan elementum. Curabitur augue erat, aliquet eu tincidunt sed,</p>
-                                                </div>
+                                                    <p class="rate text-white">{!! $inventaris->deskripsi !!}</p>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>

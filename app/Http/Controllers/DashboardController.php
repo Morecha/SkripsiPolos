@@ -34,18 +34,11 @@ class DashboardController extends Controller
         $pengadaan = pengadaan::all()->count();
 
         // logika tabel peminjaman
-        $tabel_peminjaman = Peminjaman::select('*', DB::raw('DATE_ADD(created_at, INTERVAL lama_peminjaman DAY) as due_date'))
-                            ->orderBy('due_date', 'asc')
+        $tabel_peminjaman = Peminjaman::where('status', 'dipinjam')
                             ->limit(20)
-                            ->get();
+                            ->get()
+                            ->sortBy(fn($item) => $item->due_date);
         foreach($tabel_peminjaman as $p){
-            if($p['id_user'] != null){
-                $p['jenis_peminjaman'] = 'kelompok';
-                $p['username'] = User::find($p['id_user'])->name;
-            }elseif($p['id_anggota'] != null){
-                $p['jenis_peminjaman'] = 'individu';
-                $p['username'] = anggota::find($p['id_anggota'])->name;
-            }
             $p['jumlah_buku'] = pivot::where('id_peminjaman', $p['id'])->count();
         }
 

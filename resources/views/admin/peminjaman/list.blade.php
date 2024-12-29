@@ -103,11 +103,12 @@
                                                 <tr>
                                                     <td>{{ $i++ }}</td>
                                                     <td>{{ $data->jenis_peminjaman }}</td>
-                                                    @if ($data->jenis_peminjaman == 'kelompok')
+                                                    <td>{{ $data->nama_peminjaman }}</td>
+                                                    {{-- @if ($data->jenis_peminjaman == 'kelompok')
                                                         <td>{{ $data->id_user }}</td>
                                                     @else
                                                         <td>{{ $data->id_anggota }}</td>
-                                                    @endif
+                                                    @endif --}}
                                                     <td>{{ $data->pivot_count }}</td>
                                                     <td>{{ $data->lama_peminjaman }}</td>
                                                     {{-- <td>{{$data->id}}</td> --}}

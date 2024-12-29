@@ -116,6 +116,7 @@ class BukuController extends Controller
             ];
         }
         // dd($id);
+        // dd(response()->view('admin.inventaris.list-cetak', compact('data', 'id'), 200));
         return view('admin.inventaris.list-cetak', compact('data','id'));
     }
 

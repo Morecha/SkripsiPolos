@@ -52,8 +52,6 @@
                 <div class="row">
                     <div class="col-6 col-lg-3">
                         <a class="navbar-brand link" href="index-food-delivery.html">
-                            {{-- <img src="{{asset('assets/landing-page/food-delivery/img/logo.png')}}" class="" alt="logo"> --}}
-                            {{-- <img src="food-delivery/img/logo-white-small.png" class="logo-fixed" alt="logo"> --}}
                         </a>
                     </div>
                     <div class="col-lg-6 simple-navbar d-none d-lg-flex align-items-center justify-content-center">
@@ -67,136 +65,9 @@
                             </div>
                         </nav>
                     </div>
-                    {{-- <div class="col-6 col-lg-3 d-flex align-items-center justify-content-end">
-                        <ul class="user-links">
-                            <li class="header-shop-cart"><a href="javascript:void(0);" class="line-icon position-relative link"><i class="las la-shopping-bag"></i><span class="badge rounded-circle">4</span></a>
-                                <div class="minicart link">
-                                    <div class="minicart-content">
-                                        <div class="row">
-                                            <div class="cart-img col-5">
-                                                <a href="#">
-                                                    <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-content col-6">
-                                                <h4>
-                                                    <a href="#">Lamp Chops Handi</a>
-                                                </h4>
-                                                <div class="cart-price">
-                                                    <span class="new">$229.9</span>
-                                                    <span><del>$229.9</del></span>
-                                                </div>
-                                                <div class="number">
-                                                    <span class="minus">-</span>
-                                                    <input type="text" value="1"/>
-                                                    <span class="plus">+</span>
-                                                </div>
-                                                <div class="del-icon">
-                                                    <a href="#">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="cart-img col-5">
-                                                <a href="#">
-                                                    <img src="{{asset('assets/landing-page/food-delivery/img/item6.png')}}" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-content col-6">
-                                                <h4>
-                                                    <a href="#">Double Stack Pizza</a>
-                                                </h4>
-                                                <div class="cart-price">
-                                                    <span class="new">$229.9</span>
-                                                    <span><del>$229.9</del></span>
-                                                </div>
-                                                <div class="number">
-                                                    <span class="minus">-</span>
-                                                    <input type="text" value="3"/>
-                                                    <span class="plus">+</span>
-                                                </div>
-                                                <div class="del-icon">
-                                                    <a href="#">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="cart-img col-5">
-                                                <a href="#">
-                                                    <img src="{{asset('assets/landing-page/food-delivery/img/item5.png')}}" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="cart-content col-6">
-                                                <h4>
-                                                    <a href="#">Double Stack Pizza</a>
-                                                </h4>
-                                                <div class="cart-price">
-                                                    <span class="new">$229.9</span>
-                                                    <span><del>$229.9</del></span>
-                                                </div>
-                                                <div class="number">
-                                                    <span class="minus">-</span>
-                                                    <input type="text" value="2"/>
-                                                    <span class="plus">+</span>
-                                                </div>
-                                                <div class="del-icon">
-                                                    <a href="#">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <ul class="ml-0">
-                                        <li>
-                                            <div class="total-price">
-                                                <!--<span class="f-left">Total:</span>-->
-                                                <span class="f-right">$239.9</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="checkout-link">
-                                                <a href="#" class="main-btn rounded-pill" id="checkout-btn">Checkout</a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="user-menu-cart"><a href="javascript:void(0);" class="fa-icon link"><i class="far fa-user"></i><span><i class="las la-angle-down ml-1"></i></span></a>
-                                <div class="menu-links link">
-                                    <ul>
-                                        <li>
-                                            <div class="overlay-link"></div>
-                                            <a href="food-delivery/login.html"><i class="lni lni-key"></i>Login</a>
-                                        </li>
-                                        <li>
-                                            <div class="overlay-link"></div>
-                                            <a href="food-delivery/registeration.html"><i class="lni lni-pointer-right"></i>Register</a></li>
-                                        <li>
-                                            <div class="overlay-link"></div>
-                                            <a href="food-delivery/accounts.html"><i class="lni lni-user"></i>Account</a></li>
-                                        <li>
-                                            <div class="overlay-link"></div>
-                                            <a href="#"><i class="lni lni-lock"></i>Logout</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div> --}}
                 </div>
             </div>
         </div>
-        <!--toggle btn-->
-        {{-- <a href="javascript:void(0)" class="sidemenu_btn link d-lg-none" id="sidemenu_toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a> --}}
-    </div>
     <!--Side Nav-->
     <div class="side-menu hidden side-menu-opacity">
         <div class="bg-overlay"></div>
@@ -222,21 +93,6 @@
                             </ul>
                         </nav>
                     </div>
-                    {{-- <div class="col-12 col-lg-4 d-flex align-items-center">
-                        <div class="side-footer text-white w-100">
-                            <div class="menu-company-details">
-                                <span>+1 631 123 4567</span>
-                                <span>email@website.com</span>
-                            </div>
-                            <ul class="social-icons-simple">
-                                <li><a class="facebook-text-hvr" href="javascript:void(0)"><i class="fab fa-facebook-f"></i> </a> </li>
-                                <li><a class="instagram-text-hvr" href="javascript:void(0)"><i class="fab fa-twitter"></i> </a> </li>
-                                <li><a class="instagram-text-hvr" href="javascript:void(0)"><i class="fab fa-youtube"></i> </a> </li>
-                                <li><a class="instagram-text-hvr" href="javascript:void(0)"><i class="fab fa-instagram"></i> </a> </li>
-                            </ul>
-                            <p class="text-white">&copy; 2020 MegaOne. Made With Love by Themesindustry</p>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -258,13 +114,6 @@
             <div class="col-12">
                 <div class="footer-social text-center">
                     <p>apliasi perpustakaan SDN Bandungrejosari 4 Malang</p><br><p>Satu untuk semua</p>
-                    {{-- <ul class="list-unstyled">
-                        <li><a class="wow fadeInUp" href="javascript:void(0);"><i aria-hidden="true" class="fab fa-facebook-f"></i><span></span></a></li>
-                        <li><a class="wow fadeInDown" href="javascript:void(0);"><i aria-hidden="true" class="fab fa-twitter"></i><span></span></a></li>
-                        <li><a class="wow fadeInUp" href="javascript:void(0);"><i aria-hidden="true" class="fab fa-google-plus-g"></i><span></span></a></li>
-                        <li><a class="wow fadeInDown" href="javascript:void(0);"><i aria-hidden="true" class="fab fa-linkedin-in"></i><span></span></a></li>
-                        <li><a class="wow fadeInUp" href="javascript:void(0);"><i aria-hidden="true" class="fab fa-instagram"></i><span></span></a></li>
-                    </ul> --}}
                 </div>
             </div>
             <!--Text-->

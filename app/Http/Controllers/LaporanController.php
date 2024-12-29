@@ -110,10 +110,9 @@ class LaporanController extends Controller
             $peminjaman = peminjaman::withCount('pivot')->where('status', 'dipinjam')->get();
 
 
-            foreach($peminjaman as $p){
-                $p['jenis_peminjaman'] = $p->jenisPeminjaman();
-                $p->namaPeminjaman();
-            }
+            // foreach($peminjaman as $p){
+            //     $p['jenis_peminjaman'] = $p->jenisPeminjaman();
+            // }
 
             $pdf = Pdf::loadView('admin.laporan.peminjaman',
             compact('request','total_peminjaman','total_pengembalian','total_buku_dipinjam','total_buku_hilang','total_peminjaman_periode','total_pengembalian_periode','total_buku_dipinjam_periode','total_buku_hilang_periode','peminjaman','base64TutWuri','base64SD'));

@@ -30,6 +30,25 @@
                 object-fit: cover; /* Gambar diatur untuk menyesuaikan container */
             }
 
+            p.text.text-white {
+                color: #ffffff !important; /* Tambahkan !important untuk memaksa prioritas */
+            }
+
+            .deskripsi {
+                display: -webkit-box;
+                -webkit-line-clamp: 5; /* Jumlah baris yang ditampilkan */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .pengarang {
+                display: -webkit-box;
+                -webkit-line-clamp: 3; /* Jumlah baris yang ditampilkan */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         </style>
     @endsection
 
@@ -109,11 +128,11 @@
                                                                 <div class="mb-5 mb-md-0"></div>
                                                                 <h4 class="main-heading text-white">{{$cari->judul}}</h4>
                                                                 <div class="mb-3 mb-md-5"></div>
-                                                                <h5 class="text-white">{{$cari->pengarang}}</h5>
+                                                                <h5 class="text-white pengarang">{{$cari->pengarang}}</h5>
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <h5 class="text-white">Deskripsi</h5><br>
-                                                                <p class="rate text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                                <div class="text text-white deskripsi">{!! $cari->deskripsi !!}</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -161,219 +180,12 @@
                                                 <div class="d-flex justify-content-between">
                                                     <h4 class="item-name">{{$i->judul}}</h4>
                                                 </div>
-                                                <p class="text">{{$i->pengarang}} </p>
+                                                <p class="text pengarang">{{ $i->pengarang }}</p>
                                             </div>
                                         </a>
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item2.png')}}">
-                                            <div class="item-badge rounded-circle">50<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">The Fast Food</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item3.png')}}">
-                                            <div class="item-badge rounded-circle">45<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Green Bakery</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item4.png')}}">
-                                            <div class="item-badge rounded-circle">25<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Eat Frio</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item5.png')}}">
-                                            <div class="item-badge rounded-circle">50<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Turkish Cousine</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item6.png')}}">
-                                            <div class="item-badge rounded-circle">45<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Pizzario</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item1.png')}}">
-                                            <div class="item-badge rounded-circle">25<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Mega Restaurant</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item2.png')}}">
-                                            <div class="item-badge rounded-circle">50<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">The Fast Food</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item3.png')}}">
-                                            <div class="item-badge rounded-circle">45<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Green Bakery</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-4 portfolio-item">
-                                <div class="portfolio-inner-content">
-                                    <a href="restaurant-detail.html">
-                                        <div class="item-img-holder position-relative">
-                                            <img src="{{asset('assets/landing-page/food-delivery/img/item6.png')}}">
-                                            <div class="item-badge rounded-circle">45<span>mins</span></div>
-                                        </div>
-                                        <div class="item-detail-area">
-                                            <div class="d-flex justify-content-between">
-                                                <h4 class="item-name">Pizzario</h4>
-                                                <ul class="item-reviews">
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                    <li><i class="las la-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <p class="text">Curabitur mollis bibendum luctus.. </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-12 col-lg-6 offset-lg-3">
