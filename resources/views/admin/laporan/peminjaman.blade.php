@@ -198,11 +198,6 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $d->jenis_peminjaman }}</td>
                                 <td>{{ $d->nama_peminjaman }}</td>
-                                {{-- @if($d['jenis_peminjaman'] == 'kelompok')
-                                    <td>{{$d['id_user']}}</td>
-                                @else
-                                    <td>{{$d['id_anggota']}}</td>
-                                @endif --}}
                                 <td>{{$d['pivot_count']}}</td>
                                 <td>{{$d['lama_peminjaman']}}</td>
                                 <td>{{$d['status']}}</td>

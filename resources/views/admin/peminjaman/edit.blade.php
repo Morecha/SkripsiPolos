@@ -125,13 +125,13 @@
                                                     {{-- <input type="text" id="id_anggota" class="form-control" name="id_anggota" autocomplete="off" placeholder="Anggota"/> --}}
                                                     <select class="select2 form-select" name="id_anggota" id="select2" {{ $dipinjam->jenis_peminjaman == 'individu' ? '' : 'disabled' }}>
                                                         @if ($dipinjam->jenis_peminjaman == 'kelompok')
-                                                            <option value="{{ $dipinjam->user->id }}" selected>{{ $dipinjam->user->name }}</option>
+                                                            <option value="{{ $dipinjam->user->id }}" selected>{{$dipinjam->user->NIP}} - {{ $dipinjam->user->name }}</option>
                                                         @else
                                                             <!-- Default untuk individu -->
-                                                            <option value="{{$dipinjam->anggota->id}}">{{$dipinjam->anggota->name}}</option>
+                                                            <option value="{{$dipinjam->anggota->id}}">{{$dipinjam->anggota->NIS}} - {{$dipinjam->anggota->name}}</option>
                                                             @foreach ($list_anggota as $isi)
                                                                 <option value="{{$isi->id}}" @if ($isi->status != 'aktif') disabled @endif">
-                                                                    {{$isi->name}}
+                                                                    {{$isi->NIS}} - {{$isi->name}}
                                                                 </option>
                                                             @endforeach
                                                         @endif
@@ -155,29 +155,32 @@
                                                     <div class="kode-buku-group mb-2">
                                                         <div class="row">
                                                             <div class="col-md-6">
-                                                                <select class="select2 form-select" name="id_buku[]" id="select2-nested-{{$index}}">
-                                                                    <option value="{{$item->buku->id}}" selected>{{$item->buku->kode_buku}}</option>
+                                                                <select class="select2 form-select" name="id_buku[]" id="select2-nested-{{$index}}"
+                                                                    @if ($item->status == 'kembali'|| $item->status == 'hilang') disabled @endif>
+                                                                    <option value="{{$item->buku->id}}" selected>{{$item->buku->kode_buku}} - {{$item->buku->inventaris->judul}}</option>
                                                                     @php
                                                                         $judul = null;
                                                                     @endphp
                                                                     @foreach ($buku as $bukuItem)
                                                                         @if ($judul != $bukuItem->inventaris->judul)
                                                                             <optgroup label="{{$bukuItem->inventaris->judul}}">
-                                                                        @endif
-                                                                        <option value="{{$bukuItem->id}}" @if ($bukuItem->posisi != 'ada') disabled @endif>
-                                                                            {{$bukuItem->kode_buku}}
-                                                                        </option>
-                                                                        @if ($judul != $bukuItem->inventaris->judul)
-                                                                            </optgroup>
                                                                             @php
                                                                                 $judul = $bukuItem->inventaris->judul;
                                                                             @endphp
+                                                                        @endif
+                                                                        <option value="{{$bukuItem->id}}" @if ($bukuItem->posisi != 'ada') disabled @endif>
+                                                                            {{$bukuItem->kode_buku}} - {{$judul}}
+                                                                        </option>
+                                                                        @if ($judul != $bukuItem->inventaris->judul)
+                                                                            </optgroup>
                                                                         @endif
                                                                     @endforeach
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <button type="button" class="btn btn-danger remove-btn" style="white-space: nowrap;" onclick="removeKodeBuku(this)">Hapus</button>
+                                                                <button type="button" class="btn btn-danger remove-btn" style="white-space: nowrap;" onclick="removeKodeBuku(this)"
+                                                                @if ($item->buku->posisi == 'hilang' || $item->buku->posisi == 'ada' || $item->buku->posisi == 'dimusnahkan') disabled @endif>
+                                                                Hapus</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -291,6 +294,35 @@
             counter++; // Tingkatkan counter setelah membuat id
 
             // Atur id baru pada elemen select yang diduplikasi
+            var newSelect = newKodeBukuGroup.querySelector('select');
+            newSelect.id = newId;
+
+            newSelect.innerHTML = '';
+            @php $judul = null; @endphp
+            @foreach ($buku as $bukuItem)
+                @if ($judul != $bukuItem->inventaris->judul)
+                    var optgroup = document.createElement('optgroup');
+                    optgroup.label = "{{ $bukuItem->inventaris->judul }}";
+                    newSelect.appendChild(optgroup);
+                    @php $judul = $bukuItem->inventaris->judul; @endphp
+                @endif
+
+                var option = document.createElement('option');
+                option.value = "{{ $bukuItem->id }}";
+                option.textContent = "{{ $bukuItem->kode_buku }} - {{ $judul }}";
+                @if ($bukuItem->posisi != 'ada')
+                    option.disabled = true;
+                @endif
+                newSelect.lastElementChild.appendChild(option); // Masukkan ke optgroup terakhir
+            @endforeach
+
+            // Hapus atribut disabled dari elemen select yang diduplikasi
+            newSelect.removeAttribute('disabled');
+
+            // Hapus nilai yang dipilih sebelumnya di select baru
+            newSelect.selectedIndex = -1;
+
+            // Atur id baru pada elemen select yang diduplikasi
             newKodeBukuGroup.querySelector('select').id = newId;
 
             // Hapus nilai yang dipilih sebelumnya di select baru
@@ -331,6 +363,16 @@
                     button.removeAttribute('disabled');
                 });
             }
+
+             // Tambahkan logika untuk menonaktifkan tombol Hapus berdasarkan kondisi posisi buku
+            removeButtons.forEach((button) => {
+                const select = button.closest('.kode-buku-group').querySelector('select');
+                if (select && (select.disabled || select.value == 'hilang' || select.value == 'ada' || select.value == 'dimusnahkan')) {
+                    button.setAttribute('disabled', true); // Nonaktifkan tombol Hapus jika kondisi dipenuhi
+                } else {
+                    button.removeAttribute('disabled'); // Aktifkan tombol Hapus jika tidak ada kondisi yang memenuhi
+                }
+            });
         }
 
 

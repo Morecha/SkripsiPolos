@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
+use function PHPSTORM_META\type;
+
 class PeminjamanController extends Controller
 {
     public function __construct(){
@@ -26,10 +28,6 @@ class PeminjamanController extends Controller
                     ->where('status', 'dipinjam')
                     ->get();
 
-        foreach($peminjaman as $p){
-            $p['jenis_peminjaman'] = $p->jenisPeminjaman();
-        }
-
         return view('admin.peminjaman.list',compact('peminjaman'));
     }
 
@@ -39,8 +37,6 @@ class PeminjamanController extends Controller
                     ->withCount('pivot')
                     ->find($id);
 
-        $peminjaman['jenis_peminjaman'] = $peminjaman->jenisPeminjaman();
-
         return view('admin.peminjaman.detail', compact('peminjaman'));
     }
 
@@ -49,8 +45,6 @@ class PeminjamanController extends Controller
         $peminjaman = peminjaman::with(['pivot.buku.inventaris'])
                     ->withCount('pivot')
                     ->find($id);
-
-        $peminjaman['jenis_peminjaman'] = $peminjaman->jenisPeminjaman();
 
         return view('admin.pengembalian.detail', compact('peminjaman'));
     }
@@ -137,11 +131,14 @@ class PeminjamanController extends Controller
                     ->withCount('pivot')
                     ->find($id);
 
+        $get_id_buku = [];
+        foreach($dipinjam->pivot as $p){
+            $get_id_buku[] = $p->id_buku;
+        }
         $buku = buku::with('inventaris')
                 ->where('posisi', 'ada')
+                ->whereNotIn('id', $get_id_buku)
                 ->orderBy('id_inven', 'asc')->get();
-
-        $dipinjam['jenis_peminjaman'] = $dipinjam->jenisPeminjaman();
 
         if($dipinjam->id_anggota == null){
             return view('admin.peminjaman.edit', compact('dipinjam','buku'));
@@ -159,14 +156,22 @@ class PeminjamanController extends Controller
     {
         $request->validate([
             'lama_peminjaman' => 'required|integer|max:10000',
-            'id_buku' => 'required',
+            'id_buku' => 'nullable',
             'deskripsi' => 'nullable',
         ]);
-
         $input = $request->all();
         $peminjaman = peminjaman::with('pivot')->find($id);
-        $buku = buku::find($request['id_buku']);
+        $buku = collect(buku::find($request['id_buku']));
 
+        //menambahkan yang disabled kedalam inputan yg ada
+        foreach($peminjaman->pivot as $p){
+            $add_buku = buku::find($p->id_buku);
+            if($add_buku->posisi == 'hilang'||$add_buku->posisi == 'ada' || $add_buku->posisi == 'dimusnahkan'){
+                $buku->push($add_buku);
+                $input['id_buku'][] = "$add_buku->id";
+            }
+        }
+        // dd($buku,$request,$input);
         if($request['id_anggota'] == null){
             unset($input['id_anggota']);
         }elseif($request['id_user'] == null){
@@ -177,7 +182,7 @@ class PeminjamanController extends Controller
         //    klo yang lama ga ada di yang baru di drop
         // 2. bedakan jadi 3 buah
         //    - klo ada di lama tapi ga ada di yang baru (hapus)
-        //    - klo ada di lama tapi ada jg di yang baru (update)
+        //    - klo ada di lama tapi ada jg di yang baru (biarkan)
         //    - klo ga ada di lama tapi ada di yang baru (tambah)
 
         $id_buku_peminjaman_lama_asosiatif = []; //array asosiatif
@@ -203,6 +208,7 @@ class PeminjamanController extends Controller
             }
         }
 
+        //buku baru klo ga ada di lama di tambahkan
         foreach($input['id_buku'] as $r){
             $added = [];
             if(!in_array($r, $id_buku_peminjaman_lama_biasa)){
@@ -211,7 +217,11 @@ class PeminjamanController extends Controller
                     'id_buku' => $r
                 ]);
                 $update = buku::find($r);
-                $update->posisi = 'dipinjam';
+                if($peminjaman->jenis_peminjaman == 'kelompok'){
+                    $update->posisi = 'kelas';
+                }elseif($peminjaman->jenis_peminjaman == 'individu'){
+                    $update->posisi = 'dipinjam';
+                }
                 $update->save();
             }
         }
@@ -253,9 +263,6 @@ class PeminjamanController extends Controller
                     ->withCount('pivot')
                     ->where('status', 'kembali')
                     ->get();
-        foreach($peminjaman as $p){
-            $p['jenis_peminjaman'] = $p->jenisPeminjaman();
-        }
         // dd($peminjaman);
         return view('admin.pengembalian.list',compact('peminjaman'));
     }
@@ -265,35 +272,48 @@ class PeminjamanController extends Controller
                     ->withCount('pivot')
                     ->find($id);
 
-        $buku = buku::with('inventaris')
-                ->where('posisi', 'ada')
-                ->orderBy('id_inven', 'asc')->get();
-
-        $dipinjam['jenis_peminjaman'] = $dipinjam->jenisPeminjaman();
-
-        if($dipinjam->id_anggota == null){
-            return view('admin.pengembalian.create', compact('dipinjam','buku'));
-        }elseif ($dipinjam->id_user == null){
-            $list_anggota = anggota::where('id','!=',$dipinjam->id_anggota)
-                        ->orderBy('id', 'asc')->get();
-            // dd($list_anggota);
-            return view('admin.pengembalian.create', compact('dipinjam','buku','list_anggota'));
-        }
+        return view('admin.pengembalian.create', compact('dipinjam'));
     }
 
     public function pengembalian_store(Request $request, string $id){
-        // dd($request,$id);
-        $peminjaman = peminjaman::with(['pivot.buku.inventaris'])
-                    ->find($id);
-        $peminjaman->status = 'kembali';
-        $peminjaman->detail = $request->detail;
-        foreach($peminjaman->pivot as $p){
+        $peminjaman = peminjaman::with(['pivot.buku.inventaris'])->find($id);
+        $data_status_baru = $request->all();
+        unset($data_status_baru['_token']);
+        unset($data_status_baru['detail']);
+        $data_status_baru = array_values($data_status_baru);
+        $cek_status = [];
+
+        foreach($peminjaman->pivot as $index => $p){
             $buku = buku::find($p->id_buku);
-            if($buku['posisi'] != 'hilang'){
-                $buku->posisi = 'ada';
+            $pivot = pivot::find($p->id);
+
+            if($data_status_baru[$index] == 'kembali'){
+                $data_posisi_buku = 'ada';
+            }elseif($data_status_baru[$index] == 'dipinjam'){
+                if($peminjaman->jenis_peminjaman == 'individu'){
+                    $data_posisi_buku = 'dipinjam';
+                }elseif($peminjaman->jenis_peminjaman == 'kelompok'){
+                    $data_posisi_buku = 'kelas';
+                }
+            }elseif($data_status_baru[$index] == 'hilang'){
+                $data_posisi_buku = 'hilang';
             }
+            $buku->posisi = $data_posisi_buku;
+            $pivot->status = $data_status_baru[$index];
+
+            $cek_status[$index] = $buku->posisi;
+
             $buku->save();
+            $pivot->save();
         }
+        // dd($data_status_baru,$data_status_lama,$id,$peminjaman,$cek_status);
+        if(in_array('dipinjam', $cek_status)||in_array('kelas', $cek_status)){
+            $peminjaman->status = 'dipinjam';
+        } else {
+            $peminjaman->status = 'kembali';
+        }
+
+        $peminjaman->detail = $request->detail;
         $peminjaman->save();
         return redirect()->route('peminjaman.list')->with('success', 'Data peminjaman berhasil dikembalikan');
     }
@@ -302,8 +322,6 @@ class PeminjamanController extends Controller
         $pengembalian = peminjaman::with(['pivot.buku.inventaris'])
                     ->withCount('pivot')
                     ->find($id);
-
-        $pengembalian['jenis_peminjaman'] = $pengembalian->jenisPeminjaman();
 
         return view('admin.pengembalian.edit',compact('pengembalian'));
     }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('id_peminjaman')->unsigned();
             $table->bigInteger('id_buku')->unsigned();
+            $table->enum('status', ['dipinjam','kembali','hilang']);
             $table->timestamps();
 
             $table->foreign('id_peminjaman')->references('id')->on('peminjamans')->onDelete('cascade')->onUpdate('cascade');

@@ -39,13 +39,13 @@ class peminjaman extends Model
         return $this->belongsToMany(Buku::class, 'pivot', 'id_peminjaman', 'id_buku');
     }
 
-    public function jenisPeminjaman(){
-        if ($this->id_anggota == null){
-            return 'kelompok';
-        }elseif ($this->id_user == null){
-            return 'individu';
-        }
-    }
+    // public function jenisPeminjaman(){
+    //     if ($this->id_anggota == null){
+    //         return 'kelompok';
+    //     }elseif ($this->id_user == null){
+    //         return 'individu';
+    //     }
+    // }
 
     public function getjenisPeminjamanAttribute(){
         if ($this->id_anggota == null){
@@ -81,6 +81,6 @@ class peminjaman extends Model
         $tenggat = now()->diff($hingga);
         $tanda = $tenggat->invert ? '-' : '';
 
-        return "{$tanda} {$tenggat->d} hari {$tenggat->h} jam {$tenggat->i} menit {$tenggat->s} detik";
+        return "{$tanda} {$tenggat->d} hari {$tenggat->h} jam";
     }
 }

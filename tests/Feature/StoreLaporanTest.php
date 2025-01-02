@@ -9,6 +9,7 @@ use App\Models\Buku;
 use App\Models\Peminjaman;
 use App\Models\Inventaris;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -19,17 +20,18 @@ class StoreLaporanTest extends TestCase
     /**
      * A basic feature test example.
      */
+    use DatabaseTransactions;
     public function test_store_laporan_()
     {
         $user = User::find(1);
         $this->actingAs($user);
 
         $data = [
-            'jenis' => '',
-            'dari' => '',
-            'hingga' => '',
-            'keterangan' => '',
-            'deskripsi' => '',
+            'jenis' => 'inventaris',
+            'dari' => '2023-01-01',
+            'hingga' => '2025-01-01',
+            'keterangan' => 'Laporan Inventaris Tahun 2023 hingga 2025',
+            'deskripsi' => 'Deskripsi Laporan Inventaris dari tahun 2023 hingga 2025',
         ];
 
         $response = $this->post(route('laporan.store'), $data);
@@ -38,7 +40,7 @@ class StoreLaporanTest extends TestCase
         $this->assertFileExists(storage_path('app/public/laporan/'.$pdfFileName));
 
         $this->assertDatabaseHas('laporans', [
-            'keterangan' => 'Laporan inventaris Tahun 2023',
+            'keterangan' => 'Laporan Inventaris Tahun 2023 hingga 2025',
             'file' => $pdfFileName
         ]);
 
@@ -63,7 +65,4 @@ class StoreLaporanTest extends TestCase
         $response->assertSessionHasErrors(['jenis', 'dari', 'hingga', 'keterangan']);
         $response->assertStatus(302); // Redirect karena validasi gagal
     }
-
-
-
 }

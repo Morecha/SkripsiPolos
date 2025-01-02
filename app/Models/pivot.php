@@ -25,4 +25,22 @@ class pivot extends Model
     {
         return $this->belongsTo(buku::class, 'id_buku');
     }
+
+    public function getAvailabilityAttribute()
+    {
+        $posisi_buku = $this->buku->posisi;
+        $kondisi_pivot = $this->status;
+
+        if($kondisi_pivot == 'dipinjam'){
+            return 'available';
+        }elseif($kondisi_pivot == 'kembali'){
+            if ($posisi_buku == 'ada') {
+                return 'available';
+            } else {
+                return 'unavailable';
+            }
+        }elseif($kondisi_pivot == 'hilang'){
+            return 'available';
+        }
+    }
 }

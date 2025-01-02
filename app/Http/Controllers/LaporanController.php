@@ -52,7 +52,6 @@ class LaporanController extends Controller
         $base64TutWuri = $this->gambarencode64('/storage/gambar/logo/tut-wuri-handayani.png');
         $base64SD = $this->gambarencode64('/storage/gambar/logo/logo-sd.png');
 
-        // dd($imagePathTutWuri);
         if($request['jenis'] == 'inventaris'){
             $totalInventaris = inventaris::all()->count();
             $totalBuku = buku::all()->count();
@@ -108,11 +107,6 @@ class LaporanController extends Controller
             $total_buku_hilang_periode = buku::where('posisi', 'hilang')->whereBetween('updated_at', [$dari, $hingga])->get()->count();
 
             $peminjaman = peminjaman::withCount('pivot')->where('status', 'dipinjam')->get();
-
-
-            // foreach($peminjaman as $p){
-            //     $p['jenis_peminjaman'] = $p->jenisPeminjaman();
-            // }
 
             $pdf = Pdf::loadView('admin.laporan.peminjaman',
             compact('request','total_peminjaman','total_pengembalian','total_buku_dipinjam','total_buku_hilang','total_peminjaman_periode','total_pengembalian_periode','total_buku_dipinjam_periode','total_buku_hilang_periode','peminjaman','base64TutWuri','base64SD'));

@@ -150,14 +150,22 @@
                                                         <div class="row">
                                                             <div class="col-md-6 col-12">
                                                                 <div class="mb-2">
-                                                                    <label class="form-label" for="lama_peminjaman">Status</label>
-                                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pivot->buku->posisi }}" disabled/>
+                                                                    <label class="form-label" for="lama_peminjaman">Status Pengembalian</label>
+                                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pivot->status }}" disabled/>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-6 col-12">
                                                                 <div class="mb-2">
                                                                     <label class="form-label" for="lama_peminjaman">Pengarang</label>
                                                                     <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pivot->buku->inventaris->pengarang }}" disabled/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="mb-2">
+                                                                    <label class="form-label" for="lama_peminjaman">Status Buku (Saat Ini)</label>
+                                                                    <input type="text" class="form-control" id="lama_peminjaman" name="lama_peminjaman" placeholder="lama peminjaman" autocomplete="lama_peminjaman" value="{{ $pivot->buku->posisi }}" disabled/>
                                                                 </div>
                                                             </div>
                                                         </div>

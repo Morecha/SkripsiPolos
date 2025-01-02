@@ -127,7 +127,7 @@
                                                         <option value="" selected disabled>Pilih Anggota</option>
                                                         @foreach ($anggota as $isi)
                                                             <option value="{{$isi->id}}" @if ($isi->status != 'aktif') disabled @endif>
-                                                                {{$isi->name}}
+                                                                {{$isi->NIS}} - {{$isi->name}}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -159,15 +159,15 @@
                                                                     @foreach ($buku as $buku)
                                                                         @if ($judul != $buku->inventaris->judul)
                                                                             <optgroup label="{{$buku->inventaris->judul}}">
-                                                                        @endif
-                                                                        <option value="{{$buku->id}}" @if ($buku->posisi != 'ada') disabled @endif>
-                                                                            {{$buku->kode_buku}}
-                                                                        </option>
-                                                                        @if ($judul != $buku->inventaris->judul)
-                                                                            </optgroup>
                                                                             @php
                                                                                 $judul = $buku->inventaris->judul;
                                                                             @endphp
+                                                                        @endif
+                                                                        <option value="{{$buku->id}}" @if ($buku->posisi != 'ada') disabled @endif>
+                                                                            {{$buku->kode_buku}} - {{$judul}}
+                                                                        </option>
+                                                                        @if ($judul != $buku->inventaris->judul)
+                                                                            </optgroup>
                                                                         @endif
                                                                     @endforeach
                                                                 </select>

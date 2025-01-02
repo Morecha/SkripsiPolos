@@ -176,7 +176,12 @@
                                                 <td>{{ $tabel_peminjaman->created_at }}</td>
                                                 <td>{{ $tabel_peminjaman->due_date }}</td>
                                                 <td>
-                                                    <span class="badge badge-light-warning">{{ $tabel_peminjaman->tenggat_waktu }}</span>
+                                                    @php
+                                                        $isLate = str_contains($tabel_peminjaman->tenggat_waktu, '-');
+                                                    @endphp
+                                                    <span class="badge {{ $isLate ? 'badge-light-danger' : 'badge-light-warning' }}">
+                                                        {{ $tabel_peminjaman->tenggat_waktu }}
+                                                    </span>
                                                 </td>
                                             </tr>
                                             @endforeach

@@ -116,9 +116,9 @@
                                                     <label class="form-label" for="id_anggota">Peminjam</label>
                                                     <select class="select2 form-select" name="" id="select2" disabled>
                                                         @if ($dipinjam->jenis_peminjaman == 'kelompok')
-                                                            <option value="{{ $dipinjam->user->id }}" selected>{{ $dipinjam->user->name }}</option>
+                                                            <option value="{{ $dipinjam->user->id }}" selected>{{$dipinjam->user->NIP}} - {{ $dipinjam->user->name }}</option>
                                                         @else
-                                                            <option value="{{ $dipinjam->anggota->id }}" selected>{{ $dipinjam->anggota->name }}</option>
+                                                            <option value="{{ $dipinjam->anggota->id }}" selected>{{$dipinjam->anggota->NIS}} - {{ $dipinjam->anggota->name }}</option>
                                                         @endif
                                                     </select>
                                                 </div>
@@ -131,18 +131,57 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6 mb-1">
-                                                <label class="form-label" for="select2-nested">Kode Buku</label>
-                                                <div id="kodeBukuContainer">
-                                                    <!-- Wrapper untuk duplikasi select -->
-                                                    @foreach ($dipinjam->pivot as $index => $item)
-                                                        <div class="kode-buku-group mb-2">
-                                                            <select class="select2 form-select" name="" id="select2-nested-{{$index}}" disabled>
-                                                                <option value="{{$item->buku->id}}" selected>{{$item->buku->kode_buku}}</option>
-                                                            </select>
+                                            <label class="form-label" for="select2-nested">Kode Buku</label>
+                                            <div id="kodeBukuContainer">
+                                                <!-- Wrapper untuk duplikasi select -->
+                                                @foreach ($dipinjam->pivot as $index => $item)
+                                                    <div class="kode-buku-group mb-2">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <select class="select2 form-select" name="id_buku[]" id="select2-nested-{{$index}}" disabled>
+                                                                    <option value="{{$item->buku->id}}" selected>{{$item->buku->kode_buku}} - {{$item->buku->inventaris->judul}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-check my-50">
+                                                                            <input type="radio" id="validationRadiojq{{$index}}" name="status{{$index}}" class="form-check-input" value="dipinjam"
+                                                                            {{$item->status == 'dipinjam' ? 'checked' : ''}}
+                                                                            @if ($item->availability == 'unavailable')
+                                                                                onclick="return false;"
+                                                                            @endif
+                                                                            />
+                                                                            <label class="form-check-label" for="validationRadiojq">Dipinjam</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-check my-50">
+                                                                            <input type="radio" id="validationRadiojq1{{$index}}" name="status{{$index}}" class="form-check-input" value="kembali"
+                                                                            {{$item->status == 'kembali' ? 'checked' : ''}}
+                                                                            @if ($item->availability == 'unavailable')
+                                                                                onclick="return false;"
+                                                                            @endif
+                                                                            />
+                                                                            <label class="form-check-label" for="validationRadiojq1{{$index}}">Dikembalikan</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-check">
+                                                                            <input type="radio" id="validationRadiojq2{{$index}}" name="status{{$index}}" class="form-check-input" value="hilang"
+                                                                            {{$item->status == 'hilang' ? 'checked' : ''}}
+                                                                            @if ($item->availability == 'unavailable')
+                                                                                onclick="return false;"
+                                                                            @endif
+                                                                            />
+                                                                            <label class="form-check-label" for="validationRadiojq2{{$index}}">Hilang</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    @endforeach
-                                                </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                         <div class="row">
