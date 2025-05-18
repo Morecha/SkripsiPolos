@@ -6,8 +6,8 @@ link jurnal [jptik ub](https://j-ptiik.ub.ac.id/index.php/j-ptiik/article/view/1
 link Skripsi [click here](https://drive.google.com/file/d/13EfbSKZct0IiAfeteMiFrAgcVIecrZyk/view?usp=sharing)
 
 1. BAB I (PENDAHULUAN)
-   _Latar Belakang
-   _Rumusan Masalah
+   -Latar Belakang
+   -Rumusan Masalah
    Tujuan
    Manfaat
    Batasan Masalah
